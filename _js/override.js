@@ -4,6 +4,10 @@ var prop = 'POPULACAO';
 var arr = ['EF','EF','PG','EF','EF','ES','PG','EM','PG','EM','EM',
             'ES','ES','EM','EM','ES','EF','EM','PG','ES','ES',
             'EM','EF','EM','EM','PG','ES','PG','ES','ES'];
+var arr2 = ['rosa','amarela','rosa','azul','rosa','branca','preta',
+            'preta','rosa','branca','rosa','preta','branca','preta',
+            'rosa','amarela','rosa','branca','branca','azul','rosa','amarela',
+            'branca','branca','branca','branca','azul','branca','branca','azul']
 
 
 function quali_nominal(prop,arr){
@@ -40,14 +44,14 @@ function quali_nominal(prop,arr){
         quali_fi[x] = box[x];
 
         //FR %
-        quali_fr[x] = (box[x]*100)/tot;
+        quali_fr[x] = Number(((box[x]*100)/tot).toFixed());
 
         //FAC
         sum += box[x]
         quali_fac[x] = sum;
 
         //FAC %
-        sum2 += (box[x]*100)/tot;
+        sum2 += Number(((box[x]*100)/tot).toFixed());
         quali_fac_percent[x] = sum2;
     }
 
@@ -68,3 +72,4 @@ function quali_nominal(prop,arr){
 }
 
 console.log(quali_nominal(prop,arr));
+console.log(quali_nominal(prop,arr2));
