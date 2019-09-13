@@ -1,28 +1,34 @@
+//constantes para alimentar as funções, conforme o que o usuário escolher//
+const PROP = ['POPULACAO','AMOSTRA'], TIPO = ['NOMINAL','ORDINAL'];
 
 
-var prop = 'POPULACAO';
+//Arrays de teste//
 var arr = ['EF','EF','PG','EF','EF','ES','PG','EM','PG','EM','EM',
             'ES','ES','EM','EM','ES','EF','EM','PG','ES','ES',
             'EM','EF','EM','EM','PG','ES','PG','ES','ES'];
 var arr2 = ['rosa','amarela','rosa','azul','rosa','branca','preta',
             'preta','rosa','branca','rosa','preta','branca','preta',
             'rosa','amarela','rosa','branca','branca','azul','rosa','amarela',
-            'branca','branca','branca','branca','azul','branca','branca','azul']
+            'branca','branca','branca','branca','azul','branca','branca','azul'];
 
 
-function quali_nominal(prop,arr){
+function quali_nominal_ordinal(prop,tipo,arr){
 
-    //Variaveis auxiliares;
+    //Variaveis auxiliares//;
     var box = {},
         quali_names = {},
         quali_fi = {},
         quali_fr = {}, 
         quali_fac={},
         quali_fac_percent = {},
-        cont=0, sum=0, sum2=0, tot = arr.length, quali_nominal_tb = [];
+        cont=0, sum=0, sum2=0, tot = arr.length, quali_struct_tb = [];
 
-    //Ordena o array//
-    arr.sort();
+    //Ordena o array caso a variavel seja do tipo NOMINAL (ordem alfabética)//
+    if(tipo==='NOMINAL'){
+        //Ordena o array em ordem alfabética (por peso UNICODE)//
+        arr.sort();
+    }
+    
 
     //Monta um objeto contendo os elementos e a sua frequencia simples FI//
     for(var i=0; i<tot; i++){   
@@ -62,14 +68,18 @@ function quali_nominal(prop,arr){
         3 - FAC
         4 - FAC %
     */
-    quali_nominal_tb[0] = quali_names;
-    quali_nominal_tb[1] = quali_fi;
-    quali_nominal_tb[2] = quali_fr;
-    quali_nominal_tb[3] = quali_fac;
-    quali_nominal_tb[4] = quali_fac_percent;
+    //Montando o array de retorno//
+    quali_struct_tb[0] = quali_names;
+    quali_struct_tb[1] = quali_fi;
+    quali_struct_tb[2] = quali_fr;
+    quali_struct_tb[3] = quali_fac;
+    quali_struct_tb[4] = quali_fac_percent;
     
-    return quali_nominal_tb;
+    //Retorno dos valores tratados//
+    return quali_struct_tb;
 }
 
-console.log(quali_nominal(prop,arr));
-console.log(quali_nominal(prop,arr2));
+
+//Chamadas de Teste//
+console.log(quali_nominal_ordinal(PROP[0],TIPO[0],arr));
+console.log(quali_nominal_ordinal(PROP[0],TIPO[0],arr2));
