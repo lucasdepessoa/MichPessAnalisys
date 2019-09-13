@@ -9,15 +9,20 @@ var arr = ['EF','EF','PG','EF','EF','ES','PG','EM','PG','EM','EM',
 function quali_nominal(prop,arr){
 
     //Variaveis auxiliares;
-    var box = {},box_perc = {},fac = {}, fac_perc={}, cont=0, sum=0, sum2=0;
+    var box = {},
+        quali_names = {},
+        quali_fi = {},
+        quali_fr = {}, 
+        quali_fac={},
+        quali_fac_percent = {},
+        cont=0, sum=0, sum2=0, tot = arr.length, quali_nominal_tb = [];
 
-    //Ordena o array por peso de código unicode e guarda o valor total de elementos//
+    //Ordena o array//
     arr.sort();
-    var tot = arr.length;
 
     //Monta um objeto contendo os elementos e a sua frequencia simples FI//
-    for(var i=0; i<arr.length; i++){   
-        for(var j=0; j<arr.length; j++){
+    for(var i=0; i<tot; i++){   
+        for(var j=0; j<tot; j++){
             if(arr[i]==arr[j]){
                 cont++;
             }             
@@ -28,23 +33,38 @@ function quali_nominal(prop,arr){
 
     //Percorre o objeto catpruando os valroes descritos abaixo: //
     for(x in box){
+        //Names - Variaveis
+        quali_names[x] = x; 
+
+        //Fi
+        quali_fi[x] = box[x];
+
         //FR %
-        box_perc[x] = (box[x]*100)/tot;
+        quali_fr[x] = (box[x]*100)/tot;
 
         //FAC
         sum += box[x]
-        fac[x] = sum;
+        quali_fac[x] = sum;
 
         //FAC %
         sum2 += (box[x]*100)/tot;
-        fac_perc[x] = sum2;
+        quali_fac_percent[x] = sum2;
     }
+
+    /*Array contendo os elementos calculados acima, legenda abaixo:
+        0 - Elementos (Nomes das Variaveis Pesquisadas) 
+        1 - FI 
+        2 - FR %
+        3 - FAC
+        4 - FAC %
+    */
+    quali_nominal_tb[0] = quali_names;
+    quali_nominal_tb[1] = quali_fi;
+    quali_nominal_tb[2] = quali_fr;
+    quali_nominal_tb[3] = quali_fac;
+    quali_nominal_tb[4] = quali_fac_percent;
     
-    console.log(box);
-    console.log(box_perc);
-    console.log(fac);
-    console.log(fac_perc)
-    
+    return quali_nominal_tb;
 }
 
 console.log(quali_nominal(prop,arr));
