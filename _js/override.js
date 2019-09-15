@@ -12,6 +12,13 @@ var arr2 = ['rosa','amarela','rosa','azul','rosa','branca','preta',
             'branca','branca','branca','branca','azul','branca','branca','azul'];
 
 
+var arr3 = [230,232,244,245,248,
+            280,281,284,289,292,
+            308,309,309,310,311,
+            333,335,335,337,337];
+
+
+
 function quali_nominal_ordinal(prop,tipo,arr){
 
     //Variaveis auxiliares//;
@@ -22,6 +29,7 @@ function quali_nominal_ordinal(prop,tipo,arr){
         quali_fac= [],
         quali_fac_percent = [],
         cont=0, sum=0, sum2=0, tot = arr.length, quali_struct_tb = [];
+       
 
     //Ordena o array caso a variavel seja do tipo NOMINAL (ordem alfabética)//
     if(tipo==='NOMINAL'){
@@ -80,8 +88,56 @@ function quali_nominal_ordinal(prop,tipo,arr){
 }
 
 
-//Chamadas de Teste//
-console.log(quali_nominal_ordinal(PROP[0],TIPO[0],arr));
-console.log(quali_nominal_ordinal(PROP[0],TIPO[1],arr2));
+function quanti_continua(prop,arr){
+    //Variaveis Auxiliares//
+    var aux = [],
+        quanti_names = [],
+        quanti_fi = [],
+        quanti_fr = [], 
+        quanti_fac= [],
+        quanti_fac_percent = [],
+        cont=0, sum=0, sum2=0, tot = arr.length, quanti_struct_tb = [],
+        at=0, max=0, min=0, k=0, ic=0, aux=0;
+    
+        //Ordenando o Array//
+        aux = arr.sort(function(a,b){
+            return a-b;
+        });
 
+        //Amplitude//
+        max = Math.max(...arr);
+        min = Math.min(...arr);
+        at = (max-min)+1;
+
+        //Calcula a quantidade de linhas//
+        k = (Math.sqrt(tot).toFixed());
+        while(at % k != 0){
+            k++;
+        }
+
+        //Calcula o Intervalo//
+        ic = at/k;
+
+        // //Monta os intervalos//
+        // for(var i=0; i<k; i++){
+        //     for(var j=0; j<2; j++){
+        //         quanti_names[i][j] = arr[i];
+        //         if(j==1){
+        //             quanti_names[i][j] = aux+ic;
+        //         }
+        //     }
+            
+        // }
+        console.log('AT: '+at+' K:'+k+' IC:'+ic)
+
+
+    }
+
+
+
+//Chamadas de Teste//
+//console.log(quali_nominal_ordinal(PROP[0],TIPO[0],arr));
+//console.log(quali_nominal_ordinal(PROP[0],TIPO[1],arr2));
+
+console.log(quanti_continua(PROP[0],arr3));
 
