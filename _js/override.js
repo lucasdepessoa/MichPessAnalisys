@@ -15,12 +15,12 @@ var arr2 = ['rosa','amarela','rosa','azul','rosa','branca','preta',
 function quali_nominal_ordinal(prop,tipo,arr){
 
     //Variaveis auxiliares//;
-    var box = {},
-        quali_names = {},
-        quali_fi = {},
-        quali_fr = {}, 
-        quali_fac={},
-        quali_fac_percent = {},
+    var aux = [],
+        quali_names = [],
+        quali_fi = [],
+        quali_fr = [], 
+        quali_fac= [],
+        quali_fac_percent = [],
         cont=0, sum=0, sum2=0, tot = arr.length, quali_struct_tb = [];
 
     //Ordena o array caso a variavel seja do tipo NOMINAL (ordem alfabética)//
@@ -28,7 +28,6 @@ function quali_nominal_ordinal(prop,tipo,arr){
         //Ordena o array em ordem alfabética (por peso UNICODE)//
         arr.sort();
     }
-    
 
     //Monta um objeto contendo os elementos e a sua frequencia simples FI//
     for(var i=0; i<tot; i++){   
@@ -37,28 +36,29 @@ function quali_nominal_ordinal(prop,tipo,arr){
                 cont++;
             }             
         }
-        box[arr[i]] = cont;
+        aux[arr[i]] = cont;
         cont = 0;
     }
+    
+    //Calcula os valores//
+    for(x in aux){
 
-    //Percorre o objeto catpruando os valroes descritos abaixo: //
-    for(x in box){
-        //Names - Variaveis
-        quali_names[x] = x; 
+        //Names - Variáveis
+        quali_names.push(x);
 
-        //Fi
-        quali_fi[x] = box[x];
+        //Fi - Frequencia Simples
+        quali_fi.push(aux[x]);
 
-        //FR %
-        quali_fr[x] = Number(((box[x]*100)/tot).toFixed());
+        //FR % - Frequencia Proporcional Relativa
+        quali_fr.push(Number(((aux[x]*100)/tot).toFixed()));
 
-        //FAC
-        sum += box[x]
-        quali_fac[x] = sum;
+        //FAC - Frequencia Acumulativa
+        sum += aux[x];
+        quali_fac.push(sum);
 
-        //FAC %
-        sum2 += Number(((box[x]*100)/tot).toFixed());
-        quali_fac_percent[x] = sum2;
+        //FAC % - Frequencia Acumulativa Proporcional
+        sum2 += Number(((aux[x]*100)/tot).toFixed());
+        quali_fac_percent.push(sum2);
     }
 
     /*Array contendo os elementos calculados acima, legenda abaixo:
@@ -82,4 +82,6 @@ function quali_nominal_ordinal(prop,tipo,arr){
 
 //Chamadas de Teste//
 console.log(quali_nominal_ordinal(PROP[0],TIPO[0],arr));
-console.log(quali_nominal_ordinal(PROP[0],TIPO[0],arr2));
+console.log(quali_nominal_ordinal(PROP[0],TIPO[1],arr2));
+
+
