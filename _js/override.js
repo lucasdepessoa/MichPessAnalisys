@@ -96,13 +96,17 @@ function quanti_continua(prop,arr){
         quanti_fr = [], 
         quanti_fac= [],
         quanti_fac_percent = [],
-        cont=0, sum=0, sum2=0, tot = arr.length, quanti_struct_tb = [],
+        cont=0, sum=0, sum2=0, sum3=0, tot = arr.length, quanti_struct_tb = [],
         at=0, max=0, min=0, k=0, ic=0, aux=0;
     
         //Ordenando o Array//
-        aux = arr.sort(function(a,b){
+        arr.sort(function(a,b){
             return a-b;
         });
+
+        //Guarda uma copia do array original ordenado//
+        aux = [...arr];
+
 
         //Amplitude//
         max = Math.max(...arr);
@@ -117,27 +121,69 @@ function quanti_continua(prop,arr){
 
         //Calcula o Intervalo//
         ic = at/k;
+        sum = aux[0];
 
-        // //Monta os intervalos//
-        // for(var i=0; i<k; i++){
-        //     for(var j=0; j<2; j++){
-        //         quanti_names[i][j] = arr[i];
-        //         if(j==1){
-        //             quanti_names[i][j] = aux+ic;
-        //         }
-        //     }
+        //Monta os intervalos//
+        for(var i=0; i<k; i++){
+            for(var j=0; j<2; j++){
+                quanti_names[i] = sum;        
+            }
+            sum += ic;
+        }
+
+        //Adiciona o numero final + ic//
+        quanti_names.push(quanti_names[k-1]+ic);
+
+
+        // Monta FI ; FR% ; FAC ; FAC% //
+        for(var i=0; i<k; i++){
+            for(var j=0; j<tot; j++){
+
+                //Monta a variavel FI//
+                if(aux[j]>=quanti_names[i] && aux[j]<quanti_names[i+1]){
+                    cont++;
+                }
+            }
+
+            //Monta a variavel FI//
+            quanti_fi[i] = cont;
+            cont = 0;
+
+            //Monta a variavel FR//
+            quanti_fr.push(Number(((quanti_fi[i]*100)/tot).toFixed()));
             
-        // }
-        console.log('AT: '+at+' K:'+k+' IC:'+ic)
+            //Monta a variavel FAC//
+            sum2 += quanti_fi[i];
+            quanti_fac[i] = sum2;
 
+            //Monta a variavel FAC % //
+            sum3 += quanti_fr[i];
+            quanti_fac_percent.push(Number(sum3));
+        }
 
+        /*Array contendo os elementos calculados acima, legenda abaixo:
+        0 - Elementos (Nomes das Variaveis Pesquisadas) 
+        1 - FI 
+        2 - FR %
+        3 - FAC
+        4 - FAC %
+        */
+
+        //Monta o Array de Retorno//
+        quanti_struct_tb[0] = quanti_names;
+        quanti_struct_tb[1] = quanti_fi;
+        quanti_struct_tb[2] = quanti_fr;
+        quanti_struct_tb[3] = quanti_fac;
+        quanti_struct_tb[4] = quanti_fac_percent;
+
+        return quanti_struct_tb;
     }
 
 
 
 //Chamadas de Teste//
-//console.log(quali_nominal_ordinal(PROP[0],TIPO[0],arr));
-//console.log(quali_nominal_ordinal(PROP[0],TIPO[1],arr2));
+// console.log(quali_nominal_ordinal(PROP[0],TIPO[0],arr));
+// console.log(quali_nominal_ordinal(PROP[0],TIPO[1],arr2));
 
 console.log(quanti_continua(PROP[0],arr3));
 
