@@ -1,0 +1,43 @@
+#trigger{
+    display: none;
+}
+button.outline {
+    outline: none!important;
+    border:none!important;
+}
+
+button.outline:hover{
+    outline: none!important;
+    border:none!important;
+    background-color:#343a40!important;
+    box-shadow: none!important;
+}
+
+button.outline:focus{
+    outline:none!important;
+    border:none!important;
+    box-shadow: none!important;
+    background-color:none!important;
+    background-color:#343a40!important;
+}
+
+
+.backMaster{
+    background-color:rgba(244,244,244,.8)!important;
+}
+
+.navItemCustom:hover {
+    border:none!important;
+}
+.navItemCustom:focus {
+    outline: none!important;
+    color:black!important;
+    background-color: white!important;
+    border:none!important;
+}
+
+
+/* remove a setinha do menu dropdown */
+.dropdown-toggle::after {
+    display:none;
+}

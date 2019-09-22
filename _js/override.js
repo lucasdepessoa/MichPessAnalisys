@@ -18,7 +18,7 @@ var arr3 = [230,232,244,245,248,
             333,335,335,337,337];
 
 
-
+// Funções Prontas //
 function quali_nominal_ordinal(prop,tipo,arr){
 
     //Variaveis auxiliares//;
@@ -177,13 +177,39 @@ function quanti_continua(prop,arr){
         quanti_struct_tb[4] = quanti_fac_percent;
 
         return quanti_struct_tb;
-    }
-
+}
+// Fim - Funções Prontas //
 
 
 //Chamadas de Teste//
 // console.log(quali_nominal_ordinal(PROP[0],TIPO[0],arr));
 // console.log(quali_nominal_ordinal(PROP[0],TIPO[1],arr2));
+// console.log(quanti_continua(PROP[0],arr3));
 
-console.log(quanti_continua(PROP[0],arr3));
 
+
+
+function trigger(id){
+
+    var obj =  document.getElementById('varPes');
+    
+    switch(id){
+        case 'quali_nomi':
+            obj.innerHTML = 'Qualitativa Nominal';
+        break;
+        case 'quali_ordi':
+            obj.innerHTML = 'Qualitativa Ordinal';
+        break;
+        case 'quati_disc':
+            obj.innerHTML = 'Quantitativa Discreta';
+        break;
+        case 'quati_cont':
+            obj.innerHTML = 'Quantitativa Contínua';
+        break;        
+    }
+
+    if(document.getElementById('trigger').style.display != 'block'){
+        document.getElementById('trigger').style.display = 'block'; 
+    }
+}
+    
