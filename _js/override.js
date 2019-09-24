@@ -79,34 +79,7 @@ function quali_nominal_ordinal(prop,tipo,arr){
         sum2 += Number(((aux[x]*100)/tot).toFixed());
         quali_fac_percent.push(sum2);
     }
-    //cálculo da moda
-    var moda = quali_fi[0];
-    for (i=0;i<tot;i++){
-        if (quali_fi[i+1]>quali_fi[i]){
-            moda = quali_fi[i+1]
-        }
-    }   
-    console.log("A moda é " + moda);
-
-    //medidas separatrizes - a mediana é uma delas - (quartil x 2) ou (deal x 5)
-    //obs: do pior para o melhor à escolha do usuário
-    //mediana - divide os dados em duas partes iguais
-    var sep = []
-    if (sum%2==0){
-        var posMed = sum/2;
-        var posMed2 = posMed + 1;
-        sep.push(arr[posMed],arr[posMed2]);
-    }else{
-        var posMed = sum/2;
-        sep.push(arr[posMed]);
-    }
-    console.log("A medida separatriz - mediana - é " + sep);
-
-    //quartil - divide os dados em 4 partes iguais 
-    //quintil - divide os dados em 5 partes iguais
-    //deal - divide os dados em 10 partes iguais
-    //porcentil - divide os dados em 100 partes iguais
-
+       
     /*Array contendo os elementos calculados acima, legenda abaixo:
         0 - Elementos (Nomes das Variaveis Pesquisadas) 
         1 - FI 
@@ -120,11 +93,39 @@ function quali_nominal_ordinal(prop,tipo,arr){
     quali_struct_tb[2] = quali_fr;
     quali_struct_tb[3] = quali_fac;
     quali_struct_tb[4] = quali_fac_percent;
-        
+    
+    //cálculo da moda
+    var moda = quali_fi[0];
+    for (i=0;i<tot;i++){
+        if (quali_fi[i+1]>quali_fi[i]){
+            moda = quali_fi[i+1]
+        }
+    }
+    //cálculo da mediana
+    var med = []
+    if (sum%2==0){
+        var pos1 = sum/2;
+        var pos2 = pos1 + 1;
+        med.push(arr[pos1],arr[pos2]);
+        console.log("A mediana é " + med + " nas posições "+ pos1 + " e " + pos2);
+    }else{
+        var pos1 = sum/2;
+        med.push(arr[pos1]);
+        console.log("A mediana é " + med + " na posição " + pos1);
+    };
+    //MEDIDAS SEPARATRIZES
+    var sep = [];
+    //quartil
+    
+
+    
+    //exibição de resultados
+    console.log("A moda é " + moda);
+    console.log(quali_struct_tb);    
     //Retorno dos valores tratados//
     return quali_struct_tb;
-}
-
+    
+};
 
 function quanti_continua(prop,arr){
     //Variaveis Auxiliares//
@@ -220,14 +221,9 @@ function quanti_continua(prop,arr){
 
 
 //Chamadas de Teste//
-function call(){
-    
-}
 console.log(quali_nominal_ordinal(PROP[0],TIPO[0],arr)); 
 // console.log(quali_nominal_ordinal(PROP[0],TIPO[1],arr2));
 // console.log(quanti_continua(PROP[0],arr3));
-
-
 
 
 function trigger(id){
@@ -253,4 +249,3 @@ function trigger(id){
         document.getElementById('trigger').style.display = 'block'; 
     }
 }
-    
