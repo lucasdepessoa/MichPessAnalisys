@@ -1,3 +1,13 @@
+var arr_ent = [];
+console.log(arr_ent)
+// Funções Prontas //
+function entrada(){
+      var numString = document.getElementById("numString").value;
+      arr_ent.push(numString.split(';'));
+      document.getElementById("valores").innerHTML = arr_ent;
+      return entrada;
+}
+ 
 //constantes para alimentar as funções, conforme o que o usuário escolher//
 const PROP = ['POPULACAO','AMOSTRA'], TIPO = ['NOMINAL','ORDINAL'];
 
@@ -22,7 +32,7 @@ var arr3 = [230,232,244,245,248,
 function quali_nominal_ordinal(prop,tipo,arr){
 
     //Variaveis auxiliares//;
-    var aux = [],
+        var aux = [],
         quali_names = [],
         quali_fi = [],
         quali_fr = [], 
@@ -68,7 +78,7 @@ function quali_nominal_ordinal(prop,tipo,arr){
         sum2 += Number(((aux[x]*100)/tot).toFixed());
         quali_fac_percent.push(sum2);
     }
-
+       
     /*Array contendo os elementos calculados acima, legenda abaixo:
         0 - Elementos (Nomes das Variaveis Pesquisadas) 
         1 - FI 
@@ -83,10 +93,38 @@ function quali_nominal_ordinal(prop,tipo,arr){
     quali_struct_tb[3] = quali_fac;
     quali_struct_tb[4] = quali_fac_percent;
     
+    //cálculo da moda
+    var moda = quali_fi[0];
+    for (i=0;i<tot;i++){
+        if (quali_fi[i+1]>quali_fi[i]){
+            moda = quali_fi[i+1]
+        }
+    }
+    //cálculo da mediana
+    var med = []
+    if (sum%2==0){
+        var pos1 = sum/2;
+        var pos2 = pos1 + 1;
+        med.push(arr[pos1],arr[pos2]);
+        console.log("A mediana é " + med + " nas posições "+ pos1 + " e " + pos2);
+    }else{
+        var pos1 = sum/2;
+        med.push(arr[pos1]);
+        console.log("A mediana é " + med + " na posição " + pos1);
+    };
+    //MEDIDAS SEPARATRIZES
+    var sep = [];
+    //quartil
+    
+
+    
+    //exibição de resultados
+    console.log("A moda é " + moda);
+    console.log(quali_struct_tb);    
     //Retorno dos valores tratados//
     return quali_struct_tb;
-}
-
+    
+};
 
 function quanti_continua(prop,arr){
     //Variaveis Auxiliares//
@@ -182,11 +220,9 @@ function quanti_continua(prop,arr){
 
 
 //Chamadas de Teste//
-// console.log(quali_nominal_ordinal(PROP[0],TIPO[0],arr));
+console.log(quali_nominal_ordinal(PROP[0],TIPO[0],arr)); 
 // console.log(quali_nominal_ordinal(PROP[0],TIPO[1],arr2));
 // console.log(quanti_continua(PROP[0],arr3));
-
-
 
 
 function trigger(id){
@@ -212,4 +248,3 @@ function trigger(id){
         document.getElementById('trigger').style.display = 'block'; 
     }
 }
-    
