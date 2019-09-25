@@ -32,6 +32,7 @@ var arr3 = [230,232,244,245,248,
 function quali_nominal_ordinal(prop,tipo,arr){
 
     //Variaveis auxiliares//;
+    var aux = [],
         var aux = [],
         quali_names = [],
         quali_fi = [],
@@ -93,6 +94,10 @@ function quali_nominal_ordinal(prop,tipo,arr){
     quali_struct_tb[3] = quali_fac;
     quali_struct_tb[4] = quali_fac_percent;
     
+    //Retorno dos valores tratados//
+    return quali_struct_tb;
+}
+
     //cálculo da moda
     var moda = quali_fi[0];
     for (i=0;i<tot;i++){
@@ -220,9 +225,12 @@ function quanti_continua(prop,arr){
 
 
 //Chamadas de Teste//
+// console.log(quali_nominal_ordinal(PROP[0],TIPO[0],arr));
 console.log(quali_nominal_ordinal(PROP[0],TIPO[0],arr)); 
 // console.log(quali_nominal_ordinal(PROP[0],TIPO[1],arr2));
 // console.log(quanti_continua(PROP[0],arr3));
+
+
 
 
 function trigger(id){
@@ -248,3 +256,4 @@ function trigger(id){
         document.getElementById('trigger').style.display = 'block'; 
     }
 }
+    
