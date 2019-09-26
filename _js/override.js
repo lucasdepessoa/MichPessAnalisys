@@ -1,6 +1,5 @@
 
 var arr_ent = [];
-console.log(arr_ent)
 // Funções Prontas //
 function entrada(){
       var numString = document.getElementById("numString").value;
@@ -30,7 +29,11 @@ var arr3 = [230,232,244,245,248,
 
 var arr4 = [2,3,1,1,2,1,2,1,2,5,5,1,2,3,1,2,2,3,1,2];
 
-// Funções Prontas //
+
+var arr5 = [40,41,42,45,54,55,59,60,61,62,64,65,65,66,67,68,69,70,71,71,
+            80,81,83,84,85,86,87,87,88,89,90,91,93,97,98,98,99,100,101,105];
+
+// FUNÇÕES PRINCIPAIS DE ESTATISTICA //
 function quali_nominal_ordinal(prop,tipo,arr){
 
     //Variaveis auxiliares//;
@@ -40,7 +43,7 @@ function quali_nominal_ordinal(prop,tipo,arr){
         quali_fac= [],
         quali_fac_percent = [],
         cont=0, sum=0, sum2=0, tot = arr.length, quali_struct_tb = [];
-       
+    
 
     //Ordena o array caso a variavel seja do tipo NOMINAL (ordem alfabética)//
     if(tipo==='NOMINAL'){
@@ -66,7 +69,7 @@ function quali_nominal_ordinal(prop,tipo,arr){
 
     //Calcula os valores//
     for(x in quali_fi){
-      
+    
         //FR % - Frequencia Proporcional Relativa
         quali_fr.push(Number(((quali_fi[x]*100)/tot).toFixed()));
 
@@ -78,7 +81,7 @@ function quali_nominal_ordinal(prop,tipo,arr){
         sum2 += Number(((quali_fi[x]*100)/tot).toFixed());
         quali_fac_percent.push(sum2);
     }
-       
+    
     /*Array contendo os elementos calculados acima, legenda abaixo:
         0 - Elementos (Nomes das Variaveis Pesquisadas) 
         1 - FI 
@@ -102,7 +105,7 @@ function quali_nominal_ordinal(prop,tipo,arr){
     moda(quali_struct_tb);
     mediana(quali_struct_tb);
     //exibe o resultado
-    console.log(quali_struct_tb);    
+    //console.log(quali_struct_tb);    
     //Retorno dos valores tratados//
     return quali_struct_tb;
     
@@ -185,7 +188,7 @@ function quanti_continua(prop,arr){
 
         //Monta os pontos médios de cada intervalo//
         for(var i=0; i<=k-1; i++){  
-            pontos_medios[i] = Math.floor((quanti_names[i]+quanti_names[i+1] ) / 2);  
+            pontos_medios[i] = Number(((quanti_names[i]+quanti_names[i+1] ) / 2).toFixed(2));  
         }
 
         /*Array contendo os elementos calculados acima, legenda abaixo:
@@ -210,13 +213,14 @@ function quanti_continua(prop,arr){
         quanti_struct_tb[7] = pontos_medios;
 
         //chama as funções
-        mediana_cont(quanti_struct_tb);
+        //mediana_cont(quanti_struct_tb);
 
         return quanti_struct_tb;
 }
 
 
 function quanti_discreta(prop,arr){
+    //variaveis
     var aux = [],
         quanti_names = [],
         quanti_fi = [],
@@ -232,7 +236,7 @@ function quanti_discreta(prop,arr){
     
     //Guarda Cópias//
     aux = [...arr];
- 
+
     //Pega os elementos que se repetem//   
     quanti_names = aux.filter(function(valor,indice,arr){
         return arr.indexOf(valor)===indice;
@@ -284,17 +288,11 @@ function quanti_discreta(prop,arr){
 
     return quanti_struct_tb;
 }
+//##################################//
 
 
 
-//Chamadas de Teste//
-//console.log(quali_nominal_ordinal(PROP[0],TIPO[0],arr));
-// console.log(quali_nominal_ordinal(PROP[0],TIPO[0],arr)); 
-// console.log(quali_nominal_ordinal(PROP[0],TIPO[1],arr2));
-console.log(quanti_continua(PROP[0],arr3));
-// console.log(quanti_discreta('AMOSTRA',arr4));
-
-
+//Funções de Tabulação//
 function trigger(id){
 
     var obj =  document.getElementById('varPes');
@@ -319,7 +317,6 @@ function trigger(id){
     }
 }
 
-//CONSTRUÇÃO DA TABELA     
 function table_builder(arr){
     var tabela = '';    
 
@@ -342,14 +339,34 @@ function table_builder_continua(arr){
     }
     document.getElementById('tabul').innerHTML += tabela; 
 }
+//--//
 
 
-//Teste aqui amor, apenas descomente uma por vez e veja na aba de tabulação os resultados//
+
+//TESTES - CONSOLE.LOG//
+
+//console.log(quali_nominal_ordinal(PROP[0],TIPO[0],arr));
+// console.log(quali_nominal_ordinal(PROP[0],TIPO[0],arr)); 
+// console.log(quali_nominal_ordinal(PROP[0],TIPO[1],arr2));
+//console.log(quanti_continua(PROP[0],arr5));
+// console.log(quanti_discreta('AMOSTRA',arr4));
+
+//--//
+
+
+
+//TESTES - TABULAÇÃO //
 
 // table_builder(quanti_discreta('AMOSTRA',arr4));
 // table_builder(quali_nominal_ordinal(PROP[0],TIPO[0],arr));
 // table_builder(quali_nominal_ordinal(PROP[0],TIPO[1],arr2));
-table_builder_continua(quanti_continua(PROP[0],arr3));
+//table_builder_continua(quanti_continua(PROP[0],arr5));
+//--//
+
+
+
+
+//FUNÇÕES COMPLEMENTARES - MODA, MEDIANA, DESVIO PADRÃO E SEPARATRIZ//
 
 function moda(matriz){
 /*   Cálculo da Moda - Legenda da matriz de origem:
@@ -383,6 +400,11 @@ function mediana(matriz){
     };
 };
 
+
+
+
+
+
 function mediana_cont(matriz){
 /*Array contendo os elementos calculados acima, legenda abaixo:
     0 - Elementos (Nomes das Variaveis Pesquisadas) 
@@ -393,27 +415,39 @@ function mediana_cont(matriz){
     5 - Tamanho do Array
     6 - Array inteiro ordenado 
     7 - Pontos médios de cada intervalo soma de um + outro / por 2
-*/
-    var pos = matriz[5]/2;
-    var I = 0;
-    var linha = 0;
-    var fac_ant = 0;
-    var fi_da_med = 0;
-    var md = 0;
-    for (var i=0;i<matriz[3][i].length;i++){
-        if (pos>matriz[3]){
-            linha = i;
-        }
-    }
-    I = matriz[0][linha];
-    fac_ant = matriz[3][linha-1];
-    fi_da_med = matriz[1][linha];
-    h = matriz[0][1] - matriz[0][0];
-    md = I + ((pos - fac_ant)/fi_da_med)*h;
-    console.log("pos é " + pos);
-    console.log("I é " + I);
-    console.log("fac_ant: " + fac_ant);
-    console.log("fi_da_med" + fi_da_med);
-    console.log("linha é " + linha);
-    console.log("A mediana arredondada é " + Math.round(md));
+*/  
+    //variaveis auxiliares
+
+
+//     var pos = matriz[5]/2;
+//     var I = 0;
+//     var linha = 0;
+//     var fac_ant = 0;
+//     var fi_da_med = 0;
+//     var md = 0;
+//     for (var i=0;i<matriz[3][i].length;i++){
+//         if (pos>matriz[3]){
+//             linha = i;
+//         }
+//     }
+//     I = matriz[0][linha];
+//     fac_ant = matriz[3][linha-1];
+//     fi_da_med = matriz[1][linha];
+//     h = matriz[0][1] - matriz[0][0];
+//     md = I + ((pos - fac_ant)/fi_da_med)*h;
+//     console.log("pos é " + pos);
+//     console.log("I é " + I);
+//     console.log("fac_ant: " + fac_ant);
+//     console.log("fi_da_med" + fi_da_med);
+//     console.log("linha é " + linha);
+//     console.log("A mediana arredondada é " + Math.round(md));
 };
+
+
+mediana_cont(quanti_continua(PROP[0],arr5));
+
+
+
+
+//--//
+
