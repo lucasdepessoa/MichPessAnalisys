@@ -209,6 +209,9 @@ function quanti_continua(prop,arr){
         quanti_struct_tb[6] = arr;
         quanti_struct_tb[7] = pontos_medios;
 
+        //chama as funções
+        mediana_cont(quanti_struct_tb);
+
         return quanti_struct_tb;
 }
 
@@ -391,5 +394,26 @@ function mediana_cont(matriz){
     6 - Array inteiro ordenado 
     7 - Pontos médios de cada intervalo soma de um + outro / por 2
 */
-	md = I + ((pos - fac_ant)/fi_da_med)*h;
+    var pos = matriz[5]/2;
+    var I = 0;
+    var linha = 0;
+    var fac_ant = 0;
+    var fi_da_med = 0;
+    var md = 0;
+    for (var i=0;i<matriz[3][i].length;i++){
+        if (pos>matriz[3]){
+            linha = i;
+        }
+    }
+    I = matriz[0][linha];
+    fac_ant = matriz[3][linha-1];
+    fi_da_med = matriz[1][linha];
+    h = matriz[0][1] - matriz[0][0];
+    md = I + ((pos - fac_ant)/fi_da_med)*h;
+    console.log("pos é " + pos);
+    console.log("I é " + I);
+    console.log("fac_ant: " + fac_ant);
+    console.log("fi_da_med" + fi_da_med);
+    console.log("linha é " + linha);
+    console.log("A mediana arredondada é " + Math.round(md));
 };
