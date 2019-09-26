@@ -343,10 +343,21 @@ function table_builder(arr){
     document.getElementById('tabul').innerHTML += tabela; 
 }
 
+function table_builder_continua(arr){
+    var tabela = '';
+
+    for(var i=0; i<arr[1].length; i++){
+        tabela += '<tr>';
+        tabela += '<td>'+arr[0][i]+' |--------- '+arr[0][i+1]+'</td><td>'+arr[1][i]+'</td><td>'+arr[2][i]+'</td><td>'+arr[3][i]+'</td><td>'+arr[4][i]+'</td>';
+        tabela += '</tr>';    
+    }
+    document.getElementById('tabul').innerHTML += tabela; 
+}
+
 
 //Teste aqui amor, apenas descomente uma por vez e veja na aba de tabulação os resultados//
 
 // table_builder(quanti_discreta('AMOSTRA',arr4));
 // table_builder(quali_nominal_ordinal(PROP[0],TIPO[0],arr));
 // table_builder(quali_nominal_ordinal(PROP[0],TIPO[1],arr2));
-
+//table_builder_continua(quanti_continua(PROP[0],arr3));
