@@ -86,6 +86,7 @@ function quali_nominal_ordinal(prop,tipo,arr){
         3 - FAC
         4 - FAC %
         5 - Tamanho do Array
+        6 - Array inteiro ordenado//
 
     */
     //Montando o array de retorno//
@@ -95,6 +96,7 @@ function quali_nominal_ordinal(prop,tipo,arr){
     quali_struct_tb[3] = quali_fac;
     quali_struct_tb[4] = quali_fac_percent;
     quali_struct_tb[5] = [tot];
+    quali_struct_tb[6] = arr;
 
     //cálculo da moda
     var moda = quali_fi[0];
@@ -215,6 +217,7 @@ function quanti_continua(prop,arr){
         4 - FAC %
         5 - Tamanho do Array
         6 - Pontos médios de cada intervalo soma de um + outro / por 2
+        7 - Array inteiro ordenado
         */
 
         //Monta o Array de Retorno//
@@ -225,6 +228,7 @@ function quanti_continua(prop,arr){
         quanti_struct_tb[4] = quanti_fac_percent;
         quanti_struct_tb[5] = [tot];
         quanti_struct_tb[6] = pontos_medios;
+        quanti_struct_tb[7] = arr;
 
         return quanti_struct_tb;
 }
@@ -284,6 +288,7 @@ function quanti_discreta(prop,arr){
         3 - FAC
         4 - FAC %
         5 - Tamanhao do Array
+        6 - Array completo ordenado 
     */
 
     //Monta o Array de Retorno//
@@ -293,6 +298,7 @@ function quanti_discreta(prop,arr){
     quanti_struct_tb[3] = quanti_fac;
     quanti_struct_tb[4] = quanti_fac_percent;
     quanti_struct_tb[5] = [tot]
+    quanti_struct_tb[6] = arr;
 
     return quanti_struct_tb;
 }
