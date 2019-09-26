@@ -17,16 +17,16 @@ const PROP = ['POPULACAO','AMOSTRA'], TIPO = ['NOMINAL','ORDINAL'];
 var arr = ['EF','EF','PG','EF','EF','ES','PG','EM','PG','EM','EM',
             'ES','ES','EM','EM','ES','EF','EM','PG','ES','ES',
             'EM','EF','EM','EM','PG','ES','PG','ES','ES'];
-// var arr2 = ['rosa','amarela','rosa','azul','rosa','branca','preta',
-//             'preta','rosa','branca','rosa','preta','branca','preta',
-//             'rosa','amarela','rosa','branca','branca','azul','rosa','amarela',
-//             'branca','branca','branca','branca','azul','branca','branca','azul'];
+var arr2 = ['rosa','amarela','rosa','azul','rosa','branca','preta',
+            'preta','rosa','branca','rosa','preta','branca','preta',
+            'rosa','amarela','rosa','branca','branca','azul','rosa','amarela',
+            'branca','branca','branca','branca','azul','branca','branca','azul'];
 
 
-// var arr3 = [230,232,244,245,248,
-//             280,281,284,289,292,
-//             308,309,309,310,311,
-//             333,335,335,337,337];
+var arr3 = [230,232,244,245,248,
+            280,281,284,289,292,
+            308,309,309,310,311,
+            333,335,335,337,337];
 
 var arr4 = [2,3,1,1,2,1,2,1,2,5,5,1,2,3,1,2,2,3,1,2];
 
@@ -34,7 +34,7 @@ var arr4 = [2,3,1,1,2,1,2,1,2,5,5,1,2,3,1,2,2,3,1,2];
 function quali_nominal_ordinal(prop,tipo,arr){
 
     //Variaveis auxiliares//;
-    var  quali_names = [],
+    var quali_names = [],
         quali_fi = [],
         quali_fr = [], 
         quali_fac= [],
@@ -85,6 +85,8 @@ function quali_nominal_ordinal(prop,tipo,arr){
         2 - FR %
         3 - FAC
         4 - FAC %
+        5 - Tamanho do Array
+
     */
     //Montando o array de retorno//
     quali_struct_tb[0] = quali_names;
@@ -92,12 +94,13 @@ function quali_nominal_ordinal(prop,tipo,arr){
     quali_struct_tb[2] = quali_fr;
     quali_struct_tb[3] = quali_fac;
     quali_struct_tb[4] = quali_fac_percent;
+    quali_struct_tb[5] = [tot];
 
     //cálculo da moda
     var moda = quali_fi[0];
     for (var i=0;i<tot;i++){
         if (quali_fi[i+1]>quali_fi[i]){
-            moda = quali_fi[i+1]
+            moda = quali_fi[i+1];
         }
     }
 
@@ -122,7 +125,7 @@ function quali_nominal_ordinal(prop,tipo,arr){
     //Retorno dos valores tratados//
     return quali_struct_tb;
     
-};
+}
 
 function quanti_continua(prop,arr){
 
@@ -133,6 +136,7 @@ function quanti_continua(prop,arr){
         quanti_fr = [], 
         quanti_fac= [],
         quanti_fac_percent = [],
+        pontos_medios = [],
         cont=0, sum=0, sum2=0, sum3=0, tot = arr.length, quanti_struct_tb = [],
         at=0, max=0, min=0, k=0, ic=0, aux=0;
     
@@ -198,12 +202,19 @@ function quanti_continua(prop,arr){
             quanti_fac_percent.push(Number(sum3));
         }
 
+        //Monta os pontos médios de cada intervalo//
+        for(var i=0; i<=k-1; i++){  
+            pontos_medios[i] = Math.floor((quanti_names[i]+quanti_names[i+1] ) / 2);  
+        }
+
         /*Array contendo os elementos calculados acima, legenda abaixo:
         0 - Elementos (Nomes das Variaveis Pesquisadas) 
         1 - FI 
         2 - FR %
         3 - FAC
         4 - FAC %
+        5 - Tamanho do Array
+        6 - Pontos médios de cada intervalo soma de um + outro / por 2
         */
 
         //Monta o Array de Retorno//
@@ -212,9 +223,11 @@ function quanti_continua(prop,arr){
         quanti_struct_tb[2] = quanti_fr;
         quanti_struct_tb[3] = quanti_fac;
         quanti_struct_tb[4] = quanti_fac_percent;
+        quanti_struct_tb[5] = [tot];
+        quanti_struct_tb[6] = pontos_medios;
 
         return quanti_struct_tb;
-};
+}
 
 
 function quanti_discreta(prop,arr){
@@ -270,6 +283,7 @@ function quanti_discreta(prop,arr){
         2 - FR %
         3 - FAC
         4 - FAC %
+        5 - Tamanhao do Array
     */
 
     //Monta o Array de Retorno//
@@ -278,6 +292,7 @@ function quanti_discreta(prop,arr){
     quanti_struct_tb[2] = quanti_fr;
     quanti_struct_tb[3] = quanti_fac;
     quanti_struct_tb[4] = quanti_fac_percent;
+    quanti_struct_tb[5] = [tot]
 
     return quanti_struct_tb;
 }
@@ -288,7 +303,7 @@ function quanti_discreta(prop,arr){
 // console.log(quali_nominal_ordinal(PROP[0],TIPO[0],arr));
 // console.log(quali_nominal_ordinal(PROP[0],TIPO[0],arr)); 
 // console.log(quali_nominal_ordinal(PROP[0],TIPO[1],arr2));
-// console.log(quanti_continua(PROP[0],arr3));
+console.log(quanti_continua(PROP[0],arr3));
 // console.log(quanti_discreta('AMOSTRA',arr4));
 
 
