@@ -1,12 +1,12 @@
 
-
-//Entrada dos dados//
+var arr_ent = [];
+console.log(arr_ent)
+// Funções Prontas //
 function entrada(){
-    var arr_ent = [];
-    var numString = document.getElementById("numString").value;
-    arr_ent.push(numString.split(';'));
-    document.getElementById("valores").innerHTML = arr_ent;
-    return entrada;
+      var numString = document.getElementById("numString").value;
+      arr_ent.push(numString.split(';'));
+      document.getElementById("valores").innerHTML = arr_ent;
+      return arr_ent;
 }
  
 // //constantes para alimentar as funções, conforme o que o usuário escolher//
@@ -98,31 +98,10 @@ function quali_nominal_ordinal(prop,tipo,arr){
     quali_struct_tb[5] = [tot];
     quali_struct_tb[6] = arr;
 
-    //cálculo da moda
-    var moda = quali_fi[0];
-    for (var i=0;i<tot;i++){
-        if (quali_fi[i+1]>quali_fi[i]){
-            moda = quali_fi[i+1];
-        }
-    }
-
-    //cálculo da mediana
-    var med = []
-    if (sum%2==0){
-        var pos1 = sum/2;
-        var pos2 = pos1 + 1;
-        med.push(arr[pos1],arr[pos2]);
-        console.log("A mediana é " + med + " nas posições "+ pos1 + " e " + pos2);
-    }else{
-        var pos1 = sum/2;
-        med.push(arr[pos1]);
-        console.log("A mediana é " + med + " na posição " + pos1);
-    };
-    
-
-    
-    //exibição de resultados
-    console.log("A moda é " + moda);
+    //chamadas 
+    moda(quali_struct_tb);
+    mediana(quali_struct_tb);
+    //exibe o resultado
     console.log(quali_struct_tb);    
     //Retorno dos valores tratados//
     return quali_struct_tb;
@@ -216,8 +195,8 @@ function quanti_continua(prop,arr){
         3 - FAC
         4 - FAC %
         5 - Tamanho do Array
-        6 - Pontos médios de cada intervalo soma de um + outro / por 2
-        7 - Array inteiro ordenado
+        6 - Array inteiro ordenado 
+        7 - Pontos médios de cada intervalo soma de um + outro / por 2
         */
 
         //Monta o Array de Retorno//
@@ -227,8 +206,11 @@ function quanti_continua(prop,arr){
         quanti_struct_tb[3] = quanti_fac;
         quanti_struct_tb[4] = quanti_fac_percent;
         quanti_struct_tb[5] = [tot];
-        quanti_struct_tb[6] = pontos_medios;
-        quanti_struct_tb[7] = arr;
+        quanti_struct_tb[6] = arr;
+        quanti_struct_tb[7] = pontos_medios;
+
+        //chama as funções
+        mediana_cont(quanti_struct_tb);
 
         return quanti_struct_tb;
 }
@@ -306,10 +288,10 @@ function quanti_discreta(prop,arr){
 
 
 //Chamadas de Teste//
-// console.log(quali_nominal_ordinal(PROP[0],TIPO[0],arr));
+//console.log(quali_nominal_ordinal(PROP[0],TIPO[0],arr));
 // console.log(quali_nominal_ordinal(PROP[0],TIPO[0],arr)); 
 // console.log(quali_nominal_ordinal(PROP[0],TIPO[1],arr2));
-// console.log(quanti_continua(PROP[0],arr3));
+console.log(quanti_continua(PROP[0],arr3));
 // console.log(quanti_discreta('AMOSTRA',arr4));
 
 
@@ -336,7 +318,8 @@ function trigger(id){
         document.getElementById('trigger').style.display = 'block'; 
     }
 }
-    
+
+//CONSTRUÇÃO DA TABELA     
 function table_builder(arr){
     var tabela = '';    
 
@@ -366,4 +349,71 @@ function table_builder_continua(arr){
 // table_builder(quanti_discreta('AMOSTRA',arr4));
 // table_builder(quali_nominal_ordinal(PROP[0],TIPO[0],arr));
 // table_builder(quali_nominal_ordinal(PROP[0],TIPO[1],arr2));
-//table_builder_continua(quanti_continua(PROP[0],arr3));
+table_builder_continua(quanti_continua(PROP[0],arr3));
+
+function moda(matriz){
+/*   Cálculo da Moda - Legenda da matriz de origem:
+    1 - FI 
+    5 - Tamanho do Array */
+    var moda = matriz[1][0];
+    for (i=0;i<matriz[5];i++){
+        if (matriz[1][i+1]>matriz[1][i]){
+            moda = matriz[1][i+1];
+        };
+    };
+    console.log("A moda é " + moda);
+}
+
+function mediana(matriz){
+/*  Cálculo da mediana para as funções qualitativas e quantitativa discreta
+    5 - Tamanhao do Array
+    6 - Array completo ordenado 
+*/
+    var med = []
+    if (matriz[5]%2==0){
+        var pos1 = matriz[5]/2;
+        var pos2 = pos1 + 1;
+        med.push(matriz[6][pos1],matriz[6][pos2]);
+        console.log("A mediana é " + med + " nas posições "+ pos1 + " e " + pos2);
+    }
+    else {
+        var pos1 = matriz[5]/2;
+        med.push(matriz[6][pos1]);
+        console.log("A mediana é " + med + " na posição " + pos1);
+    };
+};
+
+function mediana_cont(matriz){
+/*Array contendo os elementos calculados acima, legenda abaixo:
+    0 - Elementos (Nomes das Variaveis Pesquisadas) 
+    1 - FI 
+    2 - FR %
+    3 - FAC
+    4 - FAC %
+    5 - Tamanho do Array
+    6 - Array inteiro ordenado 
+    7 - Pontos médios de cada intervalo soma de um + outro / por 2
+*/
+    var pos = matriz[5]/2;
+    var I = 0;
+    var linha = 0;
+    var fac_ant = 0;
+    var fi_da_med = 0;
+    var md = 0;
+    for (var i=0;i<matriz[3][i].length;i++){
+        if (pos>matriz[3]){
+            linha = i;
+        }
+    }
+    I = matriz[0][linha];
+    fac_ant = matriz[3][linha-1];
+    fi_da_med = matriz[1][linha];
+    h = matriz[0][1] - matriz[0][0];
+    md = I + ((pos - fac_ant)/fi_da_med)*h;
+    console.log("pos é " + pos);
+    console.log("I é " + I);
+    console.log("fac_ant: " + fac_ant);
+    console.log("fi_da_med" + fi_da_med);
+    console.log("linha é " + linha);
+    console.log("A mediana arredondada é " + Math.round(md));
+};
