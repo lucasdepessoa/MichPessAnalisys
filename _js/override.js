@@ -356,8 +356,6 @@ function table_builder_continua(arr){
 }
 //--//
 
-<<<<<<< HEAD
-=======
 
 
 //TESTES - CONSOLE.LOG//
@@ -367,23 +365,9 @@ function table_builder_continua(arr){
 // console.log(quali_nominal_ordinal(PROP[0],TIPO[1],arr2));
 //console.log(quanti_continua(PROP[0],arr5));
 // console.log(quanti_discreta('AMOSTRA',arr4));
->>>>>>> c7e7073ddcf32ce49a27cb31399c24dc6885ec96
 
 //--//
 
-<<<<<<< HEAD
-//TESTES - CONSOLE.LOG//
-
-//console.log(quali_nominal_ordinal(PROP[0],TIPO[0],arr));
-// console.log(quali_nominal_ordinal(PROP[0],TIPO[0],arr)); 
-// console.log(quali_nominal_ordinal(PROP[0],TIPO[1],arr2));
-console.log(quanti_continua(PROP[0],arr5));
-//console.log(quanti_discreta('AMOSTRA',arr4));
-
-//--//
-
-=======
->>>>>>> c7e7073ddcf32ce49a27cb31399c24dc6885ec96
 
 
 //TESTES - TABULAÇÃO //
@@ -391,11 +375,7 @@ console.log(quanti_continua(PROP[0],arr5));
 // table_builder(quanti_discreta('AMOSTRA',arr4));
 // table_builder(quali_nominal_ordinal(PROP[0],TIPO[0],arr));
 // table_builder(quali_nominal_ordinal(PROP[0],TIPO[1],arr2));
-<<<<<<< HEAD
-   table_builder_continua(quanti_continua(PROP[0],arr5));
-=======
 //table_builder_continua(quanti_continua(PROP[0],arr5));
->>>>>>> c7e7073ddcf32ce49a27cb31399c24dc6885ec96
 //--//
 
 
@@ -436,15 +416,11 @@ function mediana(matriz){
 };
 
 
-<<<<<<< HEAD
-//function mediana_cont(matriz){
-=======
 
 
 
 
 function mediana_cont(matriz){
->>>>>>> c7e7073ddcf32ce49a27cb31399c24dc6885ec96
 /*Array contendo os elementos calculados acima, legenda abaixo:
     0 - Elementos (Nomes das Variaveis Pesquisadas) 
     1 - FI 
@@ -482,15 +458,6 @@ function mediana_cont(matriz){
 //     console.log("A mediana arredondada é " + Math.round(md));
 };
 
-<<<<<<< HEAD
-mediana_cont(quanti_continua(PROP[0],arr5));
-
-function separatriz(matriz, num){
-    matriz[6]
-}
-
-
-=======
 
 mediana_cont(quanti_continua(PROP[0],arr5));
 
@@ -499,4 +466,3 @@ mediana_cont(quanti_continua(PROP[0],arr5));
 
 //--//
 
->>>>>>> c7e7073ddcf32ce49a27cb31399c24dc6885ec96
