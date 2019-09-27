@@ -16,6 +16,8 @@ const PROP = ['POPULACAO','AMOSTRA'], TIPO = ['NOMINAL','ORDINAL'];
 var arr = ['EF','EF','PG','EF','EF','ES','PG','EM','PG','EM','EM',
             'ES','ES','EM','EM','ES','EF','EM','PG','ES','ES',
             'EM','EF','EM','EM','PG','ES','PG','ES','ES'];
+
+
 var arr2 = ['rosa','amarela','rosa','azul','rosa','branca','preta',
             'preta','rosa','branca','rosa','preta','branca','preta',
             'rosa','amarela','rosa','branca','branca','azul','rosa','amarela',
@@ -200,6 +202,7 @@ function quanti_continua(prop,arr){
         5 - Tamanho do Array
         6 - Array inteiro ordenado 
         7 - Pontos médios de cada intervalo soma de um + outro / por 2
+        8 - Valor dos intervalos
         */
 
         //Monta o Array de Retorno//
@@ -211,6 +214,7 @@ function quanti_continua(prop,arr){
         quanti_struct_tb[5] = [tot];
         quanti_struct_tb[6] = arr;
         quanti_struct_tb[7] = pontos_medios;
+        quanti_struct_tb[8] = ic;
 
         //chama as funções
         //mediana_cont(quanti_struct_tb);
@@ -348,7 +352,7 @@ function table_builder_continua(arr){
 //console.log(quali_nominal_ordinal(PROP[0],TIPO[0],arr));
 // console.log(quali_nominal_ordinal(PROP[0],TIPO[0],arr)); 
 // console.log(quali_nominal_ordinal(PROP[0],TIPO[1],arr2));
-//console.log(quanti_continua(PROP[0],arr5));
+console.log(quanti_continua(PROP[0],arr5));
 // console.log(quanti_discreta('AMOSTRA',arr4));
 
 //--//
@@ -407,7 +411,7 @@ function mediana(matriz){
 
 function mediana_cont(matriz){
 /*Array contendo os elementos calculados acima, legenda abaixo:
-    0 - Elementos (Nomes das Variaveis Pesquisadas) 
+    0 - Elementos (Invervalos no caso da continua) 
     1 - FI 
     2 - FR %
     3 - FAC
@@ -415,36 +419,38 @@ function mediana_cont(matriz){
     5 - Tamanho do Array
     6 - Array inteiro ordenado 
     7 - Pontos médios de cada intervalo soma de um + outro / por 2
+    8 - Valor do intervalo da continua
 */  
     //variaveis auxiliares
+    var posicao=0, media = 0, num = 0, linha = 0, I = 0, fac_ant = 0, fi_da_med = 0, md = 0;
 
+    //Guarda a posição a ser encontrada//
+    posicao = Math.round(matriz[6].length/2);
+    
+    //Verifica a linha que vai cair a posição procurada//
+    for(var i=0; i<matriz[3].length; i++){
+        if(matriz[3][i] <= posicao){
+            linha++;
+        }    
+    }
 
-//     var pos = matriz[5]/2;
-//     var I = 0;
-//     var linha = 0;
-//     var fac_ant = 0;
-//     var fi_da_med = 0;
-//     var md = 0;
-//     for (var i=0;i<matriz[3][i].length;i++){
-//         if (pos>matriz[3]){
-//             linha = i;
-//         }
-//     }
-//     I = matriz[0][linha];
-//     fac_ant = matriz[3][linha-1];
-//     fi_da_med = matriz[1][linha];
-//     h = matriz[0][1] - matriz[0][0];
-//     md = I + ((pos - fac_ant)/fi_da_med)*h;
-//     console.log("pos é " + pos);
-//     console.log("I é " + I);
-//     console.log("fac_ant: " + fac_ant);
-//     console.log("fi_da_med" + fi_da_med);
-//     console.log("linha é " + linha);
-//     console.log("A mediana arredondada é " + Math.round(md));
+    //Pega o primeiro valor do intervalo da linha correspondente//
+    I = matriz[0][linha-1];
+    
+    //Pega o fac anterior ao da linha correspondente a posição procurada//
+    fac_ant = matriz[3][linha-2];
+
+    //Pega o FI da linha correspondente//
+    fi_da_med = matriz[1][linha-1];
+
+    //Captura o valor da mediana//
+    md = Number((I + ((posicao - fac_ant)/fi_da_med) * matriz[8]).toFixed(2));
+    
+    return md;
 };
 
-
-mediana_cont(quanti_continua(PROP[0],arr5));
+//Teste de mediana//
+console.log(mediana_cont(quanti_continua(PROP[0],arr5)));
 
 
 
