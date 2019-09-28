@@ -1,18 +1,15 @@
-
-var arr_ent = [];
 // Funções Prontas //
 function entrada(){
-      var numString = document.getElementById("numString").value;
-      arr_ent.push(numString.split(';'));
-      document.getElementById("valores").innerHTML = arr_ent;
-      return arr_ent;
+    var numString = document.getElementById("numString").value;
+    arr_ent.push(numString.split(';'));
+    document.getElementById("valores").innerHTML = arr_ent;
+    return arr_ent;
 }
  
-// //constantes para alimentar as funções, conforme o que o usuário escolher//
+//constantes para alimentar as funcoes, conforme o que o usuario escolher//
 const PROP = ['POPULACAO','AMOSTRA'], TIPO = ['NOMINAL','ORDINAL'];
 
 
-// //Arrays de teste//
 var arr = ['EF','EF','PG','EF','EF','ES','PG','EM','PG','EM','EM',
             'ES','ES','EM','EM','ES','EF','EM','PG','ES','ES',
             'EM','EF','EM','EM','PG','ES','PG','ES','ES'];
@@ -23,42 +20,34 @@ var arr2 = ['rosa','amarela','rosa','azul','rosa','branca','preta',
             'rosa','amarela','rosa','branca','branca','azul','rosa','amarela',
             'branca','branca','branca','branca','azul','branca','branca','azul'];
 
-
-var arr3 = [230,232,244,245,248,
-            280,281,284,289,292,
-            308,309,309,310,311,
-            333,335,335,337,337];
+var arr3 = [230,232,244,245,248,280,281,284,289,292,308,309,309,310,311,333,335,335,337,337];
 
 var arr4 = [2,3,1,1,2,1,2,1,2,5,5,1,2,3,1,2,2,3,1,2];
 
-
-var arr5 = [40,41,42,45,54,55,59,60,61,62,64,65,65,66,67,68,69,70,71,71,
-            80,81,83,84,85,86,87,87,88,89,90,91,93,97,98,98,99,100,101,105];
+var arr5 = [40,41,42,45,54,55,59,60,61,62,64,65,65,66,67,68,69,70,71,71,80,81,83,84,85,86,87,87,88,89,90,91,93,97,98,98,99,100,101,105];
 
 // FUNÇÕES PRINCIPAIS DE ESTATISTICA //
+
+/* Função genérica - Variável Qualitativa Nominal e Ordinal */
 function quali_nominal_ordinal(prop,tipo,arr){
 
-    //Variaveis auxiliares//;
-    var quali_names = [],
-        quali_fi = [],
-        quali_fr = [], 
-        quali_fac= [],
-        quali_fac_percent = [],
-        cont=0, sum=0, sum2=0, tot = arr.length, quali_struct_tb = [];
+    //variaveis auxiliares//
+    var quali_names = [], quali_fi = [], quali_fr = [], quali_fac= [],
+    quali_fac_percent = [],cont=0, sum=0, sum2=0, tot = arr.length, quali_struct_tb = [];
     
 
-    //Ordena o array caso a variavel seja do tipo NOMINAL (ordem alfabética)//
+    //ordena o array caso a variavel seja do tipo NOMINAL (ordem alfabetica)//
     if(tipo==='NOMINAL'){
-        //Ordena o array em ordem alfabética (por peso UNICODE)//
+        //ordena o array em ordem alfabética (por peso UNICODE)//
         arr.sort();
     }
 
-    //Captura os elementos repetidos//
+    //recupera os indices que se repetem//
     quali_names = arr.filter(function(valor,indice,arr){
         return arr.indexOf(valor)===indice;
     })
 
-    //Calculando as quantidades//
+    //calcula a quantidade de cada indice//
     for(var i=0; i<quali_names.length; i++){
         for(var j=0; j<tot; j++){
             if(quali_names[i]==arr[j]){
@@ -69,7 +58,7 @@ function quali_nominal_ordinal(prop,tipo,arr){
         cont = 0;
     }
 
-    //Calcula os valores//
+    //calcula os valores restantes//
     for(x in quali_fi){
     
         //FR % - Frequencia Proporcional Relativa
@@ -84,7 +73,7 @@ function quali_nominal_ordinal(prop,tipo,arr){
         quali_fac_percent.push(sum2);
     }
     
-    /*Array contendo os elementos calculados acima, legenda abaixo:
+    /* LEGENDA - array de retorno :
         0 - Elementos (Nomes das Variaveis Pesquisadas) 
         1 - FI 
         2 - FR %
@@ -92,9 +81,9 @@ function quali_nominal_ordinal(prop,tipo,arr){
         4 - FAC %
         5 - Tamanho do Array
         6 - Array inteiro ordenado//
-
     */
-    //Montando o array de retorno//
+
+    //montando o array de retorno//
     quali_struct_tb[0] = quali_names;
     quali_struct_tb[1] = quali_fi;
     quali_struct_tb[2] = quali_fr;
@@ -103,150 +92,35 @@ function quali_nominal_ordinal(prop,tipo,arr){
     quali_struct_tb[5] = [tot];
     quali_struct_tb[6] = arr;
 
-    //chamadas 
+    //funcoes complementares 
     moda(quali_struct_tb);
     mediana(quali_struct_tb);
-    //exibe o resultado
-    //console.log(quali_struct_tb);    
-    //Retorno dos valores tratados//
+    
+    //retorna o array com os valores prontos//
     return quali_struct_tb;
-    
 }
 
-function quanti_continua(prop,arr){
-
-    //Variaveis Auxiliares//
-    var aux = [],
-        quanti_names = [],
-        quanti_fi = [],
-        quanti_fr = [], 
-        quanti_fac= [],
-        quanti_fac_percent = [],
-        pontos_medios = [],
-        cont=0, sum=0, sum2=0, sum3=0, tot = arr.length, quanti_struct_tb = [],
-        at=0, max=0, min=0, k=0, ic=0, aux=0;
-    
-        //Ordenando o Array//
-        arr.sort(function(a,b){
-            return a-b;
-        });
-
-        //Guarda uma copia do array original ordenado//
-        aux = [...arr];
-
-
-        //Amplitude//
-        max = Math.max(...arr);
-        min = Math.min(...arr);
-        at = (max-min)+1;
-
-        //Calcula a quantidade de linhas//
-        k = (Math.sqrt(tot).toFixed());
-        while(at % k != 0){
-            k++;
-        }
-
-        //Calcula o Intervalo//
-        ic = at/k;
-        sum = aux[0];
-
-        //Monta os intervalos//
-        for(var i=0; i<k; i++){
-            for(var j=0; j<2; j++){
-                quanti_names[i] = sum;        
-            }
-            sum += ic;
-        }
-
-        //Adiciona o numero final + ic//
-        quanti_names.push(quanti_names[k-1]+ic);
-
-
-        // Monta FI ; FR% ; FAC ; FAC% //
-        for(var i=0; i<k; i++){
-            for(var j=0; j<tot; j++){
-
-                //Monta a variavel FI//
-                if(aux[j]>=quanti_names[i] && aux[j]<quanti_names[i+1]){
-                    cont++;
-                }
-            }
-
-            //Monta a variavel FI//
-            quanti_fi[i] = cont;
-            cont = 0;
-
-            //Monta a variavel FR//
-            quanti_fr.push(Number(((quanti_fi[i]*100)/tot).toFixed()));
-            
-            //Monta a variavel FAC//
-            sum2 += quanti_fi[i];
-            quanti_fac[i] = sum2;
-
-            //Monta a variavel FAC % //
-            sum3 += quanti_fr[i];
-            quanti_fac_percent.push(Number(sum3));
-        }
-
-        //Monta os pontos médios de cada intervalo//
-        for(var i=0; i<=k-1; i++){  
-            pontos_medios[i] = Number(((quanti_names[i]+quanti_names[i+1] ) / 2).toFixed(2));  
-        }
-
-        /*Array contendo os elementos calculados acima, legenda abaixo:
-        0 - Elementos (Nomes das Variaveis Pesquisadas) 
-        1 - FI 
-        2 - FR %
-        3 - FAC
-        4 - FAC %
-        5 - Tamanho do Array
-        6 - Array inteiro ordenado 
-        7 - Pontos médios de cada intervalo soma de um + outro / por 2
-        8 - Valor dos intervalos
-        */
-
-        //Monta o Array de Retorno//
-        quanti_struct_tb[0] = quanti_names;
-        quanti_struct_tb[1] = quanti_fi;
-        quanti_struct_tb[2] = quanti_fr;
-        quanti_struct_tb[3] = quanti_fac;
-        quanti_struct_tb[4] = quanti_fac_percent;
-        quanti_struct_tb[5] = [tot];
-        quanti_struct_tb[6] = arr;
-        quanti_struct_tb[7] = pontos_medios;
-        quanti_struct_tb[8] = ic;
-
-        //chama as funções
-        //mediana_cont(quanti_struct_tb);
-
-        return quanti_struct_tb;
-}
-
-
+/* Função específica - Variável Quantitativa Discreta */
 function quanti_discreta(prop,arr){
-    //variaveis
-    var aux = [],
-        quanti_names = [],
-        quanti_fi = [],
-        quanti_fr = [], 
-        quanti_fac= [],
-        quanti_fac_percent = [],
-        cont=0, sum=0, sum2=0, tot = arr.length, quanti_struct_tb = [], aux=0; 
     
-    //Ordena o array//
+    //variaveis auxiliares//
+    var aux = [], quanti_names = [], quanti_fi = [], quanti_fr = [], quanti_fac= [], aux=0, 
+    cont=0, sum=0, sum2=0, tot = arr.length, quanti_struct_tb = [],  quanti_fac_percent = [];
+    
+    //ordena o array com base no peso unicode em ordem crescente (menor pro maior)//
     arr.sort(function(a,b){
         return a-b;
     });
     
-    //Guarda Cópias//
+    //faz uma copia do array original para guardar os valores originais//
     aux = [...arr];
 
-    //Pega os elementos que se repetem//   
+    //identifica os indices que se repetem//   
     quanti_names = aux.filter(function(valor,indice,arr){
         return arr.indexOf(valor)===indice;
     })
 
-    //Calcula a quantidade de repetições//
+    //calcula a quantidade de repeticoes dos indices//
     for(var i=0; i<quanti_names.length; i++){
         for(var j=0; j<tot; j++){
             if(quanti_names[i]==aux[j]){
@@ -257,6 +131,7 @@ function quanti_discreta(prop,arr){
         cont = 0;
     }
 
+    //calcula o restante dos valores//
     for(var x in quanti_fi){
 
         // FR % //
@@ -271,14 +146,14 @@ function quanti_discreta(prop,arr){
         quanti_fac_percent.push(sum2);
     }
 
-    /*Array contendo os elementos calculados acima, legenda abaixo:
-        0 - Elementos (Nomes das Variaveis Pesquisadas) 
+    /* LEGENDA - array de retorno :
+        0 - Elementos (quantidades calculadas) 
         1 - FI 
         2 - FR %
         3 - FAC
         4 - FAC %
-        5 - Tamanhao do Array
-        6 - Array completo ordenado 
+        5 - .length do array original
+        6 - array inteiro ordenado
     */
 
     //Monta o Array de Retorno//
@@ -290,13 +165,124 @@ function quanti_discreta(prop,arr){
     quanti_struct_tb[5] = [tot]
     quanti_struct_tb[6] = arr;
 
+    //funcoes complementares//
+
+    //retorno do array com os dados prontos//
     return quanti_struct_tb;
 }
+
+/* Função específica - Variável Quantitativa Continua */
+function quanti_continua(prop,arr){
+
+    //variaveis auxiliares//
+    var aux = [], quanti_names = [], quanti_fi = [], quanti_fr = [], quanti_fac= [], 
+    quanti_fac_percent = [], pontos_medios = [], cont=0, sum=0, sum2=0, sum3=0, 
+    tot = arr.length, quanti_struct_tb = [], at=0, max=0, min=0, k=0, ic=0, aux=0;
+    
+    //ordena o array com base no peso unicode e ordem crescente (menor pro maior)//
+    arr.sort(function(a,b){
+        return a-b;
+    });
+
+    //faz uma copia do array original ja ordernado, para guardar o array original//
+    aux = [...arr];
+
+
+    //calculo de amplitude//
+    max = Math.max(...arr);
+    min = Math.min(...arr);
+    at = (max-min)+1;
+
+    //calcula a quantidade de linhas que a tabela tera//
+    k = (Math.sqrt(tot).toFixed());
+    while(at % k != 0){
+        k++;
+    }
+
+    //calcula o valor dos intervalos//
+    ic = at/k;
+    sum = aux[0];
+
+    //monta o vetor de intervalos//
+    for(var i=0; i<k; i++){
+        for(var j=0; j<2; j++){
+            quanti_names[i] = sum;        
+        }
+        sum += ic;
+    }
+
+    //adiciona o numero final no array + ic (o ultimo numero sempre tem +1)//
+    quanti_names.push(quanti_names[k-1]+ic);
+
+
+    //calcula os valores restantes//
+    for(var i=0; i<k; i++){
+        for(var j=0; j<tot; j++){
+
+            //contador FI//
+            if(aux[j]>=quanti_names[i] && aux[j]<quanti_names[i+1]){
+                cont++;
+            }
+        }
+
+        //registra o FI//
+        quanti_fi[i] = cont;
+        cont = 0;
+
+        //registra o FR - frequencia relativa proporcional//
+        quanti_fr.push(Number(((quanti_fi[i]*100)/tot).toFixed()));
+        
+        //registra a FAC - frequencia acumulativa//
+        sum2 += quanti_fi[i];
+        quanti_fac[i] = sum2;
+
+        //registra a FAC % - frequencia acumulativa proporcinal//
+        sum3 += quanti_fr[i];
+        quanti_fac_percent.push(Number(sum3));
+    }
+
+    //calcula a media entre cada intervalo e registra um vetor de pontos medios//
+    for(var i=0; i<=k-1; i++){  
+        pontos_medios[i] = Number(((quanti_names[i]+quanti_names[i+1] ) / 2).toFixed(2));  
+    }
+
+    /* LEGENDA - array de retorno:
+    0 - elementos (intervalos registrados) 
+    1 - FI 
+    2 - FR %
+    3 - FAC
+    4 - FAC %
+    5 - .length do array original
+    6 - array original ordenado 
+    7 - vetor de pontos medios (intervalos)
+    8 - vetor de intervalos
+    */
+
+    //Monta o Array de Retorno//
+    quanti_struct_tb[0] = quanti_names;
+    quanti_struct_tb[1] = quanti_fi;
+    quanti_struct_tb[2] = quanti_fr;
+    quanti_struct_tb[3] = quanti_fac;
+    quanti_struct_tb[4] = quanti_fac_percent;
+    quanti_struct_tb[5] = [tot];
+    quanti_struct_tb[6] = arr;
+    quanti_struct_tb[7] = pontos_medios;
+    quanti_struct_tb[8] = ic;
+
+    //funcoes complementares//
+    //mediana_cont(quanti_struct_tb);
+
+    //retorna o array com os valores prontos//
+    return quanti_struct_tb;
+}
+
 //##################################//
 
 
 
-//Funções de Tabulação//
+//funcoes de tabulação//
+
+//funcao gatilho - menu dropdown//
 function trigger(id){
 
     var obj =  document.getElementById('varPes');
@@ -321,6 +307,8 @@ function trigger(id){
     }
 }
 
+
+//funcao de tabulacao generica - variavel nominal, ordinal e quantitativa discreta//
 function table_builder(arr){
     var tabela = '';    
 
@@ -330,10 +318,13 @@ function table_builder(arr){
         tabela += '</tr>';
         
     }
+
     document.getElementById('tabul').innerHTML += tabela; 
 }
 
+//funcao de tabulacao específica - variavel continua//
 function table_builder_continua(arr){
+
     var tabela = '';
 
     for(var i=0; i<arr[1].length; i++){
@@ -372,25 +363,33 @@ console.log(quanti_continua(PROP[0],arr5));
 
 //FUNÇÕES COMPLEMENTARES - MODA, MEDIANA, DESVIO PADRÃO E SEPARATRIZ//
 
+/* Função de moda genérica */
 function moda(matriz){
-/*   Cálculo da Moda - Legenda da matriz de origem:
-    1 - FI 
-    5 - Tamanho do Array */
+    /* Cálculo da Moda - Legenda da matriz de origem:
+        1 - FI 
+        5 - Tamanho do Array 
+    */
+
     var moda = matriz[1][0];
+   
     for (i=0;i<matriz[5];i++){
         if (matriz[1][i+1]>matriz[1][i]){
             moda = matriz[1][i+1];
         };
     };
-    console.log("A moda é " + moda);
+
+    return moda;
 }
 
+/* Função de mediana genérica */
 function mediana(matriz){
-/*  Cálculo da mediana para as funções qualitativas e quantitativa discreta
-    5 - Tamanhao do Array
-    6 - Array completo ordenado 
-*/
-    var med = []
+    /* Cálculo da mediana para as funções qualitativas e quantitativa discreta
+        5 - Tamanhao do Array
+        6 - Array completo ordenado 
+    */
+    
+    var med = [];
+    
     if (matriz[5]%2==0){
         var pos1 = matriz[5]/2;
         var pos2 = pos1 + 1;
@@ -408,7 +407,7 @@ function mediana(matriz){
 
 
 
-
+/* Função de mediana específica - variável continua */
 function mediana_cont(matriz){
 /*Array contendo os elementos calculados acima, legenda abaixo:
     0 - Elementos (Invervalos no caso da continua) 
@@ -424,28 +423,29 @@ function mediana_cont(matriz){
     //variaveis auxiliares
     var posicao=0, media = 0, num = 0, linha = 0, I = 0, fac_ant = 0, fi_da_med = 0, md = 0;
 
-    //Guarda a posição a ser encontrada//
+    //guarda a posicao a ser encontrada//
     posicao = Math.round(matriz[6].length/2);
     
-    //Verifica a linha que vai cair a posição procurada//
+    //verifica a quantidades de linha ate a posicao encontrada//
     for(var i=0; i<matriz[3].length; i++){
         if(matriz[3][i] <= posicao){
             linha++;
         }    
     }
 
-    //Pega o primeiro valor do intervalo da linha correspondente//
+    //pega o primeiro valor da linha correspondente//
     I = matriz[0][linha-1];
     
-    //Pega o fac anterior ao da linha correspondente a posição procurada//
+    //pega o fac anterior ao da linha correspondente a posicao procurada//
     fac_ant = matriz[3][linha-2];
 
-    //Pega o FI da linha correspondente//
+    //pega o FI da linha correspondente//
     fi_da_med = matriz[1][linha-1];
 
-    //Captura o valor da mediana//
+    //captura o valor da mediana//
     md = Number((I + ((posicao - fac_ant)/fi_da_med) * matriz[8]).toFixed(2));
     
+    //retorna//
     return md;
 };
 
