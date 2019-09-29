@@ -26,6 +26,9 @@ var arr4 = [2,3,1,1,2,1,2,1,2,5,5,1,2,3,1,2,2,3,1,2];
 
 var arr5 = [40,41,42,45,54,55,59,60,61,62,64,65,65,66,67,68,69,70,71,71,80,81,83,84,85,86,87,87,88,89,90,91,93,97,98,98,99,100,101,105];
 
+
+var arr6 = [2,2,2,4,4,4,4,4,5,5,5,5,5,5,5,5,7,7,7,7,7,7,10,10];
+
 // FUNÇÕES PRINCIPAIS DE ESTATISTICA //
 
 /* Função genérica - Variável Qualitativa Nominal e Ordinal */
@@ -93,8 +96,8 @@ function quali_nominal_ordinal(prop,tipo,arr){
     quali_struct_tb[6] = arr;
 
     //funcoes complementares 
-    moda(quali_struct_tb);
-    mediana(quali_struct_tb);
+    //moda(quali_struct_tb);
+    //mediana(quali_struct_tb);
     
     //retorna o array com os valores prontos//
     return quali_struct_tb;
@@ -340,10 +343,10 @@ function table_builder_continua(arr){
 
 //TESTES - CONSOLE.LOG//
 
-//console.log(quali_nominal_ordinal(PROP[0],TIPO[0],arr));
+// console.log(quali_nominal_ordinal(PROP[0],TIPO[0],arr));
 // console.log(quali_nominal_ordinal(PROP[0],TIPO[0],arr)); 
 // console.log(quali_nominal_ordinal(PROP[0],TIPO[1],arr2));
-console.log(quanti_continua(PROP[0],arr5));
+// console.log(quanti_continua(PROP[0],arr5));
 // console.log(quanti_discreta('AMOSTRA',arr4));
 
 //--//
@@ -355,7 +358,7 @@ console.log(quanti_continua(PROP[0],arr5));
 // table_builder(quanti_discreta('AMOSTRA',arr4));
 // table_builder(quali_nominal_ordinal(PROP[0],TIPO[0],arr));
 // table_builder(quali_nominal_ordinal(PROP[0],TIPO[1],arr2));
-//table_builder_continua(quanti_continua(PROP[0],arr5));
+// table_builder_continua(quanti_continua(PROP[0],arr5));
 //--//
 
 
@@ -449,8 +452,46 @@ function mediana_cont(matriz){
     return md;
 };
 
+
+function medida_separatriz(arr,medida,posicao){
+    /*
+        Q - Quartil - 25% 50% 75% 100% (4)
+        K - Quintil - 20% 40% 60% 80% 100% (5)
+        D - Deal - 10% 20% 30% 40% 50% 60% 70% 80% 90% 100% (10)
+        P - Percentil - 1 % 2% .. 100% (100);       
+    */
+
+    //variaveis auxiliares//
+    var medida = Number(medida), posicao = Number(posicao), elemento = [], cont = 0;
+    
+    //identifica a separatriz e guarda o contador adequado//
+    switch(medida){
+        case 4:
+            cont = Math.floor((arr[6].length*25*posicao)/100);
+        break;
+        case 5:
+            cont = Math.floor((arr[6].length*20*posicao)/100);
+        break;
+        case 10:
+            cont = Math.floor((arr[6].length*10*posicao)/100);
+        break;
+        case 100:
+            cont = Math.floor((arr[6].length*posicao)/100);
+        break;
+    }
+    return arr[6][cont];
+}
+
+
 //Teste de mediana//
-console.log(mediana_cont(quanti_continua(PROP[0],arr5)));
+//console.log(mediana_cont(quanti_continua(PROP[0],arr5)));
+
+// Teste de separatriz//
+console.log(medida_separatriz(quanti_discreta('AMOSTRA',arr6),4,1)); //Quartil 1//
+console.log(medida_separatriz(quanti_discreta('AMOSTRA',arr6),4,3)); //Quartil 3//
+console.log(medida_separatriz(quanti_discreta('AMOSTRA',arr6),10,4)); //Deal 4//
+console.log(medida_separatriz(quanti_discreta('AMOSTRA',arr6),5,4)); //Kintil 4//
+console.log(medida_separatriz(quanti_discreta('AMOSTRA',arr6),100,60)); //Percentil 60//
 
 
 
