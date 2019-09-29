@@ -1,13 +1,39 @@
-// Array global //
-var arr_ent = [];
 // Funções Prontas //
 function entrada(){
-      var numString = document.getElementById("numString").value;
-      arr_ent.push(numString.split(';'));
-      document.getElementById("valores").innerHTML = arr_ent;
-      return arr_ent;
+    var arr_ent = [];
+    var numString = document.getElementById("numString").value;
+    //determina se o valor digitado é número ou caractere, a partir disso, monta o array
+    var teste = (numString.split(';').map(parseFloat));
+    if (isNaN(teste[0]) == true){
+        arr_ent = numString.split(';');    
+    }
+    else{
+        arr_ent = numString.split(';').map(parseFloat);
+      }
+    document.getElementById("valores").innerHTML = arr_ent;
+    console.log(arr_ent);
+    return arr_ent;
 }
- 
+function call(){
+//TESTES - CONSOLE.LOG//
+
+//console.log(quali_nominal_ordinal(PROP[0],TIPO[0],entrada()));
+//console.log(quali_nominal_ordinal(PROP[0],TIPO[1],entrada()));
+console.log(quanti_continua(PROP[0],entrada()));
+//console.log(quanti_discreta('AMOSTRA',entrada()));
+
+//--//
+
+//TESTES - TABULAÇÃO //
+
+//table_builder(quanti_discreta('AMOSTRA',entrada()));
+//table_builder(quali_nominal_ordinal(PROP[0],TIPO[0],entrada()));
+//table_builder(quali_nominal_ordinal(PROP[0],TIPO[1],entrada()));
+table_builder_continua(quanti_continua(PROP[0],entrada()));
+//--//
+
+}
+
 // constantes para alimentar as funções, conforme o que o usuário escolher//
 const PROP = ['POPULACAO','AMOSTRA'], TIPO = ['NOMINAL','ORDINAL'];
 
@@ -363,26 +389,6 @@ function table_builder(arr){
 }
 //--//
 
-
-
-//TESTES - CONSOLE.LOG//
-
-//console.log(quali_nominal_ordinal(PROP[0],TIPO[0],arr));
-//console.log(quali_nominal_ordinal(PROP[0],TIPO[1],arr2));
-//console.log(quanti_continua(PROP[0],arr5));
-//console.log(quanti_discreta('AMOSTRA',arr4));
-
-//--//
-
-//TESTES - TABULAÇÃO //
-
-//table_builder(quanti_discreta('AMOSTRA',arr4));
-//table_builder(quali_nominal_ordinal(PROP[0],TIPO[0],arr));
-//table_builder(quali_nominal_ordinal(PROP[0],TIPO[1],arr2));
-//table_builder_continua(quanti_continua(PROP[0],arr5));
-//--//
-
-
 //FUNÇÕES COMPLEMENTARES - MODA, MEDIANA, DESVIO PADRÃO E SEPARATRIZ//
 
 function moda(matriz){
@@ -415,10 +421,8 @@ function moda_cont(matriz){
     var freq = matriz[1][0];
     var moda = [];
     for (var i=0;i<matriz[1].length;i++){
-        console.log(i);
         if (matriz[1][i]>freq){
             freq = matriz[1][i];
-            console.log(freq);
         };
     };
     for (var i = 0; i<matriz[1].length; i++){
@@ -444,7 +448,7 @@ function mediana(matriz){
         console.log("A mediana é " + med + " nas posições "+ pos1 + " e " + pos2);
     }
     else {
-        var pos1 = matriz[5]/2;
+        var pos1 = Math.ceil(matriz[5]/2);
         med.push(matriz[6][pos1]);
         console.log("A mediana é " + med + " na posição " + pos1);
     };
