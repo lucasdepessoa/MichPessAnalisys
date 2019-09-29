@@ -29,6 +29,8 @@ var arr5 = [40,41,42,45,54,55,59,60,61,62,64,65,65,66,67,68,69,70,71,71,80,81,83
 
 var arr6 = [2,2,2,4,4,4,4,4,5,5,5,5,5,5,5,5,7,7,7,7,7,7,10,10];
 
+var arr7 = [20,23,23,27,27,27,28,29,30,32,34,34,34,35,37,37,37,38,38,38,41,42,43,43,45,45,45,46,47,47,50,51,53,55,55,56,56,56,60,60,63,65];
+
 // FUNÇÕES PRINCIPAIS DE ESTATISTICA //
 
 /* Função genérica - Variável Qualitativa Nominal e Ordinal */
@@ -180,7 +182,7 @@ function quanti_continua(prop,arr){
     //variaveis auxiliares//
     var aux = [], quanti_names = [], quanti_fi = [], quanti_fr = [], quanti_fac= [], 
     quanti_fac_percent = [], pontos_medios = [], cont=0, sum=0, sum2=0, sum3=0, 
-    tot = arr.length, quanti_struct_tb = [], at=0, max=0, min=0, k=0, ic=0, aux=0;
+    tot = arr.length, quanti_struct_tb = [], at=0, max=0, min=0, k=0, ic=0, aux=0, cc=0;
     
     //ordena o array com base no peso unicode e ordem crescente (menor pro maior)//
     arr.sort(function(a,b){
@@ -195,11 +197,28 @@ function quanti_continua(prop,arr){
     max = Math.max(...arr);
     min = Math.min(...arr);
     at = (max-min)+1;
-
+   
     //calcula a quantidade de linhas que a tabela tera//
-    k = (Math.sqrt(tot).toFixed());
+    k = Math.sqrt(tot).toFixed();
+
+    //diminui 1 no k
+    k--;
+    cc = 1;
+
     while(at % k != 0){
-        k++;
+        at++;
+
+
+        if(cc===1) //aumenta 1 no k
+        {
+            k++;
+            cc++;  
+        }
+        else if(cc===2) //aumenta 1 no k (totalizando 1 anterior +1 + 1 posterior)
+        {
+            k++;
+            cc++;
+        }
     }
 
     //calcula o valor dos intervalos//
@@ -208,15 +227,17 @@ function quanti_continua(prop,arr){
 
     //monta o vetor de intervalos//
     for(var i=0; i<k; i++){
-        for(var j=0; j<2; j++){
-            quanti_names[i] = sum;        
+        quanti_names.push(sum);
+        
+        if(sum <= aux[arr.length-1]+1){
+            console.log(sum)
+            sum += ic;
         }
-        sum += ic;
+        
     }
 
     //adiciona o numero final no array + ic (o ultimo numero sempre tem +1)//
-    quanti_names.push(quanti_names[k-1]+ic);
-
+    quanti_names.push(aux[tot-1]+1);
 
     //calcula os valores restantes//
     for(var i=0; i<k; i++){
