@@ -557,7 +557,7 @@ function medida_separatriz_cont(arr,medida,posicao){
     
     //H - da formula (intervalo)//
     H = Number(arr[8].toFixed(2));
-    
+    console.log(arr)
     //medida separatriz recebe//
     ms = I + ( (pos - fac_anterior) /fi_linha ) * H;
 
