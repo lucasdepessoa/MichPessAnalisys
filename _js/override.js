@@ -31,9 +31,9 @@ var arr6 = [2,2,2,4,4,4,4,4,5,5,5,5,5,5,5,5,7,7,7,7,7,7,10,10];
 
 var arr7 = [20,23,23,27,27,27,28,29,30,32,34,34,34,35,37,37,37,38,38,38,41,42,43,43,45,45,45,46,47,47,50,51,53,55,55,56,56,56,60,60,63,65];
 
-// var arr8 = [34,43,20,37,37,55,27,37,23,46,43,56,60,32,27,60,53,51,45,45,45,28,41,38,38,38,56,65,63,23,56,34,27,34,30,29,47,45,47,42,50,35];
+var arr8 = [34,43,20,37,37,55,27,37,23,46,43,56,60,32,27,60,53,51,45,45,45,28,41,38,38,38,56,65,63,23,56,34,27,34,30,29,47,45,47,42,50,35];
 
-var arr8 = [58,61,61,65,65,66,66,67,67,68,71,71,71,72,73,80,90,100,55,50,47,78,98,65,69,82,72,68,61,76];
+// var arr8 = [58,61,61,65,65,66,66,67,67,68,71,71,71,72,73,80,90,100,55,50,47,78,98,65,69,82,72,68,61,76];
 
 // FUNÇÕES PRINCIPAIS DE ESTATISTICA //
 
@@ -559,7 +559,7 @@ function medida_separatriz_cont(arr,medida,posicao){
     H = Number(arr[8].toFixed(2));
     
     //medida separatriz recebe//
-    ms = I * ( (pos - fac_anterior) /fi_linha ) * H;
+    ms = I + ( (pos - fac_anterior) /fi_linha ) * H;
 
     return Number(ms.toFixed(2));
 }
@@ -579,7 +579,7 @@ function medida_separatriz_cont(arr,medida,posicao){
 // console.log(medida_separatriz(quali_nominal_ordinal('AMOSTRA','ORDINAL',arr2),5,4)); //Kintil 4//
 // console.log(medida_separatriz(quali_nominal_ordinal('AMOSTRA','ORDINAL',arr2),100,60)); //Percentil 60//
 // console.log(medida_separatriz_cont(quanti_continua('AMOSTRA',arr8),100,27))
-console.log(medida_separatriz_cont(quanti_continua('AMOSTRA',arr8),10,8))
+console.log(medida_separatriz_cont(quanti_continua('AMOSTRA',arr8),5,3))
 
 
 //--//
