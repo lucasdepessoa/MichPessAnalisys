@@ -20,13 +20,13 @@ function call(){
 //console.log(quali_nominal_ordinal(PROP[0],TIPO[0],entrada()));
 //console.log(quali_nominal_ordinal(PROP[0],TIPO[1],entrada()));
 console.log(quanti_continua(PROP[0],entrada()));
-//console.log(quanti_discreta('AMOSTRA',entrada()));
+//console.log(quanti_discreta('POPULACAO',entrada()));
 
 //--//
 
 //TESTES - TABULAÇÃO //
 
-//table_builder(quanti_discreta('AMOSTRA',entrada()));
+//table_builder(quanti_discreta('POPULACAO',entrada()));
 //table_builder(quali_nominal_ordinal(PROP[0],TIPO[0],entrada()));
 //table_builder(quali_nominal_ordinal(PROP[0],TIPO[1],entrada()));
 table_builder_continua(quanti_continua(PROP[0],entrada()));
@@ -186,6 +186,32 @@ function quanti_discreta(prop,arr){
     }
     media = soma/tot;
 
+    //DESVIO PADRÃO
+    //Para população
+    if (prop[0]){
+        var v_x = 0, soma = 0, coef_varia = 0, parcial = 0, percent = 0;
+        for (i=0;i<quanti_names.length;i++){
+            parcial = (Math.pow((quanti_names[i]-media),2)*quanti_fi[i])
+            soma += parcial;
+        }
+        v_x = Math.sqrt(soma/tot);
+        coef_varia =  v_x/media;
+        percent = coef_varia * 100;
+        console.log("O desvio padrão é de " + percent);
+    }
+    //para amostra
+    else{
+        var v_x = 0, soma = 0, coef_varia = 0, parcial = 0, percent = 0;
+        for (i=0;i<quanti_names.length;i++){
+            parcial = (Math.pow((quanti_names[i]-media),2)*quanti_fi[i])
+            soma += parcial;
+        }
+        v_x = Math.sqrt(soma/(tot-1));
+        coef_varia =  v_x/media;
+        percent = coef_varia * 100;
+        console.log("O desvio padrão é de " + percent);
+    }
+
     /* LEGENDA - array de retorno :
         0 - Elementos (quantidades calculadas) 
         1 - FI 
@@ -295,6 +321,34 @@ function quanti_continua(prop,arr){
         soma += mult;
     }
     media = soma/tot;
+
+    //DESVIO PADRÃO
+    //Para população
+    if (prop[0]){
+        var v_x = 0, soma = 0, coef_varia = 0, parcial = 0, percent = 0;
+        for (i=0;i<pontos_medios.length;i++){
+            parcial = (Math.pow((pontos_medios[i]-media),2)*quanti_fi[i])
+            soma += parcial;
+        }
+        v_x = Math.sqrt(soma/tot);
+        coef_varia =  v_x/media;
+        percent = coef_varia * 100;
+        console.log("O desvio padrão é de " + percent);
+    }
+    //para amostra
+    else{
+        var v_x = 0, soma = 0, coef_varia = 0, parcial = 0, percent = 0;
+        for (i=0;i<pontos_medios.length;i++){
+            parcial = (Math.pow((pontos_medios[i]-media),2)*quanti_fi[i])
+            soma += parcial;
+        }
+        v_x = Math.sqrt(soma/(tot-1));
+        coef_varia =  v_x/media;
+        percent = coef_varia * 100;
+        console.log("O desvio padrão é de " + percent);
+    }
+    
+
 
     /* LEGENDA - array de retorno:
     0 - Elementos (intervalos registrados) 
@@ -495,8 +549,4 @@ function mediana_cont(matriz){
         
     //retorna//
     return md;
-    };
-    
-    //--//
-    
-    
+};
