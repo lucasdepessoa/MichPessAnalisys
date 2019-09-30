@@ -31,6 +31,10 @@ var arr6 = [2,2,2,4,4,4,4,4,5,5,5,5,5,5,5,5,7,7,7,7,7,7,10,10];
 
 var arr7 = [20,23,23,27,27,27,28,29,30,32,34,34,34,35,37,37,37,38,38,38,41,42,43,43,45,45,45,46,47,47,50,51,53,55,55,56,56,56,60,60,63,65];
 
+// var arr8 = [34,43,20,37,37,55,27,37,23,46,43,56,60,32,27,60,53,51,45,45,45,28,41,38,38,38,56,65,63,23,56,34,27,34,30,29,47,45,47,42,50,35];
+
+var arr8 = [58,61,61,65,65,66,66,67,67,68,71,71,71,72,73,80,90,100,55,50,47,78,98,65,69,82,72,68,61,76];
+
 // FUNÇÕES PRINCIPAIS DE ESTATISTICA //
 
 /* Função genérica - Variável Qualitativa Nominal e Ordinal */
@@ -220,11 +224,11 @@ function quanti_continua(prop,arr){
             cc++;
         }
     }
-
+   
     //calcula o valor dos intervalos//
     ic = at/k;
     sum = aux[0];
-
+    
     //monta o vetor de intervalos//
     for(var i=0; i<k; i++){
 
@@ -379,7 +383,7 @@ function table_builder_continua(arr){
 // table_builder(quanti_discreta('AMOSTRA',arr4));
 // table_builder(quali_nominal_ordinal(PROP[0],TIPO[0],arr));
 // table_builder(quali_nominal_ordinal(PROP[0],TIPO[1],arr2));
-table_builder_continua(quanti_continua(PROP[0],arr5));
+table_builder_continua(quanti_continua(PROP[0],arr8));
 //--//
 
 
@@ -519,26 +523,26 @@ function medida_separatriz_cont(arr,medida,posicao){
     //identifica a separatriz e guarda o contador adequado//
     switch(medida){
         case 4:
-            cont = ((arr[6].length*25*posicao)/100).toFixed(2);
+            cont = Number(((arr[6].length*25*posicao)/100).toFixed(2));
         break;
         case 5:
-            cont = ((arr[6].length*20*posicao)/100).toFixed(2);
+            cont = Number(((arr[6].length*20*posicao)/100).toFixed(2));
         break;
         case 10:
-            cont = ((arr[6].length*10*posicao)/100).toFixed(2);
+            cont = Number(((arr[6].length*10*posicao)/100).toFixed(2));
         break;
         case 100:
-            cont = ((arr[6].length*posicao)/100).toFixed(2);
+            cont = Number(((arr[6].length*posicao)/100).toFixed(2));
         break;
     }
-   
+
     //verifica a quantidades de linha ate a posicao encontrada//
     for(var i=0; i<arr[3].length; i++){
-        if(arr[3][i] <= cont+1){
+        if(arr[3][i] <= cont){
             linha++;
         }    
     }
-
+    
     //Indice inferior//
     I = arr[0][linha]
     
@@ -550,14 +554,14 @@ function medida_separatriz_cont(arr,medida,posicao){
 
     //FI - da linha//
     fi_linha = arr[1][linha];
-
+    
     //H - da formula (intervalo)//
-    H = arr[8].toFixed(2);
+    H = Number(arr[8].toFixed(2));
     
     //medida separatriz recebe//
-    ms = I * ( (pos - fac_anterior)/fi_linha ) * H;
-    
-    return ms;
+    ms = I * ( (pos - fac_anterior) /fi_linha ) * H;
+
+    return Number(ms.toFixed(2));
 }
 //Teste de mediana//
 //console.log(mediana_cont(quanti_continua(PROP[0],arr5)));
@@ -574,7 +578,9 @@ function medida_separatriz_cont(arr,medida,posicao){
 // console.log(medida_separatriz(quali_nominal_ordinal('AMOSTRA','NOMINAL',arr2),10,4)); //Deal 4//
 // console.log(medida_separatriz(quali_nominal_ordinal('AMOSTRA','ORDINAL',arr2),5,4)); //Kintil 4//
 // console.log(medida_separatriz(quali_nominal_ordinal('AMOSTRA','ORDINAL',arr2),100,60)); //Percentil 60//
-console.log(medida_separatriz_cont(quanti_continua('AMOSTRA',arr5),5,3))
+// console.log(medida_separatriz_cont(quanti_continua('AMOSTRA',arr8),100,27))
+console.log(medida_separatriz_cont(quanti_continua('AMOSTRA',arr8),10,8))
+
 
 //--//
 
