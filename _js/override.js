@@ -227,10 +227,10 @@ function quanti_continua(prop,arr){
 
     //monta o vetor de intervalos//
     for(var i=0; i<k; i++){
+
         quanti_names.push(sum);
         
         if(sum <= aux[arr.length-1]+1){
-            console.log(sum)
             sum += ic;
         }
         
@@ -379,7 +379,7 @@ function table_builder_continua(arr){
 // table_builder(quanti_discreta('AMOSTRA',arr4));
 // table_builder(quali_nominal_ordinal(PROP[0],TIPO[0],arr));
 // table_builder(quali_nominal_ordinal(PROP[0],TIPO[1],arr2));
-// table_builder_continua(quanti_continua(PROP[0],arr5));
+table_builder_continua(quanti_continua(PROP[0],arr5));
 //--//
 
 
@@ -445,10 +445,10 @@ function mediana_cont(matriz){
     8 - Valor do intervalo da continua
 */  
     //variaveis auxiliares
-    var posicao=0, media = 0, num = 0, linha = 0, I = 0, fac_ant = 0, fi_da_med = 0, md = 0;
+    var posicao=0, linha = 0, I = 0, fac_ant = 0, fi_da_med = 0, md = 0;
 
     //guarda a posicao a ser encontrada//
-    posicao = Math.round(matriz[6].length/2);
+    posicao = Math.ceil(matriz[6].length/2);
     
     //verifica a quantidades de linha ate a posicao encontrada//
     for(var i=0; i<matriz[3].length; i++){
@@ -504,6 +504,61 @@ function medida_separatriz(arr,medida,posicao){
 }
 
 
+function medida_separatriz_cont(arr,medida,posicao){    
+      /*
+        Q - Quartil - 25% 50% 75% 100% (4)
+        K - Quintil - 20% 40% 60% 80% 100% (5)
+        D - Deal - 10% 20% 30% 40% 50% 60% 70% 80% 90% 100% (10)
+        P - Percentil - 1 % 2% .. 100% (100);       
+    */
+
+    //variaveis auxiliares//
+    var medida = Number(medida), posicao = Number(posicao), linha = 0, cont = 0,
+    pos = 0, fac_anterior = 0, fi_linha = 0, H = 0, ms = 0, I = 0;
+    
+    //identifica a separatriz e guarda o contador adequado//
+    switch(medida){
+        case 4:
+            cont = ((arr[6].length*25*posicao)/100).toFixed(2);
+        break;
+        case 5:
+            cont = ((arr[6].length*20*posicao)/100).toFixed(2);
+        break;
+        case 10:
+            cont = ((arr[6].length*10*posicao)/100).toFixed(2);
+        break;
+        case 100:
+            cont = ((arr[6].length*posicao)/100).toFixed(2);
+        break;
+    }
+   
+    //verifica a quantidades de linha ate a posicao encontrada//
+    for(var i=0; i<arr[3].length; i++){
+        if(arr[3][i] <= cont+1){
+            linha++;
+        }    
+    }
+
+    //Indice inferior//
+    I = arr[0][linha]
+    
+    //Posição//
+    pos = cont;
+
+    //Fac-Anterior//
+    fac_anterior = arr[3][linha-1];
+
+    //FI - da linha//
+    fi_linha = arr[1][linha];
+
+    //H - da formula (intervalo)//
+    H = arr[8].toFixed(2);
+    
+    //medida separatriz recebe//
+    ms = I * ( (pos - fac_anterior)/fi_linha ) * H;
+    
+    return ms;
+}
 //Teste de mediana//
 //console.log(mediana_cont(quanti_continua(PROP[0],arr5)));
 
@@ -514,12 +569,12 @@ function medida_separatriz(arr,medida,posicao){
 // console.log(medida_separatriz(quanti_discreta('AMOSTRA',arr6),5,4)); //Kintil 4//
 // console.log(medida_separatriz(quanti_discreta('AMOSTRA',arr6),100,60)); //Percentil 60//
 
-console.log(medida_separatriz(quali_nominal_ordinal('AMOSTRA','NOMINAL',arr2),4,1)); //Quartil 1//
-console.log(medida_separatriz(quali_nominal_ordinal('AMOSTRA','ORDINAL',arr2),4,3)); //Quartil 3//
-console.log(medida_separatriz(quali_nominal_ordinal('AMOSTRA','NOMINAL',arr2),10,4)); //Deal 4//
-console.log(medida_separatriz(quali_nominal_ordinal('AMOSTRA','ORDINAL',arr2),5,4)); //Kintil 4//
-console.log(medida_separatriz(quali_nominal_ordinal('AMOSTRA','ORDINAL',arr2),100,60)); //Percentil 60//
-
+// console.log(medida_separatriz(quali_nominal_ordinal('AMOSTRA','NOMINAL',arr2),4,1)); //Quartil 1//
+// console.log(medida_separatriz(quali_nominal_ordinal('AMOSTRA','ORDINAL',arr2),4,3)); //Quartil 3//
+// console.log(medida_separatriz(quali_nominal_ordinal('AMOSTRA','NOMINAL',arr2),10,4)); //Deal 4//
+// console.log(medida_separatriz(quali_nominal_ordinal('AMOSTRA','ORDINAL',arr2),5,4)); //Kintil 4//
+// console.log(medida_separatriz(quali_nominal_ordinal('AMOSTRA','ORDINAL',arr2),100,60)); //Percentil 60//
+console.log(medida_separatriz_cont(quanti_continua('AMOSTRA',arr5),5,3))
 
 //--//
 
