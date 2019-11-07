@@ -680,8 +680,80 @@ function medida_separatriz_cont(arr,medida,posicao){
 // console.log(medida_separatriz(quali_nominal_ordinal('AMOSTRA','ORDINAL',arr2),5,4)); //Kintil 4//
 // console.log(medida_separatriz(quali_nominal_ordinal('AMOSTRA','ORDINAL',arr2),100,60)); //Percentil 60//
 // console.log(medida_separatriz_cont(quanti_continua('AMOSTRA',arr8),100,27))
-console.log(medida_separatriz_cont(quanti_continua('AMOSTRA',arr8),5,3))
+// console.log(medida_separatriz_cont(quanti_continua('AMOSTRA',arr8),5,3))
 
 
 //--//
+
+
+
+
+//Segunda tela - Estatistica por probabilidade //
+
+//Distribuição Uniforme//
+
+/*
+    Quando um parametro é passado dessa forma (nome= alguma coisa), se ele nao for chamado na chamada da função, ele simplesmente assume o valor
+    passado na hora da declaração(nesse caso nulo), porque vamos utilizar essa variavel qtd2, somente na opção ENTRE_ que é quando qtd1 e qtd2 passam
+    a ser um intervalo entre os valores max e min (ta bom nene s2 ?).
+*/
+function distribuicao_uniforme(max,min,tipo,qtd1=null, qtd2=null){
+    var result = [], media = 0, cv = 0, dp = 0, intervalo = 0;
+
+    switch(tipo){
+        case 'MENOR_QUE':
+            //media//
+            media = Number(parseFloat((max + min)/2).toFixed(2));
+            //Intervalo F(X)//
+            intervalo = Number(parseFloat(((1 / (max-min))*(qtd1-min))*100).toFixed(2));
+            
+            result[0] = media;
+            result[1] = intervalo;
+            return result;
+        break;
+        case 'MAIOR_QUE':
+            //media//
+            media = Number(parseFloat((max + min)/2).toFixed(2));
+            //Intervalo F(x)//
+            intervalo = Number(parseFloat(((1 / (max-min))*(max-qtd1))*100).toFixed(2));  
+
+            result[0] = media;
+            result[1] = intervalo;
+            return result;   
+        break;
+        case 'ENTRE_':
+            //Intervalo F(x) qtd1 e qtd2 agora são o intervalo dentro dos valores max e min//
+            intervalo = Number(parseFloat(((1 / (max-min))*(qtd2-qtd1))*100).toFixed(2));
+
+            result[0] = intervalo;
+            return result;
+        break;
+        case 'EQUILIBRIO':
+            //Media//
+            media = Number(parseFloat((max+min)/2).toFixed(2));
+      
+            //Intervalo F(X)//
+            intervalo = Number(parseFloat(((1 / (max-min))*(max-qtd1))*100).toFixed(2)); 
+
+            //Desvio Padrão//
+            dp = Number(Math.sqrt(Math.pow(max-min,2)/12).toFixed(2));
+
+            //Coeficiente de variação//
+            cv = Number(parseFloat(((dp/media)*100)).toFixed(2));
+
+            result[0] = media;
+            result[1] = intervalo;
+            result[2] = dp;
+            result[3] = cv;
+            return result;
+        break;
+    }
+}
+
+//Exemplos da ultima aula mor //
+// console.log(distribuicao_uniforme(700,300,'MENOR_QUE',425));
+// console.log(distribuicao_uniforme(700,300,'MAIOR_QUE',690));
+// console.log(distribuicao_uniforme(700,300,'ENTRE_',400,600));
+// console.log(distribuicao_uniforme(700,300,'EQUILIBRIO',660));
+
 
