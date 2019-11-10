@@ -757,3 +757,43 @@ function distribuicao_uniforme(max,min,tipo,qtd1=null, qtd2=null){
 // console.log(distribuicao_uniforme(700,300,'EQUILIBRIO',660));
 
 
+
+
+//Função Fatorial para utilização dentro da análise combinatória da Distribuição Binomial//
+function factorial(n){
+    if(n == 0 | n ==1 ){
+        return 1;
+    }
+    var resultado = n;
+    while(n > 2){
+        resultado *= --n;
+    }
+    return resultado;
+}
+
+
+
+function distribuicao_uniforme(n,p,q,k){
+    
+    var analise_combinatoria = 0, probabilidade = 0, media = 0, dp = 0, result = []; 
+   
+    analise_combinatoria = factorial(n) / (factorial(k) * factorial(n-k));
+    
+    probabilidade = analise_combinatoria * Math.pow(p,k) * Math.pow(q,(n-k));
+
+    media = Number(n*p).toFixed(2);
+
+    dp = Math.sqrt(n*p*q);
+
+    //Resultados//
+    result[0] = Number((probabilidade * 100).toFixed(2));
+    result[1] = Number(media);
+    result[2] = dp;
+
+    return result;
+}
+
+
+
+//Teste os exemplos do caderno amor, já está funcionando//
+// console.log(distribuicao_uniforme(10,0.3,0.7,2))
