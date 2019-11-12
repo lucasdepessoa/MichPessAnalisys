@@ -978,20 +978,16 @@ function distribuicao_normal(media,dp,tipo,qtd1=null,qtd2=null){
     }  
 }
 
-console.log('maior que ' + distribuicao_normal(90,5,'MAIOR_QUE',93));
-console.log('menor que ' + distribuicao_normal(90,5,'MENOR_QUE',95));
-console.log('entre ' + distribuicao_normal(90,5,'ENTRE_',89,93));
-console.log('entre menos ' + distribuicao_normal(90,5,'ENTRE_MENOS',86,89));
+// console.log('maior que ' + distribuicao_normal(90,5,'MAIOR_QUE',93));
+// console.log('menor que ' + distribuicao_normal(90,5,'MENOR_QUE',95));
+// console.log('entre ' + distribuicao_normal(90,5,'ENTRE_',89,93));
+// console.log('entre menos ' + distribuicao_normal(90,5,'ENTRE_MENOS',86,89));
 
 
 
-
-
-
-
-
-
-
+function correlacao_regressao(arrX,arrY){
+    var auxX = [], auxY = [], somaX = 0, somaY = 0, X_x_y = 0,  somaX_x_Y = 0, x2 = 0, y2 = 0, somax2 = 0, somay2 = 0;  
+}
 
 
 
