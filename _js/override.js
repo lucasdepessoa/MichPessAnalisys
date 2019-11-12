@@ -855,15 +855,25 @@ function distribuicao_normal(media,dp,tipo,qtd1=null,qtd2=null){
         case 'MAIOR_QUE':
             //Calcula o Z//
             var z = parseFloat((qtd1 - media)/dp).toFixed(2);
+
+            //Caso z seja maior do que 3,9//
+            if(z > 3.9 || z < -3.9){
+                return "Error: Intervalo maior do que 3,9";
+            }
             
+            //Verifica se o resultado é negativo//
+            if(Math.sign(z) == -1 || Math.sign(z) == '-0' || Math.sign(z) == -0){
+                z = Math.abs(z).toString();
+            }
+
             //Retira do Z o indice do objeto tbz//
             var indice = z.slice(0,3).replace('.',',');
 
             //Retira a posição do array que está no indice//
-            var pos = Number(z.slice(-1));
-
+            var pos = (z.charAt(3) == '' || z.charAt(3) == '0')? 0 : Number(z.slice(-1));
+            
             //Calcula a probabilidade//
-            var prob = ((0.5 - parseFloat(tbz[indice][pos])) * 100 ).toFixed(2)
+            var prob = ((0.5 - parseFloat(tbz[indice][pos])) * 100 ).toFixed(2);
 
             //Retorna a probabilidade//
             return prob;
@@ -871,12 +881,22 @@ function distribuicao_normal(media,dp,tipo,qtd1=null,qtd2=null){
         case 'MENOR_QUE':
             //Calcula o Z//
             var z = parseFloat((qtd1 - media)/dp).toFixed(2);
+
+            //Caso z seja maior do que 3,9//
+            if(z > 3.9 || z < -3.9){
+                return "Error: Intervalo maior do que 3,9";
+            }
             
+            //Verifica se o resultado é negativo//
+            if(Math.sign(z) == -1 || Math.sign(z) == '-0' || Math.sign(z) == -0){
+                z = Math.abs(z).toString();
+            }
+
             //Retira do Z o indice do objeto tbz//
             var indice = z.slice(0,3).replace('.',',');
 
             //Retira a posição do array que está no indice//
-            var pos = Number(z.slice(-1));
+            var pos = (z.charAt(3) == '' || z.charAt(3) == '0')? 0 : Number(z.slice(-1));
 
             //Calcula a probabilidade//
             var prob = ((0.5 + parseFloat(tbz[indice][pos])) * 100 ).toFixed(2)
@@ -887,50 +907,81 @@ function distribuicao_normal(media,dp,tipo,qtd1=null,qtd2=null){
         case 'ENTRE_':
             //Entre_ é quando a média está entre os valores informados//
             //Calcula os Z//
-            var z = Math.abs(((qtd1 - media)/dp).toFixed(2)).toString();
-            var z1 = Math.abs(((qtd2 - media)/dp).toFixed(2)).toString();
+            var z = parseFloat((qtd1 - media)/dp).toFixed(2);
+            var z1 = parseFloat((qtd2 - media)/dp).toFixed(2);
+            
+            //Verifica se o intervalo existe na tabela//
+            if(z > 3.9 || z < -3.9 || z1 > 3.9 || z1 < -3.9){
+                return "Error: Intervalos maior do que 3,9";
+            }
+
+            //Verifica se o resultado é negativo//
+            if(Math.sign(z) == -1 || Math.sign(z) == '-0' || Math.sign(z) == -0){
+                z = Math.abs(z).toString();
                
+            }
+            //Verifica se o resultado é negativo//
+            if(Math.sign(z1) == -1 || Math.sign(z1) == '-0' || Math.sign(z1) == -0){
+                z1 = Math.abs(z1).toString();
+            }
+
             //Retira do Z o indice do objeto tbz//
-            var indice = z.replace('.',',')
-            var indice1 = z1.replace('.',',')
+            var indice = z.slice(0,3).replace('.',',');
+            var indice1 = z1.slice(0,3).replace('.',',');
         
             //Retira a posição do array que está no indice//
-            var pos = (indice.charAt(3) == '' || indice.charAt(3) == '0')? 0 : Number(z.slice(-1));     
-            var pos1 = (indice1.charAt(3) == '' || indice1.charAt(3) == '0')? 0 : Number(z1.slice(-1));   
+            var pos = (z.charAt(3) == '' || z.charAt(3) == '0')? 0 : Number(z.slice(-1));   
+            var pos1 = (z1.charAt(3) == '' || z1.charAt(3) == '0')? 0 : Number(z1.slice(-1)); 
 
             //Calcula a probabilidade//
-            var prob = ( (parseFloat(tbz[indice][pos]) + parseFloat(tbz[indice1][pos1])) * 100 ).toFixed(2)
+            var prob = ((parseFloat(tbz[indice][pos]) + parseFloat(tbz[indice1][pos1])) * 100 ).toFixed(2)
 
             //Retorna a probabilidade//
             return prob;
         break;
         case 'ENTRE_MENOS':
-             //Entre_Menos é quando a média é maior do que os valores informados, ou seja o intervalo é entre números que são menores que a média//
-             //Calcula os Z//
-             var z = Math.abs(((qtd1 - media)/dp).toFixed(2)).toString();
-             var z1 = Math.abs(((qtd2 - media)/dp).toFixed(2)).toString();
-             
-             //Retira do Z o indice do objeto tbz//
-             var indice = z.replace('.',',');
-             var indice1 = z1.replace('.',',');
+            //Entre_Menos é quando a média é maior do que os valores informados, ou seja o intervalo é entre números que são menores que a média//
+            
+            //Calcula os Z//
+            var z = parseFloat((qtd1 - media)/dp).toFixed(2);
+            var z1 = parseFloat((qtd2 - media)/dp).toFixed(2);
+            
+            //verifica se o intervalo existe na tabela//
+            if(z > 3.9 || z < -3.9 || z1 > 3.9 || z1 < -3.9){
+                return "Error: Intervalos maior do que 3,9";
+            }
+
+            //Verifica se o resultado é negativo//
+            if(Math.sign(z) == -1 || Math.sign(z) == '-0' || Math.sign(z) == -0){
+                z = Math.abs(z).toString();
+            
+            }
+            //Verifica se o resultado é negativo//
+            if(Math.sign(z1) == -1 || Math.sign(z1) == '-0' || Math.sign(z1) == -0){
+                z1 = Math.abs(z1).toString();
+            }
+
+            //Retira do Z o indice do objeto tbz//
+            var indice = z.slice(0,3).replace('.',',');
+            var indice1 = z1.slice(0,3).replace('.',',');
+        
+            //Retira a posição do array que está no indice//
+            var pos = (z.charAt(3) == '' || z.charAt(3) == '0')? 0 : Number(z.slice(-1));   
+            var pos1 = (z1.charAt(3) == '' || z1.charAt(3) == '0')? 0 : Number(z1.slice(-1));  
+            
+            //Calcula a probabilidade//
+            var prob = ((parseFloat(tbz[indice][pos]) - parseFloat(tbz[indice1][pos1])) * 100 ).toFixed(2)
  
- 
-             //Retira a posição do array que está no indice//
-             var pos = (indice.charAt(3) == '' || indice.charAt(3) == '0')? 0 : Number(z.slice(-1));  
-             var pos1 = (indice1.charAt(3) == '' || indice1.charAt(3) == '0')? 0 : Number(z1.slice(-1));  
-             //Calcula a probabilidade//
-             var prob = ( (parseFloat(tbz[indice][pos]) - parseFloat(tbz[indice1][pos1])) * 100 ).toFixed(2)
- 
-             //Retorna a probabilidade//
-             return prob;
+            //Retorna a probabilidade//
+            return prob;
         break;
     }  
 }
 
-// console.log('maior que ' + distribuicao_normal(90,5,'MAIOR_QUE',93));
-// console.log('menor que ' + distribuicao_normal(90,5,'MENOR_QUE',95));
-// console.log('entre ' + distribuicao_normal(90,5,'ENTRE_',89,93));
-// console.log('entre menos ' + distribuicao_normal(90,5,'ENTRE_MENOS',86,89));
+console.log('maior que ' + distribuicao_normal(90,5,'MAIOR_QUE',93));
+console.log('menor que ' + distribuicao_normal(90,5,'MENOR_QUE',95));
+console.log('entre ' + distribuicao_normal(90,5,'ENTRE_',89,93));
+console.log('entre menos ' + distribuicao_normal(90,5,'ENTRE_MENOS',86,89));
 
 
 
