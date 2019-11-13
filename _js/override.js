@@ -987,7 +987,8 @@ function distribuicao_normal(media,dp,tipo,qtd1=null,qtd2=null){
 
 function correlacao_regressao(arrX,arrY){
     
-    var somaX = 0, somaY = 0, somaX_x_Y = 0, somax2 = 0, somay2 = 0, correlacao = 0, regressao = 0;  
+    var somaX=0,somaY=0,somaX_x_Y=0,somax2=0,somay2=0,correlacao=0,a=0,b=0, 
+         Y_r_formula=0, X_r_formula=0,resultado =[];
 
     //Se existir o mesmo número de variáveis dependentes e independentes//
     if(arrX.length == arrY.length){
@@ -1011,18 +1012,35 @@ function correlacao_regressao(arrX,arrY){
             somay2 += Math.pow(arrY[i],2);
         }
 
-        console.log(somaY)
-        console.log(somaX);
-        console.log(somaX_x_Y)
-        console.log(somax2);
-        console.log(somay2);
         //Calcula a relação//
-        correlacao = ((arrX.length * somaX_x_Y) - (somaX * somaY) ) /
-        console.log(correlacao);
-        return "haha";
+        correlacao = ((arrX.length * somaX_x_Y) - (somaX * somaY) ) / Math.sqrt( ( (arrX.length * somax2) -  Math.pow(somaX,2) ) * ( (arrX.length * somay2) - Math.pow(somaY,2) )) 
+        
 
+        //calculos de Regressao//
 
+        //calcula o a //
+        a = ( (arrX.length * somaX_x_Y) - (somaX * somaY) ) / ((arrX.length * somax2) - Math.pow(somaX,2));
 
+        //calcula o X da formula //
+        X_r_formula = somaX / arrX.length;
+
+        //calcula o Y da formula //
+        Y_r_formula = somaY / arrX.length;
+
+        //calcula o valor de b //
+        b = Y_r_formula - (a * X_r_formula);
+
+        //Monta o resultado//
+        /* 
+            [0] - correlacao
+            [1] - valor de a
+            [2] - valor de b
+        */
+        resultado[0] = parseFloat((correlacao*100).toFixed(2));
+        resultado[1] = parseFloat(a.toFixed(2));
+        resultado[2] = parseFloat(b.toFixed(2));
+
+        return resultado;
     }else{
         //caso o número de variáveis esteja diferente//
         return "Error: Dados incompletos";
@@ -1033,7 +1051,7 @@ function correlacao_regressao(arrX,arrY){
 ax = [12.38,14.56,14.67,15.98,17.65];
 ay = [2003,2004,2005,2006,2007];
 
-correlacao_regressao(ax,ay);
+// console.log(correlacao_regressao(ax,ay));
 
 
 
