@@ -986,12 +986,54 @@ function distribuicao_normal(media,dp,tipo,qtd1=null,qtd2=null){
 
 
 function correlacao_regressao(arrX,arrY){
-    var auxX = [], auxY = [], somaX = 0, somaY = 0, X_x_y = 0,  somaX_x_Y = 0, x2 = 0, y2 = 0, somax2 = 0, somay2 = 0;  
+    
+    var somaX = 0, somaY = 0, somaX_x_Y = 0, somax2 = 0, somay2 = 0, correlacao = 0, regressao = 0;  
+
+    //Se existir o mesmo número de variáveis dependentes e independentes//
+    if(arrX.length == arrY.length){
+
+        //Calcula os valores diante dos arrays de variáveis//
+        for(var i=0; i<arrX.length; i++){
+
+            //calcula a somatória das variáveis Y //
+            somaY += arrY[i];
+            
+            //calcula a somatória das variáveis X //
+            somaX += arrX[i];
+
+            //calcula a somatória de X * Y //
+            somaX_x_Y += arrX[i] * arrY[i]
+
+            //calcula a somatória de x² //
+            somax2 += Math.pow(arrX[i],2);
+
+            //calcula a somatória de x² //
+            somay2 += Math.pow(arrY[i],2);
+        }
+
+        console.log(somaY)
+        console.log(somaX);
+        console.log(somaX_x_Y)
+        console.log(somax2);
+        console.log(somay2);
+        //Calcula a relação//
+        correlacao = ((arrX.length * somaX_x_Y) - (somaX * somaY) ) /
+        console.log(correlacao);
+        return "haha";
+
+
+
+    }else{
+        //caso o número de variáveis esteja diferente//
+        return "Error: Dados incompletos";
+    }
 }
 
 
+ax = [12.38,14.56,14.67,15.98,17.65];
+ay = [2003,2004,2005,2006,2007];
 
-
+correlacao_regressao(ax,ay);
 
 
 
