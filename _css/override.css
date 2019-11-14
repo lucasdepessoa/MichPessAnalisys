@@ -4,12 +4,13 @@
 button.outline {
     outline: none!important;
     border:none!important;
+    background-color:#000!important;
 }
 
 button.outline:hover{
     outline: none!important;
     border:none!important;
-    background-color:#343a40!important;
+    background-color:#000!important;
     box-shadow: none!important;
 }
 
@@ -18,9 +19,13 @@ button.outline:focus{
     border:none!important;
     box-shadow: none!important;
     background-color:none!important;
-    background-color:#343a40!important;
+    background-color:#000!important;
 }
 
+
+.menu_drop{
+    border-radius:0px;
+}
 
 .backMaster{
     background-color:rgba(244,244,244,.8)!important;
@@ -36,8 +41,17 @@ button.outline:focus{
     border:none!important;
 }
 
+.navCC {
+    background:#000!important;
+}
+
 
 /* remove a setinha do menu dropdown */
 .dropdown-toggle::after {
     display:none;
+}
+
+
+#restante {
+    display: none;
 }
