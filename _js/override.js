@@ -916,6 +916,17 @@
 
 //------------- FUNÇÕES DE ESTRUTURA ------------ //
 
+    //função de animação scroll//
+    function animaScroll(local){
+        if(local === 'menu'){
+            $('html,body').animate({scrollTop: $('#myTabContent').offset().top},3000); 
+        }
+
+        if(local === 'tabs'){
+            $('html,body').animate({scrollTop: $('#myTabContent').offset().top},10000);
+        }
+    }
+
     //controlador dropdown//
     function trigger(id){
 
@@ -934,11 +945,30 @@
             case 'quati_cont':
                 obj.innerHTML = 'Quantitativa Contínua';
             break;        
+            case 'dist_uniforme':
+                obj.innerHTML = 'Probabilidade - Distribuição Uniforme'
+            break;
+            case 'dist_binomial':
+                obj.innerHTML = 'Probabilidade - Distribuição Binomial'
+            break;
+            case 'dist_normal':
+                obj.innerHTML = 'Probabilidade - Distribuição Normal'
+            break;
+            case 'navCorrelacao':
+                obj.innerHTML = 'Correlação e Regressão';
+            break;
+            case 'navSair':
+                window.location.href = 'login.html';
+            break;
         }
     
         if(document.getElementById('trigger').style.display != 'block'){
             document.getElementById('trigger').style.display = 'block'; 
         }
+
+        //move o scroll//
+        animaScroll('menu');
+
     }
 
     //tabulação genérica - nominal, ordinal e discreta//

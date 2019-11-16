@@ -40,6 +40,31 @@
                             <button class="dropdown-item navItemCustom" id="quati_cont" type="button" onclick="trigger(this.id);" > Quantitativa Continua </button>
                         </div>
                     </li>
+                    <li class="nav-item dropdown">
+                        <button class="btn btn-primary bg-dark dropdown-toggle outline" data-toggle="dropdown" id="navProb">
+                            Probabilidade
+                        </button>
+                        <div class="dropdown-menu menu_drop">
+                            <button class="dropdown-item navItemCustom" id="dist_uniforme" type="button" onclick="trigger(this.id);" > Distribuição Uniforme </button>
+                            <button class="dropdown-item navItemCustom" id="dist_binomial" type="button" onclick="trigger(this.id);" > Distribuição Binomial </button>
+                            <button class="dropdown-item navItemCustom" id="dist_normal" type="button" onclick="trigger(this.id);" > Distribuição Normal </button>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <button class="btn btn-primary bg-dark dropdown-toggle outline" onclick="trigger(this.id);" data-toggle="dropdown" id="navCorrelacao">
+                            Correlação e Regressão
+                        </button>
+                        <!-- <div class="dropdown-menu menu_drop">
+                            <button class="dropdown-item navItemCustom" id="dist_uniforme" type="button" onclick="trigger(this.id);" > Distribuição Uniforme </button>
+                            <button class="dropdown-item navItemCustom" id="dist_binomial" type="button" onclick="trigger(this.id);" > Distribuição Binomial </button>
+                            <button class="dropdown-item navItemCustom" id="dist_normal" type="button" onclick="trigger(this.id);" > Distribuição Normal </button>
+                        </div> -->
+                    </li>
+                    <li class="nav-item dropdown">
+                        <button class="btn btn-primary bg-dark dropdown-toggle outline" onclick="trigger(this.id);" data-toggle="dropdown" id="navSair">
+                            Sair
+                        </button>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -47,21 +72,21 @@
     <div class="container p-4">
         <div id="trigger">
         <nav class="navbar mt-0">
-            <h4 id="varPes"></h4>
+            <h4 id="varPes"> <!-- Aqui vai o título inserido via javascript --> </h4>
         </nav>
+
+        <!-- Menu tabulação -->
         <ul class="nav nav-tabs bg-white" id="myTab">
             <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab" href="#coleta">Coleta de Dados</a>
+                <a class="nav-link active" data-toggle="tab" onclick="animaScroll('tabs');" href="#coleta">Coleta de Dados</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#tabulacao">Tabulação</a>
+                <a class="nav-link" data-toggle="tab" onclick="animaScroll('tabs');" href="#tabulacao">Tabulação</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#graficos">Gráficos</a>
+                <a class="nav-link" data-toggle="tab" onclick="animaScroll('tabs');" href="#graficos">Gráficos</a>
             </li>
         </ul>
-        <div class="tab-content bg-white p-4" id="myTabContent">
-            <div class="tab-pane fade show active" id="coleta">Formulário de Coleta</div>
         
         <!--INSERÇÃO DE DADOS, TABULAÇÃO E APRESENTAÇÃO DE RESULTADOS-->
         <div class="tab-content bg-white p-4" id="myTabContent">
@@ -81,24 +106,28 @@
                 </div>
             </div>
             
+            <!-- Tabela -->
             <div class="tab-pane fade" id="tabulacao">
                 Tabelas Criadas
-            <table class="table">
-                <thead>
-                    <th>Variavel</th>
-                    <th>Fi</th>
-                    <th>FR %</th>
-                    <th>Fac </th>
-                    <th>Fac %</th>
-                </thead>
-                <tbody id="tabul">
+                <table class="table">
+                    <thead>
+                        <th>Variavel</th>
+                        <th>Fi</th>
+                        <th>FR %</th>
+                        <th>Fac </th>
+                        <th>Fac %</th>
+                    </thead>
+                    <tbody id="tabul">
 
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
             </div>
-            <div class="tab-pane fade" id="graficos">Gráficos</div>
-        </div>
-        </div>
+
+            <!-- Gráfico -->
+            <div class="tab-pane fade" id="graficos">
+                Gráficos
+            </div>
+        </div> 
     </div>
 </div>
 
