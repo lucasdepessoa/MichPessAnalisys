@@ -923,7 +923,7 @@
         }
 
         if(local === 'tabs'){
-            $('html,body').animate({scrollTop: $('#myTabContent').offset().top},10000);
+            $('html,body').animate({scrollTop: $('#myTabContent').offset().top},100);
         }
     }
 
@@ -1010,6 +1010,39 @@
 
 
 //&&&&&&&&&&&&&&&&&&&&&&7 MOTOR DA APLICAÇÃO &&&&&&&&&&&&&&&&&&&&&&&&&//
+
+//Função de recebimento dos dados//
+function entrada(){
+    if(document.getElementById('variable').value == '' || document.getElementById('variable').value == ' '){
+        alert('Insira os valores !');
+        document.getElementById('variable').value = '';
+        document.getElementById('variable').focus();
+    }else{
+        //Caso esteja preenchido//
+        var arr_ent = [], numString = document.getElementById('variable').value;
+        
+        //determina se o valor digitado é número ou caractere, a partir disso, monta o array
+        var teste = (numString.split(';').map(parseFloat));
+        
+        
+        if (isNaN(teste[0]) == true){
+            arr_ent = numString.split(';');    
+        }
+        else{
+            arr_ent = numString.split(';').map(parseFloat);
+        }
+        
+        table_builder(quali_nominal_ordinal("AMOSTRA","NOMINAL",arr_ent));
+    }
+        
+}
+
+
+//-------------------------------//
+
+
+
+
 
 //quando todo o documento for carregado, faça//
 $(document).ready(function(){

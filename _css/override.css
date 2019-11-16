@@ -56,3 +56,47 @@ button.outline:focus{
 #restante {
     display: none;
 }
+
+
+.overBtnTipo {
+    border-radius:0px;
+}
+
+
+
+.inp_data{
+    margin-top:10px;
+}
+
+
+.btnVariable{
+    background:#616263;
+    border-radius:0px;
+}
+
+.btnEntrada {
+    background:#616263;
+    border-radius:0px; 
+}
+
+
+
+.nav-link:hover{
+    color:#000;
+}
+
+.nav-link {
+    color:#616263;
+    font-family: monospace;
+    font-size: 19px;
+}
+
+.nav-link:active{
+    color:#000;
+}
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    border-color: #000 #000 #fff;
+    border-radius:2px;
+}
+

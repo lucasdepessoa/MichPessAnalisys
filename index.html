@@ -7,7 +7,8 @@
     <title>MichPess Analisys</title>
     <!-- Style References -->
     <link type="text/css" rel="stylesheet" href="_css/bootstrap.min.css"/>
-    <link type="text/css" rel="stylesheet" href="_css/override.css"/>
+    <link type="text/css" rel="stylesheet" href="_css/override.css"/> 
+    <link type="text/css" rel="stylesheet" href="_css/all.css"/>
     <!-- -->
 </head>
 <body class="backMaster">
@@ -63,7 +64,9 @@
                     <li class="nav-item dropdown">
                         <button class="btn btn-primary bg-dark dropdown-toggle outline" onclick="trigger(this.id);" data-toggle="dropdown" id="navSair">
                             Sair
+                            <i class="fa fa-power-off"></i>
                         </button>
+                        
                     </li>
                 </ul>
             </div>
@@ -90,25 +93,34 @@
         
         <!--INSERÇÃO DE DADOS, TABULAÇÃO E APRESENTAÇÃO DE RESULTADOS-->
         <div class="tab-content bg-white p-4" id="myTabContent">
+            <!--INSERÇÃO DE DADOS-->
             <div class="tab-pane fade show active" id="coleta">
-                Formulário de Coleta
-                <!--INSERÇÃO DE DADOS-->
-                <div>
-                    <p class="font-weight-bold">Insira os valores desejados separando-os por ponto e vírgula: </p>
-                    <input type="text" id="numString"/>
-                    <br></br>
-                    <p><button type="button" class="btn btn-primary" onclick="entrada()">Entrada</button></p>
-                    <br>
-                    <p class="font-weight-lighter">Valores incluídos:</p><span class="text-muted" id="valores"></span>
-                    <br></br>
-                    <p><button type="button" class="btn btn-primary" onclick="call()">Executar a Função</button></p>
-                    <br>
+                <!-- Tipo de variavel Amostra ou População -->
+                <div class="btn-group btn-group-toggle col-6" data-toggle="buttons">
+                    <label class="btn btn-dark  btnVariable">
+                      <input type="radio" name="tipo_variavel" id="tipo_amostra" autocomplete="off"> 
+                      Amostra
+                    </label>
+                    <label class="btn btn-dark btnVariable">
+                      <input type="radio" name="tipo_variavel" id="tipo_populacao" autocomplete="off"> 
+                      População
+                    </label>
+                </div>
+                    
+                <div class="input-group mb-3 inp_data col-6">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">; || Ex: 20.32</span>
+                    </div>
+                    <input type="text" class="form-control" id="variable" placeholder="Insira os valores separados por ponto e vírgula" aria-label="Variables" aria-describedby="Variables-Insert">
+                </div>
+
+                <div class="from-group col-12">
+                        <button type="button" class="btn btn-dark btnEntrada" onclick="entrada()">Entrada</button>
                 </div>
             </div>
             
             <!-- Tabela -->
             <div class="tab-pane fade" id="tabulacao">
-                Tabelas Criadas
                 <table class="table">
                     <thead>
                         <th>Variavel</th>
