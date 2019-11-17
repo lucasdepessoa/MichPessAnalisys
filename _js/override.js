@@ -931,31 +931,39 @@
     function trigger(id){
 
         var obj =  document.getElementById('varPes');
-    
+        var indice = document.getElementById('indice');
         switch(id){
             case 'quali_nomi':
                 obj.innerHTML = 'Qualitativa Nominal';
+                indice.value = 'NOMINAL';
             break;
             case 'quali_ordi':
                 obj.innerHTML = 'Qualitativa Ordinal';
+                indice.value = 'ORDINAL';
             break;
             case 'quati_disc':
                 obj.innerHTML = 'Quantitativa Discreta';
+                indice.value = 'DISCRETA';
             break;
             case 'quati_cont':
                 obj.innerHTML = 'Quantitativa Contínua';
+                indice.value = 'CONTINUA';
             break;        
             case 'dist_uniforme':
-                obj.innerHTML = 'Probabilidade - Distribuição Uniforme'
+                obj.innerHTML = 'Probabilidade - Distribuição Uniforme';
+                indice.value = 'UNIFORME';
             break;
             case 'dist_binomial':
-                obj.innerHTML = 'Probabilidade - Distribuição Binomial'
+                obj.innerHTML = 'Probabilidade - Distribuição Binomial';
+                indice.value = 'BINOMIAL';
             break;
             case 'dist_normal':
                 obj.innerHTML = 'Probabilidade - Distribuição Normal'
+                indice.value = 'NORMAL';
             break;
             case 'navCorrelacao':
                 obj.innerHTML = 'Correlação e Regressão';
+                indice.value = 'CORRELACAO';
             break;
             case 'navSair':
                 window.location.href = 'login.html';
@@ -973,7 +981,8 @@
 
     //tabulação genérica - nominal, ordinal e discreta//
     function table_builder(arr){
-        var tabela = '';    
+        var tabela = '';   
+        document.getElementById('tabul').innerHTML = ''; 
     
         for(var i=0; i<arr[1].length; i++){
             tabela += '<tr>';
@@ -989,6 +998,7 @@
     function table_builder_continua(arr){
 
         var tabela = '';
+        document.getElementById('tabul').innerHTML = ''; 
     
         for(var i=0; i<arr[1].length; i++){
             tabela += '<tr>';
@@ -1019,20 +1029,59 @@ function entrada(){
         document.getElementById('variable').focus();
     }else{
         //Caso esteja preenchido//
+        var indicador = document.getElementById('indice').value;
         var arr_ent = [], numString = document.getElementById('variable').value;
         
         //determina se o valor digitado é número ou caractere, a partir disso, monta o array
-        var teste = (numString.split(';').map(parseFloat));
+        var teste = numString.split(';').map(parseFloat);
         
-        
+        //Se o primeiro resultado em teste der NaN, então converta tudo para um array de string//
         if (isNaN(teste[0]) == true){
+
+            //Converte para um array de string//
             arr_ent = numString.split(';');    
+        
+
+            switch(indicador){
+                case 'NOMINAL':
+                    table_builder(quali_nominal_ordinal('AMOSTRA',indicador,arr_ent))
+                    $("#variable").val('');
+                    $("#tit_table").html('Dados variável qualitativa Nominal');
+                break;
+                case 'ORDINAL':
+                    table_builder(quali_nominal_ordinal('AMOSTRA',indicador,arr_ent))
+                    $("#variable").val('');
+                    $("#tit_table").html('Dados variável qualitativa Ordinal');
+                break;
+            }
+
+        
         }
-        else{
+        else
+        { //Senão, o array é qualitativo, converta tudo para numero//
+            
+            //Converte para um array numérico flutuante//
             arr_ent = numString.split(';').map(parseFloat);
+
+            switch(indicador){
+                case 'DISCRETA':
+                    table_builder(quanti_discreta('AMOSTRA',arr_ent));
+                    $("#variable").val('');
+                    $("#tit_table").html('Dados variável quantitativa Discreta');
+                break;
+                case 'CONTINUA':
+                    table_builder_continua(quanti_continua('AMOSTRA',arr_ent))
+                    $("#variable").val('');
+                    $("#tit_table").html('Dados variável quantitativa Continua');
+                break;
+            }
+
+
+
+
         }
         
-        table_builder(quali_nominal_ordinal("AMOSTRA","NOMINAL",arr_ent));
+        // table_builder(quali_nominal_ordinal("AMOSTRA","NOMINAL",arr_ent));
     }
         
 }
@@ -1088,7 +1137,7 @@ $(document).ready(function(){
         // var arr = ['EF','EF','PG','EF','EF','ES','PG','EM','PG','EM','EM',
         //             'ES','ES','EM','EM','ES','EF','EM','PG','ES','ES',
         //             'EM','EF','EM','EM','PG','ES','PG','ES','ES'];
-
+       
         // var arr2 = ['rosa','amarela','rosa','azul','rosa','branca','preta',
         //             'preta','rosa','branca','rosa','preta','branca','preta',
         //             'rosa','amarela','rosa','branca','branca','azul','rosa','amarela',
@@ -1110,7 +1159,7 @@ $(document).ready(function(){
         // var arr8 = [58,61,61,65,65,66,66,67,67,68,71,71,71,72,73,80,90,100,55,50,47,78,98,65,69,82,72,68,61,76];
 
 
-
+        
 
 
         //TESTES - TABULAÇÃO //

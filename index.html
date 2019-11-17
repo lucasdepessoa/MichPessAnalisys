@@ -76,18 +76,19 @@
         <div id="trigger">
         <nav class="navbar mt-0">
             <h4 id="varPes"> <!-- Aqui vai o título inserido via javascript --> </h4>
+            <input type="hidden" id="indice" value=''>
         </nav>
 
         <!-- Menu tabulação -->
         <ul class="nav nav-tabs bg-white" id="myTab">
             <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab" onclick="animaScroll('tabs');" href="#coleta">Coleta de Dados</a>
+                <a class="nav-link active" data-toggle="tab" id='tab_coleta' onclick="animaScroll('tabs');" href="#coleta">Coleta de Dados</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" onclick="animaScroll('tabs');" href="#tabulacao">Tabulação</a>
+                <a class="nav-link" data-toggle="tab" id='tab_tabulacao' onclick="animaScroll('tabs');" href="#tabulacao">Tabulação</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" onclick="animaScroll('tabs');" href="#graficos">Gráficos</a>
+                <a class="nav-link" data-toggle="tab" id='tab_graficos' onclick="animaScroll('tabs');" href="#graficos">Gráficos</a>
             </li>
         </ul>
         
@@ -109,7 +110,7 @@
                     
                 <div class="input-group mb-3 inp_data col-6">
                     <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">; || Ex: 20.32</span>
+                        <span class="input-group-text" id="basic-addon1">;</span>
                     </div>
                     <input type="text" class="form-control" id="variable" placeholder="Insira os valores separados por ponto e vírgula" aria-label="Variables" aria-describedby="Variables-Insert">
                 </div>
@@ -121,6 +122,7 @@
             
             <!-- Tabela -->
             <div class="tab-pane fade" id="tabulacao">
+                <h5 class="text-center" id="tit_table"></h5>
                 <table class="table">
                     <thead>
                         <th>Variavel</th>
