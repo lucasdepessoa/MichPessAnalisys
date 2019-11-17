@@ -125,7 +125,7 @@
         media = soma/tot;
     
         //DESVIO PADRÃO
-        //Para população
+        //Para população //
         if (prop[0]){
             var v_x = 0, soma = 0, coef_varia = 0, parcial = 0, percent = 0;
             for (i=0;i<quanti_names.length;i++){
@@ -135,9 +135,11 @@
             v_x = Math.sqrt(soma/tot);
             coef_varia =  v_x/media;
             percent = coef_varia * 100;
-            console.log("O desvio padrão é de " + percent);
+            
+            //Guarda o desvio padrão de população//
+            quanti_struct_tb[10] = percent;
         }
-        //para amostra
+        //para amostra //
         else{
             var v_x = 0, soma = 0, coef_varia = 0, parcial = 0, percent = 0;
             for (i=0;i<quanti_names.length;i++){
@@ -147,7 +149,9 @@
             v_x = Math.sqrt(soma/(tot-1));
             coef_varia =  v_x/media;
             percent = coef_varia * 100;
-            console.log("O desvio padrão é de " + percent);
+
+            //Guarda o desvio padrão para amostra//
+            quanti_struct_tb[10] = percent;
         }
     
         /* LEGENDA - array de retorno :
@@ -174,6 +178,7 @@
         quanti_struct_tb[7] = moda(quanti_struct_tb);
         quanti_struct_tb[8] = mediana(quanti_struct_tb);
         quanti_struct_tb[9] = media;
+        //posição 10 - desvio padrão já calculado acima//
     
         //retorno do array com os dados prontos//
         return quanti_struct_tb;
@@ -290,7 +295,9 @@
             v_x = Math.sqrt(soma/tot);
             coef_varia =  v_x/media;
             percent = coef_varia * 100;
-            console.log("O desvio padrão é de " + percent);
+
+            //Guarda o desvio padrão de população//
+            quanti_struct_tb[12] = percent;
         }
         //para amostra
         else{
@@ -302,7 +309,9 @@
             v_x = Math.sqrt(soma/(tot-1));
             coef_varia =  v_x/media;
             percent = coef_varia * 100;
-            console.log("O desvio padrão é de " + percent);
+
+            //Guarda o desvio padrão de Amostra//
+            quanti_struct_tb[12] = percent;
         }
         
     
@@ -335,6 +344,7 @@
         quanti_struct_tb[9] = media;
         quanti_struct_tb[10] = mediana_cont(quanti_struct_tb);
         quanti_struct_tb[11] = moda_cont(quanti_struct_tb);
+        // Posição 12 // - Desvio Padrão já calculado acima//
     
         //retorna o array com os valores prontos//
         return quanti_struct_tb;
@@ -363,7 +373,7 @@
                     moda.push(matriz[0][i]);
                 }
             }
-            console.log("A moda é " + moda + " com " + freq + " de frequência");
+            // console.log("A moda é " + moda + " com " + freq + " de frequência");
             return moda;
     }
 
@@ -380,12 +390,12 @@
             var pos1 = matriz[5]/2;
             var pos2 = pos1 + 1;
             med.push(matriz[6][pos1],matriz[6][pos2]);
-            console.log("A mediana é " + med + " nas posições "+ pos1 + " e " + pos2);
+            // console.log("A mediana é " + med + " nas posições "+ pos1 + " e " + pos2);
         }
         else {
             var pos1 = Math.ceil(matriz[5]/2);
             med.push(matriz[6][pos1]);
-            console.log("A mediana é " + med + " na posição " + pos1);
+            // console.log("A mediana é " + med + " na posição " + pos1);
         };
         return med;
     }
@@ -441,7 +451,7 @@
                     moda.push(matriz[7][i]);
                 }
             }
-            console.log("A moda é " + moda + " com " + freq + " de frequência");
+            // console.log("A moda é " + moda + " com " + freq + " de frequência");
             return moda;
         
     }
@@ -539,7 +549,7 @@
         
         //H - da formula (intervalo)//
         H = Number(arr[8].toFixed(2));
-        console.log(arr)
+        
         //medida separatriz recebe//
         ms = I + ( (pos - fac_anterior) /fi_linha ) * H;
     
@@ -923,7 +933,7 @@
         }
 
         if(local === 'tabs'){
-            $('html,body').animate({scrollTop: $('#myTabContent').offset().top},100);
+            $('html,body').animate({scrollTop: $('#myTabContent').offset().top},1500);
         }
     }
 
@@ -932,20 +942,51 @@
 
         var obj =  document.getElementById('varPes');
         var indice = document.getElementById('indice');
+
+        var comando = {
+            corrige : function(){
+                
+                //Desmarca os buttons de amostra ou população//                
+                $('#lb_amostra').removeClass('active');
+                $('#lb_populacao').removeClass('active');
+
+                //limpa a tabela//
+                $('#tabul').html('');
+                $('#tit_table').text('');
+
+            },
+            mostra : function(){
+                //Mostra a div//
+                $("#trigger").css("display","block");
+
+                //da foco no input principal//
+                $('#variable').val('');
+                $('#variable').focus();
+
+                $('#tab_coleta').trigger('click')
+
+            }
+        }
+
+
         switch(id){
             case 'quali_nomi':
+                comando.corrige();
                 obj.innerHTML = 'Qualitativa Nominal';
                 indice.value = 'NOMINAL';
             break;
             case 'quali_ordi':
+                comando.corrige();
                 obj.innerHTML = 'Qualitativa Ordinal';
                 indice.value = 'ORDINAL';
             break;
             case 'quati_disc':
+                comando.corrige();
                 obj.innerHTML = 'Quantitativa Discreta';
                 indice.value = 'DISCRETA';
             break;
             case 'quati_cont':
+                comando.corrige();
                 obj.innerHTML = 'Quantitativa Contínua';
                 indice.value = 'CONTINUA';
             break;        
@@ -956,6 +997,7 @@
             case 'dist_binomial':
                 obj.innerHTML = 'Probabilidade - Distribuição Binomial';
                 indice.value = 'BINOMIAL';
+
             break;
             case 'dist_normal':
                 obj.innerHTML = 'Probabilidade - Distribuição Normal'
@@ -969,15 +1011,15 @@
                 window.location.href = 'login.html';
             break;
         }
+        
+        comando.mostra();
+        
     
-        if(document.getElementById('trigger').style.display != 'block'){
-            document.getElementById('trigger').style.display = 'block'; 
-        }
-
         //move o scroll//
         animaScroll('menu');
 
     }
+
 
     //tabulação genérica - nominal, ordinal e discreta//
     function table_builder(arr){
@@ -990,9 +1032,33 @@
             tabela += '</tr>';
             
         }
+
+        if($('#indice').val() == 'NOMINAL' || $('#indice').val() == 'ORDINAL'){
+            
+            tabela += '<tfoot>';
+            tabela +=   '<th>Moda</th>';
+            tabela +=   '<th>'+arr[7]+'</td>';
+            tabela +=   '<th>Mediana</th>';
+            tabela +=   '<th>'+arr[8]+'</td>';
+            tabela += '</tfoot>';
+        
+        }else if($('#indice').val() == 'DISCRETA'){
+            tabela += '<tfoot>';
+            tabela +=   '<th>Moda</th>';
+            tabela +=   '<th>'+arr[7]+'</td>';
+            tabela +=   '<th>Mediana</th>';
+            tabela +=   '<th>'+arr[8]+'</td>';
+            tabela +=   '<th>Média</th>';
+            tabela +=   '<th>'+arr[9]+'</td>';
+            tabela +=   '<th>Desvio Padrão</th>';
+            tabela +=   '<th>'+arr[10]+'</td>';
+            tabela += '</tfoot>';
+
+        }
         
         document.getElementById('tabul').innerHTML += tabela; 
     }
+
 
     //tabulação variável continua//
     function table_builder_continua(arr){
@@ -1004,6 +1070,19 @@
             tabela += '<tr>';
             tabela += '<td>'+arr[0][i]+' |--------- '+arr[0][i+1]+'</td><td>'+arr[1][i]+'</td><td>'+arr[2][i]+'</td><td>'+arr[3][i]+'</td><td>'+arr[4][i]+'</td>';
             tabela += '</tr>';    
+        }
+
+        if($('#indice').val() == 'CONTINUA'){
+            tabela += '<tfoot>';
+            tabela +=   '<th>Moda</th>';
+            tabela +=   '<th>'+arr[11]+'</td>';
+            tabela +=   '<th>Mediana</th>';
+            tabela +=   '<th>'+arr[10]+'</td>';
+            tabela +=   '<th>Média</th>';
+            tabela +=   '<th>'+arr[9]+'</td>';
+            tabela +=   '<th>Desvio Padrão</th>';
+            tabela +=   '<th>'+arr[12]+'</td>';
+            tabela += '</tfoot>';
         }
         document.getElementById('tabul').innerHTML += tabela; 
     }
@@ -1047,11 +1126,13 @@ function entrada(){
                     table_builder(quali_nominal_ordinal('AMOSTRA',indicador,arr_ent))
                     $("#variable").val('');
                     $("#tit_table").html('Dados variável qualitativa Nominal');
+                    $("#tab_tabulacao").trigger('click');
                 break;
                 case 'ORDINAL':
                     table_builder(quali_nominal_ordinal('AMOSTRA',indicador,arr_ent))
                     $("#variable").val('');
                     $("#tit_table").html('Dados variável qualitativa Ordinal');
+                    $("#tab_tabulacao").trigger('click');
                 break;
             }
 
@@ -1066,13 +1147,13 @@ function entrada(){
             switch(indicador){
                 case 'DISCRETA':
                     table_builder(quanti_discreta('AMOSTRA',arr_ent));
-                    $("#variable").val('');
                     $("#tit_table").html('Dados variável quantitativa Discreta');
+                    $("#tab_tabulacao").trigger('click');
                 break;
                 case 'CONTINUA':
                     table_builder_continua(quanti_continua('AMOSTRA',arr_ent))
-                    $("#variable").val('');
                     $("#tit_table").html('Dados variável quantitativa Continua');
+                    $("#tab_tabulacao").trigger('click');
                 break;
             }
 
@@ -1081,7 +1162,7 @@ function entrada(){
 
         }
         
-        // table_builder(quali_nominal_ordinal("AMOSTRA","NOMINAL",arr_ent));
+        
     }
         
 }
