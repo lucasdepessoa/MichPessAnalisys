@@ -72,7 +72,11 @@
             </div>
         </div>
     </nav>
+
+
     <div class="container p-4" id="container_trigger">
+
+
         <!-- Pagina estatística descritiva -->
         <div id="trigger">
             <nav class="navbar mt-0">
@@ -108,13 +112,36 @@
                         População
                         </label>
                     </div>
-                        
+                    
+                    <!-- Area do input -->
                     <div class="input-group mb-3 inp_data col-6">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">;</span>
                         </div>
                         <input type="text" class="form-control" id="variable" placeholder="Insira os valores separados por ponto e vírgula" aria-label="Variables" aria-describedby="Variables-Insert">
                     </div>
+
+                    <!-- area da medida separatriz -->
+                    <div class="row pl-2">
+                        <div class="input-group mb-3 col-2">
+                            <select name="selSeparatriz" id="selSeparatriz" class="custom-select mb-3">
+                                <option value="Q">Quartil</option>
+                                <option value="D">Decil</option> 
+                                <option value="K">Quintil</option>
+                                <option value="P">Percentil</option>   
+                            </select>
+                        </div>
+                        <div class="input-group mb-3 col-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon2">%</span>
+                            </div>    
+                            <input type="number" min="1" max="5" step="1.0" class="form-control" id="parcela" placeholder=" % ..">
+                        </div>            
+                    </div>
+
+                </div>
+                    
+                    
 
                     <div class="from-group col-12">
                             <button type="button" class="btn btn-dark btnEntrada" onclick="entrada()">Entrada</button>
