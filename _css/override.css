@@ -1,6 +1,10 @@
 #trigger{
     display: none;
 }
+
+#trigger_prob{
+    display: none;
+}
 button.outline {
     outline: none!important;
     border:none!important;

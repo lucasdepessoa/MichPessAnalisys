@@ -42,14 +42,14 @@
                         </div>
                     </li>
                     <li class="nav-item dropdown">
-                        <button class="btn btn-primary bg-dark dropdown-toggle outline" data-toggle="dropdown" id="navProb">
+                        <button class="btn btn-primary bg-dark dropdown-toggle outline" onclick="trigger(this.id);" data-toggle="dropdown" id="dist_probabilidade">
                             Probabilidade
                         </button>
-                        <div class="dropdown-menu menu_drop">
+                        <!-- <div class="dropdown-menu menu_drop">
                             <button class="dropdown-item navItemCustom" id="dist_uniforme" type="button" onclick="trigger(this.id);" > Distribuição Uniforme </button>
                             <button class="dropdown-item navItemCustom" id="dist_binomial" type="button" onclick="trigger(this.id);" > Distribuição Binomial </button>
-                            <button class="dropdown-item navItemCustom" id="dist_normal" type="button" onclick="trigger(this.id);" > Distribuição Normal </button>
-                        </div>
+                            <button class="dropdown-item navItemCustom" id="dist_normal" type="button" onclick="trigger(this.id);" > Distribuição Normal </button> -->
+                        <!-- </div> -->
                     </li>
                     <li class="nav-item dropdown">
                         <button class="btn btn-primary bg-dark dropdown-toggle outline" onclick="trigger(this.id);" data-toggle="dropdown" id="navCorrelacao">
@@ -73,77 +73,145 @@
         </div>
     </nav>
     <div class="container p-4" id="container_trigger">
+        <!-- Pagina estatística descritiva -->
         <div id="trigger">
-        <nav class="navbar mt-0">
-            <h4 id="varPes"> <!-- Aqui vai o título inserido via javascript --> </h4>
-            <input type="hidden" id="indice" value=''>
-        </nav>
+            <nav class="navbar mt-0">
+                <h4 id="varPes"> <!-- Aqui vai o título inserido via javascript --> </h4>
+                <input type="hidden" id="indice" value=''>
+            </nav>
 
-        <!-- Menu tabulação -->
-        <ul class="nav nav-tabs bg-white" id="myTab">
-            <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab" id='tab_coleta' onclick="animaScroll('tabs');" href="#coleta">Coleta de Dados</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" id='tab_tabulacao' onclick="animaScroll('tabs');" href="#tabulacao">Tabulação</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" id='tab_graficos' onclick="animaScroll('tabs');" href="#graficos">Gráficos</a>
-            </li>
-        </ul>
-        
-        <!--INSERÇÃO DE DADOS, TABULAÇÃO E APRESENTAÇÃO DE RESULTADOS-->
-        <div class="tab-content bg-white p-4" id="myTabContent">
-            <!--INSERÇÃO DE DADOS-->
-            <div class="tab-pane fade show active" id="coleta">
-                <!-- Tipo de variavel Amostra ou População -->
-                <div class="btn-group btn-group-toggle col-6" data-toggle="buttons">
-                    <label class="btn btn-dark  btnVariable" id="lb_amostra">
-                      <input type="radio" name="tipo_variavel" id="tipo_amostra" autocomplete="off"> 
-                      Amostra
-                    </label>
-                    <label class="btn btn-dark btnVariable" id="lb_populacao">
-                      <input type="radio" name="tipo_variavel" id="tipo_populacao" autocomplete="off"> 
-                      População
-                    </label>
-                </div>
-                    
-                <div class="input-group mb-3 inp_data col-6">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">;</span>
-                    </div>
-                    <input type="text" class="form-control" id="variable" placeholder="Insira os valores separados por ponto e vírgula" aria-label="Variables" aria-describedby="Variables-Insert">
-                </div>
-
-                <div class="from-group col-12">
-                        <button type="button" class="btn btn-dark btnEntrada" onclick="entrada()">Entrada</button>
-                </div>
-            </div>
+            <!-- Menu tabulação -->
+            <ul class="nav nav-tabs bg-white" id="myTab">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" id='tab_coleta' onclick="animaScroll('tabs');" href="#coleta">Coleta de Dados</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" id='tab_tabulacao' onclick="animaScroll('tabs');" href="#tabulacao">Tabulação</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" id='tab_graficos' onclick="animaScroll('tabs');" href="#graficos">Gráficos</a>
+                </li>
+            </ul>
             
-            <!-- Tabela -->
-            <div class="tab-pane fade" id="tabulacao">
-                <h5 class="text-center" id="tit_table"></h5>
-                <table class="table">
-                    <thead>
-                        <th>Variavel</th>
-                        <th>Fi</th>
-                        <th>FR %</th>
-                        <th>Fac </th>
-                        <th>Fac %</th>
-                    </thead>
-                    <tbody id="tabul">
+            <!--INSERÇÃO DE DADOS, TABULAÇÃO E APRESENTAÇÃO DE RESULTADOS-->
+            <div class="tab-content bg-white p-4" id="myTabContent">
+                <!--INSERÇÃO DE DADOS-->
+                <div class="tab-pane fade show active" id="coleta">
+                    <!-- Tipo de variavel Amostra ou População -->
+                    <div class="btn-group btn-group-toggle col-6" data-toggle="buttons">
+                        <label class="btn btn-dark  btnVariable" id="lb_amostra">
+                        <input type="radio" name="tipo_variavel" id="tipo_amostra" autocomplete="off"> 
+                        Amostra
+                        </label>
+                        <label class="btn btn-dark btnVariable" id="lb_populacao">
+                        <input type="radio" name="tipo_variavel" id="tipo_populacao" autocomplete="off"> 
+                        População
+                        </label>
+                    </div>
+                        
+                    <div class="input-group mb-3 inp_data col-6">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">;</span>
+                        </div>
+                        <input type="text" class="form-control" id="variable" placeholder="Insira os valores separados por ponto e vírgula" aria-label="Variables" aria-describedby="Variables-Insert">
+                    </div>
 
-                    </tbody>
-                </table>
-            </div>
+                    <div class="from-group col-12">
+                            <button type="button" class="btn btn-dark btnEntrada" onclick="entrada()">Entrada</button>
+                    </div>
+                </div>
+                
+                <!-- Tabela -->
+                <div class="tab-pane fade" id="tabulacao">
+                    <h5 class="text-center" id="tit_table"></h5>
+                    <table class="table">
+                        <thead>
+                            <th>Variavel</th>
+                            <th>Fi</th>
+                            <th>FR %</th>
+                            <th>Fac </th>
+                            <th>Fac %</th>
+                        </thead>
+                        <tbody id="tabul">
 
-            <!-- Gráfico -->
-            <div class="tab-pane fade" id="graficos">
-                Gráficos
-            </div>
-        </div> 
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Gráfico -->
+                <div class="tab-pane fade" id="graficos">
+                    Gráficos
+                </div>
+            </div> 
+        </div>
+
+        <!-- Pagina estatística probabilidade -->
+        <div id="trigger_prob">
+            <nav class="navbar mt-0">
+                <h4 id="varPesProb"> <!-- Aqui vai o título inserido via javascript --> </h4>
+                <input type="hidden" id="indice_prob" value=''>
+            </nav>
+    
+            <!-- Menu tabulação -->
+            <ul class="nav nav-tabs bg-white" id="myTabProb">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" id='tab_coleta_prob' onclick="animaScroll('tabs');" href="#coleta_prob">Coleta de Dados</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" id='tab_tabulacao_prob' onclick="animaScroll('tabs');" href="#tabulacao_prob">Resultados</a>
+                </li>
+            </ul>
+            
+            <!--INSERÇÃO DE DADOS, TABULAÇÃO E APRESENTAÇÃO DE RESULTADOS-->
+            <div class="tab-content bg-white p-4" id="myTabProbContent">
+                <!--INSERÇÃO DE DADOS-->
+                <div class="tab-pane fade show active" id="coleta_prob">
+                    <!-- Tipo de variavel Amostra ou População -->
+                    <div class="btn-group btn-group-toggle col-6" data-toggle="buttons">
+                        <label class="btn btn-dark  btnVariable" id="lb_uniforme">
+                            <input type="radio" name="tipo_calculo" id="tipo_uniforme" autocomplete="off"> 
+                            Uniforme
+                        </label>
+                        <label class="btn btn-dark btnVariable" id="lb_binomial">
+                            <input type="radio" name="tipo_calculo" id="tipo_binomial" autocomplete="off"> 
+                            Binomial
+                        </label>
+                        <label class="btn btn-dark btnVariable" id="lb_normal">
+                            <input type="radio" name="tipo_calculo" id="tipo_normal" autocomplete="off"> 
+                            Normal
+                        </label>
+                    </div>
+                        
+                    <div class="input-group mb-3 inp_data col-6">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">;</span>
+                        </div>
+                        <input type="text" class="form-control" id="variable_prob" placeholder="Insira os valores separados por ponto e vírgula" aria-label="Variables" aria-describedby="Variables-Insert">
+                    </div>
+    
+                    <div class="from-group col-12">
+                            <button type="button" class="btn btn-dark btnEntrada" onclick="entrada()">Entrada</button>
+                    </div>
+                </div>
+                
+                <!-- Tabela -->
+                <div class="tab-pane fade" id="tabulacao_prob">
+                    <h5 class="text-center" id="tit_table"></h5>
+                    <table class="table">
+                        <thead>
+                            <th>Média</th>
+                            <th>Probabilidade %</th>
+                            <th>Desvio Padrão</th>
+                            <th>Coeficiente de Variação</th>
+                        </thead>
+                        <tbody id="tabul">
+    
+                        </tbody>
+                    </table>
+                </div>
+            </div> 
+        </div>
     </div>
-</div>
 
 
 

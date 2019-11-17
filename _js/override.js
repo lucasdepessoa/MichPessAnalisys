@@ -941,23 +941,44 @@
     function trigger(id){
 
         var obj =  document.getElementById('varPes');
+        var objProb = document.getElementById('varPesProb');
         var indice = document.getElementById('indice');
+        var indiceProb = document.getElementById('indice_prob');
 
         var comando = {
-            corrige : function(){
+            corrige : function(e=null){
                 
                 //Desmarca os buttons de amostra ou população//                
-                $('#lb_amostra').removeClass('active');
-                $('#lb_populacao').removeClass('active');
+               switch(e){
+                case 'discreta':
+                    $('#lb_amostra').removeClass('active');
+                    $('#lb_populacao').removeClass('active');
+                break;
+                case 'probabilidade':
+                    $('#lb_uniforme').removeClass('active');
+                    $('#lb_binomial').removeClass('active');
+                    $('#lb_normal').removeClass('active');
+                break;
+                }
+                
 
                 //limpa a tabela//
                 $('#tabul').html('');
                 $('#tit_table').text('');
 
             },
-            mostra : function(){
+            mostra : function(e){
                 //Mostra a div//
-                $("#trigger").css("display","block");
+                switch(e){
+                    case 'discreta':
+                        $("#trigger_prob").css("display","none");
+                        $("#trigger").css("display","block");
+                    break;
+                    case 'probabilidade':
+                        $("#trigger").css("display","none");
+                        $("#trigger_prob").css("display","block");
+                    break;
+                }
 
                 //da foco no input principal//
                 $('#variable').val('');
@@ -971,37 +992,34 @@
 
         switch(id){
             case 'quali_nomi':
-                comando.corrige();
+                comando.corrige('discreta');
                 obj.innerHTML = 'Qualitativa Nominal';
                 indice.value = 'NOMINAL';
+                comando.mostra('discreta');
             break;
             case 'quali_ordi':
-                comando.corrige();
+                comando.corrige('discreta');
                 obj.innerHTML = 'Qualitativa Ordinal';
                 indice.value = 'ORDINAL';
+                comando.mostra('discreta');
             break;
             case 'quati_disc':
-                comando.corrige();
+                comando.corrige('discreta');
                 obj.innerHTML = 'Quantitativa Discreta';
                 indice.value = 'DISCRETA';
+                comando.mostra('discreta');
             break;
             case 'quati_cont':
-                comando.corrige();
+                comando.corrige('discreta');
                 obj.innerHTML = 'Quantitativa Contínua';
                 indice.value = 'CONTINUA';
+                comando.mostra('discreta');
             break;        
-            case 'dist_uniforme':
-                obj.innerHTML = 'Probabilidade - Distribuição Uniforme';
-                indice.value = 'UNIFORME';
-            break;
-            case 'dist_binomial':
-                obj.innerHTML = 'Probabilidade - Distribuição Binomial';
-                indice.value = 'BINOMIAL';
-
-            break;
-            case 'dist_normal':
-                obj.innerHTML = 'Probabilidade - Distribuição Normal'
-                indice.value = 'NORMAL';
+            case 'dist_probabilidade':
+                comando.corrige('probabilidade');
+                objProb.innerHTML = 'Estatística Probabilidade';
+                indiceProb.value = 'PROBABILIDADE';
+                comando.mostra('probabilidade');
             break;
             case 'navCorrelacao':
                 obj.innerHTML = 'Correlação e Regressão';
@@ -1012,7 +1030,6 @@
             break;
         }
         
-        comando.mostra();
         
     
         //move o scroll//
@@ -1109,6 +1126,7 @@ function entrada(){
     }else{
         //Caso esteja preenchido//
         var indicador = document.getElementById('indice').value;
+        var indicador_prob = document.getElementById('indice_prob').value;
         var arr_ent = [], numString = document.getElementById('variable').value;
         
         //determina se o valor digitado é número ou caractere, a partir disso, monta o array
@@ -1157,6 +1175,9 @@ function entrada(){
                 break;
             }
 
+            if(indicador_prob == 'PROBABILIDADE'){
+                alert('lkfjasd')
+            }
 
 
 
