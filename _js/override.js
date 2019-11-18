@@ -151,7 +151,8 @@
             percent = coef_varia * 100;
 
             //Guarda o desvio padrão para amostra//
-            quanti_struct_tb[10] = percent;
+            quanti_struct_tb[10] = v_x;
+            quanti_struct_tb[11] = percent;
         }
     
         /* LEGENDA - array de retorno :
@@ -179,6 +180,7 @@
         quanti_struct_tb[8] = mediana(quanti_struct_tb);
         quanti_struct_tb[9] = media;
         //posição 10 - desvio padrão já calculado acima//
+        //posição 11 - coeficiente de variação //
     
         //retorno do array com os dados prontos//
         return quanti_struct_tb;
@@ -311,7 +313,8 @@
             percent = coef_varia * 100;
 
             //Guarda o desvio padrão de Amostra//
-            quanti_struct_tb[12] = percent;
+            quanti_struct_tb[12] = v_x;
+            quanti_struct_tb[13] = percent;
         }
         
     
@@ -345,6 +348,7 @@
         quanti_struct_tb[10] = mediana_cont(quanti_struct_tb);
         quanti_struct_tb[11] = moda_cont(quanti_struct_tb);
         // Posição 12 // - Desvio Padrão já calculado acima//
+        // Posição 13 // - Coeficiente de variação //
     
         //retorna o array com os valores prontos//
         return quanti_struct_tb;
@@ -763,7 +767,7 @@
                 var pos = (z.charAt(3) == '' || z.charAt(3) == '0')? 0 : Number(z.slice(-1));
     
                 //Calcula a probabilidade//
-                var prob = ((0.5 + parseFloat(tbz[indice][pos])) * 100 ).toFixed(2)
+                var prob = ((0.5 - parseFloat(tbz[indice][pos])) * 100 ).toFixed(2)
     
                 //Retorna a probabilidade//
                 return prob;
@@ -933,8 +937,9 @@
 
 //########################################################//
 
-
-
+var arrX = [0,2,3,4,6]
+var arrY = [40,50,55,60,65];
+console.log(correlacao_regressao(arrX,arrY));
 
 
 
@@ -1459,7 +1464,7 @@ $(document).ready(function(){
         // var arr7 = [20,23,23,27,27,27,28,29,30,32,34,34,34,35,37,37,37,38,38,38,41,42,43,43,45,45,45,46,47,47,50,51,53,55,55,56,56,56,60,60,63,65];
 
         // var arr8 = [34,43,20,37,37,55,27,37,23,46,43,56,60,32,27,60,53,51,45,45,45,28,41,38,38,38,56,65,63,23,56,34,27,34,30,29,47,45,47,42,50,35];
-
+        
         // var arr8 = [58,61,61,65,65,66,66,67,67,68,71,71,71,72,73,80,90,100,55,50,47,78,98,65,69,82,72,68,61,76];
 
     //    var arrteste = [2,2,2,3,3,3,4,4,5,5,6,6,8,8,8];
