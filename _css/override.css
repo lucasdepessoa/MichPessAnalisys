@@ -104,3 +104,21 @@ button.outline:focus{
     border-radius:2px;
 }
 
+#moldeBino {
+    display: none;
+}
+
+#moldeUni{
+    display: none;
+}
+
+#moldeNormal{
+    display: none;
+}
+#de_ate{
+    display: none;
+}
+
+#de_ate_normal{
+    display: none;
+}

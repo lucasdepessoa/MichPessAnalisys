@@ -943,6 +943,51 @@
 
 //------------- FUNÇÕES DE ESTRUTURA ------------ //
 
+    //Controlador SELECT PROBABILIDADE - uniforme //
+    $('#selTipoUni').on('change',function(){
+        if($(this).val()=='ENTRE_'){
+            $('#qtd_uni').val('');
+            $('#qtd_uni').attr('disabled','disabled');
+            $('#de_ate').css("display","block");
+        }else{
+            $('#de_ate').css("display","none");
+            $('#qtd_uni').attr('disabled',false);
+        }
+    })
+
+    //Controlador SELECT PROBABILIDADE - Normal//
+    $('#selTipoNormal').on('change',function(){
+        if($(this).val()=='ENTRE_'){
+            $('#qtd_normal').val('');
+            $('#qtd_normal').attr('disabled','disabled');
+            $('#de_ate_normal').css("display","block");
+        }else{
+            $('#de_ate_normal').css("display","none");
+            $('#qtd_qtd').attr('disabled',false);
+        }
+    })
+
+
+    //controlador de opções de distribuição - probabilidade//
+    $('#lb_uniforme').on('click',function(){
+        $('#moldeBino').css("display","none");
+        $('#moldeNormal').css("display","none");
+        $('#moldeUni').css("display","block");
+        animaScroll('tabs2');
+    })
+    $('#lb_binomial').on('click',function(){
+        $('#moldeNormal').css("display","none");
+        $('#moldeUni').css("display","none");
+        $('#moldeBino').css("display","block");
+        animaScroll('tabs2');
+    })
+    $('#lb_normal').on('click',function(){
+        $('#moldeBino').css("display","none");
+        $('#moldeUni').css("display","none");
+        $('#moldeNormal').css("display","block");
+        animaScroll('tabs2');
+    })
+
     //controlador select de medida separatriz//
     $('#selSeparatriz').on('change',function(){
         
@@ -976,6 +1021,14 @@
 
         if(local === 'tabs'){
             $('html,body').animate({scrollTop: $('#myTabContent').offset().top},1500);
+        }
+
+        if(local == 'menu2'){
+            $('html,body').animate({scrollTop: $('#myTabProbContent').offset().top},1500);
+        }
+
+        if(local === 'tabs2'){
+            $('html,body').animate({scrollTop: $('#myTabProbContent').offset().top},1500);
         }
     }
 
@@ -1013,10 +1066,16 @@
                 //Mostra a div//
                 switch(e){
                     case 'discreta':
+                        $('#moldeBino').css("display","none");
+                        $('#moldeUni').css("display","none");
+                        $('#moldeNormal').css("display","none");
                         $("#trigger_prob").css("display","none");
                         $("#trigger").css("display","block");
+                        $('#moldeDesc').css("display","block");
                     break;
                     case 'probabilidade':
+                        $('#moldeDesc').css("display","none")
+                        $('#moldeUni').css("display","block");
                         $("#trigger").css("display","none");
                         $("#trigger_prob").css("display","block");
                     break;
@@ -1172,11 +1231,6 @@
 
 //Função de recebimento dos dados//
 function entrada(){
-    if(document.getElementById('variable').value == '' || document.getElementById('variable').value == ' '){
-        alert('Insira os valores !');
-        document.getElementById('variable').value = '';
-        document.getElementById('variable').focus();
-    }else{
         //Caso esteja preenchido//
         var indicador = document.getElementById('indice').value;
         var indicador_prob = document.getElementById('indice_prob').value;
@@ -1244,16 +1298,95 @@ function entrada(){
                 break;
             }
 
-            if(indicador_prob == 'PROBABILIDADE'){
-                alert('lkfjasd')
+
+            
+
+
+        }
+
+        //caso o usuario clique na aba de probabilidade//
+        if(indicador_prob == 'PROBABILIDADE'){
+
+
+            // UNIFORME //
+            if($('#lb_uniforme').hasClass('active') && $('#selTipoUni').val()=='ENTRE_'){
+                var min = parseFloat($('#min_uni').val())
+                var max = parseFloat($('#max_uni').val())
+                var de_uni = parseFloat($('#de_uni').val())
+                var ate_uni = parseFloat($('#ate_uni').val());
+                var tipo = $('#selTipoUni').val();
+
+                console.log(distribuicao_uniforme(max,min,tipo,de_uni,ate_uni))
+            }
+
+            if($('#lb_uniforme').hasClass('active') && $('#selTipoUni').val()=='MAIOR_QUE'){
+                var qtd = parseFloat($('#qtd_uni').val());
+                var min = parseFloat($('#min_uni').val());
+                var max = parseFloat($('#max_uni').val());
+                var tipo = $('#selTipoUni').val();
+
+                console.log(distribuicao_uniforme(max,min,tipo,qtd));
+
+            } 
+
+            if($('#lb_uniforme').hasClass('active') && $('#selTipoUni').val()=='MENOR_QUE'){
+                var qtd = parseFloat($('#qtd_uni').val());
+                var min = parseFloat($('#min_uni').val());
+                var max = parseFloat($('#max_uni').val());
+                var tipo = $('#selTipoUni').val();
+
+                console.log(distribuicao_uniforme(max,min,tipo,qtd));
+            }
+
+
+
+            //BINOMIAL//
+            if($('#lb_binomial').hasClass('active')){
+                var amostra = parseFloat($('#amostra_bino').val());
+                var sucesso = parseFloat($('#succes_bino').val());
+                var fracasso = parseFloat($('#failed_bino').val());
+                var evento = parseFloat($('#event_bino').val());
+
+
+                console.log(distribuicao_binomial(amostra,sucesso,fracasso,evento))
+            }
+            
+
+            //NORMAL//
+             // UNIFORME //
+             if($('#lb_normal').hasClass('active') && $('#selTipoNormal').val()=='ENTRE_'){
+                var de_uni = parseFloat($('#de_normal').val())
+                var ate_uni = parseFloat($('#ate_normal').val());
+                var dp = parseFloat($('#dp_normal').val());
+                var media = parseFloat($('#media_normal').val());
+                var tipo = $('#selTipoNormal').val();
+
+                console.log(distribuicao_normal(media,dp,tipo,de_uni,ate_uni));
+            }
+
+            if($('#lb_normal').hasClass('active') && $('#selTipoNormal').val()=='MAIOR_QUE'){
+                var qtd = parseFloat($('#qtd_normal').val());
+                var dp = parseFloat($('#dp_normal').val());
+                var media = parseFloat($('#media_normal').val());
+                var tipo = $('#selTipoNormal').val();
+
+                console.log(distribuicao_normal(media,dp,tipo,qtd));
+
+            } 
+
+            if($('#lb_normal').hasClass('active') && $('#selTipoNormal').val()=='MENOR_QUE'){
+                var qtd = parseFloat($('#qtd_normal').val());
+                var dp = parseFloat($('#dp_normal').val());
+                var media = parseFloat($('#media_normal').val());
+                var tipo = $('#selTipoNormal').val();
+
+                console.log(distribuicao_normal(media,dp,tipo,qtd));
             }
 
 
 
         }
-        
-        
-    }
+
         
 }
 
