@@ -126,7 +126,7 @@
     
         //DESVIO PADRÃO
         //Para população //
-        if (prop[0]){
+        if (prop=='POPULACAO'){
             var v_x = 0, soma = 0, coef_varia = 0, parcial = 0, percent = 0;
             for (i=0;i<quanti_names.length;i++){
                 parcial = (Math.pow((quanti_names[i]-media),2)*quanti_fi[i])
@@ -286,7 +286,7 @@
     
         //DESVIO PADRÃO
         //Para população
-        if (prop[0]){
+        if (prop=='POPULACAO'){
             var v_x = 0, soma = 0, coef_varia = 0, parcial = 0, percent = 0;
             for (i=0;i<pontos_medios.length;i++){
                 parcial = (Math.pow((pontos_medios[i]-media),2)*quanti_fi[i])
@@ -487,11 +487,20 @@
             I = matriz[0][linha-1];
             
             //pega o fac anterior ao da linha correspondente a posicao procurada//
-            fac_ant = matriz[3][linha-2];
+            
+            if(linha == 0){
+                fac_anterior = matriz[3][linha];
+            }else if(linha == 1){
+                fac_anterior = matriz[3][linha-1];
+            }else{
+                fac_anterior = matriz[3][linha-2];
+            }
+           
         
             //pega o FI da linha correspondente//
             fi_da_med = matriz[1][linha-1];
-        
+            
+
             //captura o valor da mediana//
             md = Number((I + ((posicao - fac_ant)/fi_da_med) * matriz[8]).toFixed(2));
             
@@ -527,7 +536,7 @@
                 cont = Number(((arr[6].length*posicao)/100).toFixed(2));
             break;
         }
-    
+
         //verifica a quantidades de linha ate a posicao encontrada//
         for(var i=0; i<arr[3].length; i++){
             if(arr[3][i] <= cont){
@@ -535,14 +544,22 @@
             }    
         }
         
+        
         //Indice inferior//
         I = arr[0][linha]
         
         //Posição//
         pos = cont;
     
-        //Fac-Anterior//
-        fac_anterior = arr[3][linha-1];
+
+        if(linha == 0){
+            fac_anterior = arr[3][linha];
+        }else if(linha == 1){
+            fac_anterior = arr[3][linha-1];
+        }else{
+            fac_anterior = arr[3][linha-1];
+        }
+        
     
         //FI - da linha//
         fi_linha = arr[1][linha];
@@ -552,7 +569,7 @@
         
         //medida separatriz recebe//
         ms = I + ( (pos - fac_anterior) /fi_linha ) * H;
-    
+
         return Number(ms.toFixed(2));
     }
     
@@ -926,6 +943,31 @@
 
 //------------- FUNÇÕES DE ESTRUTURA ------------ //
 
+    //controlador select de medida separatriz//
+    $('#selSeparatriz').on('change',function(){
+        
+        var valor = parseInt($(this).val());
+        var input = $('#parcela');
+        
+        switch(valor){
+            case 4:
+                input.attr("max","4");
+            break;
+            case 5:
+                input.attr("max","5");
+            break;
+            case 10:
+                input.attr("max","10");
+            break;
+            case 100:
+                input.attr("max","100");
+            break;
+        }
+        
+        input.val('');
+        input.focus();
+    });
+
     //função de animação scroll//
     function animaScroll(local){
         if(local === 'menu'){
@@ -1039,9 +1081,12 @@
 
 
     //tabulação genérica - nominal, ordinal e discreta//
-    function table_builder(arr){
+    function table_builder(arr,selValor=null,selDivisao=null){
+        
         var tabela = '';   
-        document.getElementById('tabul').innerHTML = ''; 
+        
+        document.getElementById('tabul').innerHTML = '';
+        
     
         for(var i=0; i<arr[1].length; i++){
             tabela += '<tr>';
@@ -1057,6 +1102,8 @@
             tabela +=   '<th>'+arr[7]+'</td>';
             tabela +=   '<th>Mediana</th>';
             tabela +=   '<th>'+arr[8]+'</td>';
+            tabela +=   '<th>Medida Separatriz</th>';
+            tabela +=   '<th>' + medida_separatriz(arr,parseInt(selValor),parseInt(selDivisao)) + '</th>';
             tabela += '</tfoot>';
         
         }else if($('#indice').val() == 'DISCRETA'){
@@ -1069,16 +1116,19 @@
             tabela +=   '<th>'+arr[9]+'</td>';
             tabela +=   '<th>Desvio Padrão</th>';
             tabela +=   '<th>'+arr[10]+'</td>';
+            tabela +=   '<th>Medida Separatriz</th>';
+            tabela +=   '<th>' + medida_separatriz(arr,parseInt(selValor),parseInt(selDivisao)) + '</th>';
             tabela += '</tfoot>';
 
         }
         
+        // console.log(medida_separatriz(arr[6],4,1));
         document.getElementById('tabul').innerHTML += tabela; 
     }
 
 
     //tabulação variável continua//
-    function table_builder_continua(arr){
+    function table_builder_continua(arr, selValor=null,selDivisao=null){
 
         var tabela = '';
         document.getElementById('tabul').innerHTML = ''; 
@@ -1092,15 +1142,18 @@
         if($('#indice').val() == 'CONTINUA'){
             tabela += '<tfoot>';
             tabela +=   '<th>Moda</th>';
-            tabela +=   '<th>'+arr[11]+'</td>';
+            tabela +=   '<th>'+arr[11]+'</th>';
             tabela +=   '<th>Mediana</th>';
-            tabela +=   '<th>'+arr[10]+'</td>';
+            tabela +=   '<th>'+arr[10]+'</th>';
             tabela +=   '<th>Média</th>';
             tabela +=   '<th>'+arr[9]+'</td>';
             tabela +=   '<th>Desvio Padrão</th>';
             tabela +=   '<th>'+arr[12]+'</td>';
+            tabela +=   '<th>Medida Separatriz</th>';
+            tabela +=   '<th>'+ medida_separatriz_cont(arr,parseInt(selValor),parseInt(selDivisao))+'</th>';
             tabela += '</tfoot>';
         }
+
         document.getElementById('tabul').innerHTML += tabela; 
     }
 
@@ -1128,6 +1181,22 @@ function entrada(){
         var indicador = document.getElementById('indice').value;
         var indicador_prob = document.getElementById('indice_prob').value;
         var arr_ent = [], numString = document.getElementById('variable').value;
+
+
+        //verifica o item escolhido no select de separatriz e faz a conversão para o numero esperado na função
+        var selValor = $('#selSeparatriz').val();
+        var selDivisao = $('#parcela').val();
+        
+        //Verifica se é amostra ou população//
+        var proporcao = '';
+        if($('#lb_amostra').hasClass('active')){
+            proporcao = 'AMOSTRA';
+        }else{
+            proporcao = 'POPULACAO';
+        }
+        /* lembrar de adicionar uma logica para impedir que o usuario entre sem escolher amostrao ou populacao */
+
+
         
         //determina se o valor digitado é número ou caractere, a partir disso, monta o array
         var teste = numString.split(';').map(parseFloat);
@@ -1141,13 +1210,13 @@ function entrada(){
 
             switch(indicador){
                 case 'NOMINAL':
-                    table_builder(quali_nominal_ordinal('AMOSTRA',indicador,arr_ent))
+                    table_builder(quali_nominal_ordinal(proporcao,indicador,arr_ent),selValor,selDivisao);
                     $("#variable").val('');
                     $("#tit_table").html('Dados variável qualitativa Nominal');
                     $("#tab_tabulacao").trigger('click');
                 break;
                 case 'ORDINAL':
-                    table_builder(quali_nominal_ordinal('AMOSTRA',indicador,arr_ent))
+                    table_builder(quali_nominal_ordinal(proporcao,indicador,arr_ent),selValor,selDivisao);
                     $("#variable").val('');
                     $("#tit_table").html('Dados variável qualitativa Ordinal');
                     $("#tab_tabulacao").trigger('click');
@@ -1158,18 +1227,18 @@ function entrada(){
         }
         else
         { //Senão, o array é qualitativo, converta tudo para numero//
-            
+           
             //Converte para um array numérico flutuante//
             arr_ent = numString.split(';').map(parseFloat);
 
             switch(indicador){
                 case 'DISCRETA':
-                    table_builder(quanti_discreta('AMOSTRA',arr_ent));
+                    table_builder(quanti_discreta(proporcao,arr_ent),selValor,selDivisao);
                     $("#tit_table").html('Dados variável quantitativa Discreta');
                     $("#tab_tabulacao").trigger('click');
                 break;
                 case 'CONTINUA':
-                    table_builder_continua(quanti_continua('AMOSTRA',arr_ent))
+                    table_builder_continua(quanti_continua(proporcao,arr_ent),selValor,selDivisao);
                     $("#tit_table").html('Dados variável quantitativa Continua');
                     $("#tab_tabulacao").trigger('click');
                 break;
@@ -1260,8 +1329,11 @@ $(document).ready(function(){
 
         // var arr8 = [58,61,61,65,65,66,66,67,67,68,71,71,71,72,73,80,90,100,55,50,47,78,98,65,69,82,72,68,61,76];
 
-
+    //    var arrteste = [2,2,2,3,3,3,4,4,5,5,6,6,8,8,8];
         
+    //     console.log( medida_separatriz_cont(quanti_continua('AMOSTRA',arrteste),4,1))
+
+    //     console.log(quanti_continua('AMOSTRA',arrteste))
 
 
         //TESTES - TABULAÇÃO //
