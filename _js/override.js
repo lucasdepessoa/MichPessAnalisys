@@ -937,10 +937,6 @@
 
 //########################################################//
 
-var arrX = [0,2,3,4,6]
-var arrY = [40,50,55,60,65];
-console.log(correlacao_regressao(arrX,arrY));
-
 
 
 
@@ -1080,7 +1076,7 @@ console.log(correlacao_regressao(arrX,arrY));
                     break;
                     case 'probabilidade':
                         $('#moldeDesc').css("display","none")
-                        $('#moldeUni').css("display","block");
+                        $('#moldeUni').css("display","none");
                         $("#trigger").css("display","none");
                         $("#trigger_prob").css("display","block");
                     break;

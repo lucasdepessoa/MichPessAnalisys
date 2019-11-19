@@ -257,60 +257,69 @@
 
                         <!-- area de intervalo caseo seja selecionado ENTRE_ -->
                         <div class="row pl-3" id="de_ate">
-                            <!-- <div class="col-2"> </div> -->
                             <!-- Inputs de intervalo, caso seja selecionado a opção ENTRE_ -->
          
-                                <div class="input-group col-6">
+                                <div class="input-group mx-auto mb-2 col-4">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">De</span>
                                     </div>
                                     <input type="text" class="form-control" id="de_uni" placeholder="De (x)" aria-label="Variables">      
                                 </div>
 
-                                <div class="input-group  col-6">
+                                <div class="input-group mb-4 mx-auto col-4">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Até</span>
                                     </div>    
                                     <input type="text" class="form-control" id="ate_uni" placeholder="Até (y)" aria-label="Variables">
-                                </div>
-                            <!-- <div class="col-2"></div>     -->
+                                </div> 
                         </div>
                         
                         <!-- Area do botão de envio -->
                         <div class="from-group col-12">
-                                <button type="button" class="btn btn-dark btnEntrada" onclick="entrada()">Entrada</button>
+                                <button type="button" class="btn btn-dark btnEntrada d-block mx-auto" onclick="entrada()">Entrada</button>
                         </div>
                     </div>
 
                     <!-- probabilidade - binomial -->
                     <div id="moldeBino">
-                        <div class="input-group mb-3 inp_data col-6">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">Amostra</span>
+                        <div class="row mb-0 pl-3">
+                            <div class="col-2"></div>
+                            <div class="input-group mb-3 inp_data mx-auto col-4">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Amostra</span>
+                                </div>
+                                <input type="text" class="form-control" id="amostra_bino" placeholder="Amostra (N)" aria-label="Variables">
                             </div>
-                            <input type="text" class="form-control" id="amostra_bino" placeholder="Amostra (N)" aria-label="Variables">
-                        </div>
-                        <div class="input-group mb-3 inp_data col-6">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">Sucesso (P)</span>
-                            </div>
-                            <input type="text" class="form-control" id="succes_bino" placeholder="Sucesso (P)" aria-label="Variables">
-                        </div>
-                        <div class="input-group mb-3 inp_data col-6"> 
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">Fracasso (Q)</span>
-                            </div>
-                            <input type="text" class="form-control" id="failed_bino" placeholder="Fracasso (Q)" aria-label="Variables">
-                        </div>
 
-                        <div class="input-group mb-3 inp_data col-6"> 
+                            <div class="input-group mb-3 inp_data mx-auto col-4"> 
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Evento (K)</span>
                                 </div>
                                 <input type="text" class="form-control" id="event_bino" placeholder="Evento (k)" aria-label="Variables">
                             </div>
+                            <div class="col-2"></div>
+                        </div>
+
+                        <div class="row pl-3">
+                            <div class="col-2"></div>
+                            <div class="input-group mb-4 col-4">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Sucesso (P)</span>
+                                </div>
+                                <input type="text" class="form-control" id="succes_bino" placeholder="Sucesso (P)" aria-label="Variables">
+                            </div>
+                            <div class="input-group mb-4  col-4"> 
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Fracasso (Q)</span>
+                                </div>
+                                <input type="text" class="form-control" id="failed_bino" placeholder="Fracasso (Q)" aria-label="Variables">
+                            </div>
+                            <div class="col-2"></div>
+                        </div>
+
+                       
         
-                        <div class="from-group col-12">
+                        <div class="from-group d-block mx-auto col-12">
                                 <button type="button" class="btn btn-dark btnEntrada" onclick="entrada()">Entrada</button>
                         </div>
                     </div>
