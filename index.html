@@ -45,21 +45,11 @@
                         <button class="btn btn-primary bg-dark dropdown-toggle outline" onclick="trigger(this.id);" data-toggle="dropdown" id="dist_probabilidade">
                             Probabilidade
                         </button>
-                        <!-- <div class="dropdown-menu menu_drop">
-                            <button class="dropdown-item navItemCustom" id="dist_uniforme" type="button" onclick="trigger(this.id);" > Distribuição Uniforme </button>
-                            <button class="dropdown-item navItemCustom" id="dist_binomial" type="button" onclick="trigger(this.id);" > Distribuição Binomial </button>
-                            <button class="dropdown-item navItemCustom" id="dist_normal" type="button" onclick="trigger(this.id);" > Distribuição Normal </button> -->
-                        <!-- </div> -->
                     </li>
                     <li class="nav-item dropdown">
                         <button class="btn btn-primary bg-dark dropdown-toggle outline" onclick="trigger(this.id);" data-toggle="dropdown" id="navCorrelacao">
                             Correlação e Regressão
                         </button>
-                        <!-- <div class="dropdown-menu menu_drop">
-                            <button class="dropdown-item navItemCustom" id="dist_uniforme" type="button" onclick="trigger(this.id);" > Distribuição Uniforme </button>
-                            <button class="dropdown-item navItemCustom" id="dist_binomial" type="button" onclick="trigger(this.id);" > Distribuição Binomial </button>
-                            <button class="dropdown-item navItemCustom" id="dist_normal" type="button" onclick="trigger(this.id);" > Distribuição Normal </button>
-                        </div> -->
                     </li>
                     <li class="nav-item dropdown">
                         <button class="btn btn-primary bg-dark dropdown-toggle outline" onclick="trigger(this.id);" data-toggle="dropdown" id="navSair">
@@ -188,11 +178,11 @@
             <div class="tab-content bg-white p-4" id="myTabProbContent">
 
 
-                <!--INSERÇÃO DE DADOS-->
+                <!--INSERÇÃO DE DADOS - ABA DE COLETA - PROBABILIDADE -->
                 <div class="tab-pane fade show active" id="coleta_prob">
                     
+                    <!-- MENU DE BLOCOS -->
                     <div class="row pl-3 mb-2">
-                        <!-- Tipo de distribuição - Uniforme, Binomial ou Normal -->
                         <div class="btn-group btn-group-toggle col-12" data-toggle="buttons">
                             <label class="btn btn-dark  btnVariable" id="lb_uniforme">
                                 <input type="radio" name="tipo_calculo" id="tipo_uniforme" autocomplete="off"> 
@@ -209,13 +199,12 @@
                         </div>
                     </div>   
 
-                    <!-- probabilidade - uniforme -->
+                    <!-- BLOCO UNIFORME -->
                     <div id="moldeUni">
 
-                        <!-- Linha de quantidade e select de tipo -->
+                        <!-- Quantidade e Select Distribuição Uniforme --> 
                         <div class="row pl-3">
                             <div class="col-2"></div>
-                            <!-- Input de quantidade e select para escolha (MAIOR_QUE,MENOR_QUE ETC..)-->
                             <div class="input-group mb-3 inp_data col-4">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Qtd</span>
@@ -232,10 +221,10 @@
                             <div class="col-2"></div>
                         </div>
                         
-                        <!-- Input minimo e máximo -->
+                        <!-- Valor Máximo e Valor Mínimo Distribuição Binomial -->
                         <div class="row pl-3">
                             <div class="col-2"></div>
-                            <!-- input de valor Mínimo-->
+                        
                             <div class="input-group mb-3 inp_data col-4">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Min</span>
@@ -243,7 +232,6 @@
                                 <input type="text" class="form-control" id="min_uni" placeholder="Ponto mínimo" aria-label="Variables">
                             </div>
                             
-                            <!-- Input de valor Máximo-->
                             <div class="input-group mb-3 inp_data col-4">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Max</span>
@@ -255,33 +243,32 @@
                         </div>
 
 
-                        <!-- area de intervalo caseo seja selecionado ENTRE_ -->
+                        <!-- De - Até Distribuição Uniforme -->
                         <div class="row pl-3" id="de_ate">
-                            <!-- Inputs de intervalo, caso seja selecionado a opção ENTRE_ -->
-         
-                                <div class="input-group mx-auto mb-2 col-4">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">De</span>
-                                    </div>
-                                    <input type="text" class="form-control" id="de_uni" placeholder="De (x)" aria-label="Variables">      
+                            <div class="input-group mx-auto mb-2 col-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">De</span>
                                 </div>
+                                <input type="text" class="form-control" id="de_uni" placeholder="De (x)" aria-label="Variables">      
+                            </div>
 
-                                <div class="input-group mb-4 mx-auto col-4">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Até</span>
-                                    </div>    
-                                    <input type="text" class="form-control" id="ate_uni" placeholder="Até (y)" aria-label="Variables">
-                                </div> 
+                            <div class="input-group mb-4 mx-auto col-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Até</span>
+                                </div>    
+                                <input type="text" class="form-control" id="ate_uni" placeholder="Até (y)" aria-label="Variables">
+                            </div> 
                         </div>
                         
-                        <!-- Area do botão de envio -->
+                        <!-- Botão de entrada distribuição Uniforme -->
                         <div class="from-group col-12">
-                                <button type="button" class="btn btn-dark btnEntrada d-block mx-auto" onclick="entrada()">Entrada</button>
+                            <button type="button" class="btn btn-dark btnEntrada d-block mx-auto" onclick="entrada()">Entrada</button>
                         </div>
                     </div>
 
-                    <!-- probabilidade - binomial -->
+                    <!-- BLOCO BINOMIAL -->
                     <div id="moldeBino">
+                        <!-- Amostra e Evento  Distribuição Binomial -->
                         <div class="row mb-0 pl-3">
                             <div class="col-2"></div>
                             <div class="input-group mb-3 inp_data mx-auto col-4">
@@ -300,6 +287,7 @@
                             <div class="col-2"></div>
                         </div>
 
+                        <!-- Sucesso e Fracasso Distribuição Binomial -->
                         <div class="row pl-3">
                             <div class="col-2"></div>
                             <div class="input-group mb-4 col-4">
@@ -316,78 +304,94 @@
                             </div>
                             <div class="col-2"></div>
                         </div>
-
                        
-        
-                        <div class="from-group d-block mx-auto col-12">
-                                <button type="button" class="btn btn-dark btnEntrada" onclick="entrada()">Entrada</button>
+                        <!-- Botão Distribuição Binomial -->
+                        <div class="from-group col-12">
+                                <button type="button" class="btn btn-dark btnEntrada d-block mx-auto" onclick="entrada()">Entrada</button>
                         </div>
                     </div>
 
-                    <!-- probabilidade - normal -->
+                    <!-- BLOCO NORMAL  -->
                     <div id="moldeNormal">
-                        <div class="input-group mb-3 inp_data col-6">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">Qtd</span>
-                            </div>
-                            <input type="text" class="form-control" id="qtd_normal" placeholder="Quantidade">
-                            <div class="col-4">
-                                    <select name="selTipoNormal" id="selTipoNormal" class="custom-select">
-                                        <option value="MAIOR_QUE">MAIOR QUE</option>
-                                        <option value="ENTRE_">ENTRE</option>
-                                        <option value="MENOR_QUE">MENOR QUE</option>
-                                    </select>
-                            </div>
-                        </div>    
 
-                        <div class="input-group mb-3 inp_data col-6">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" >Média</span>
-                        </div>
-                        <input type="text" class="form-control" id="media_normal" placeholder="Média">
+                        <!-- Quantidade e Select - Distribuição Normal -->
+                        <div class="row pl-3">
+                            <div class="col-2"></div>
+                            <div class="input-group mb-3 inp_data col-4">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Qtd</span>
+                                </div>
+                                <input type="text" class="form-control" id="qtd_normal" placeholder="Quantidade">
+                            </div>    
+                            <div class="input-group mb-3 inp_data col-4">
+                                <select name="selTipoNormal" id="selTipoNormal" class="custom-select">
+                                    <option value="MAIOR_QUE">MAIOR QUE</option>
+                                    <option value="ENTRE_">ENTRE</option>
+                                    <option value="MENOR_QUE">MENOR QUE</option>
+                                </select>
+                            </div>
+                            <div class="col-2"></div>                                
                         </div>
 
-                        <div class="input-group mb-3 inp_data col-6">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" >Desvio Padrão</span>
+                        <!-- Média e Desvio Padrão - Distribuição Normal -->
+                        <div class="row pl-3">
+                            <div class="col-2"></div>
+                            <div class="input-group mb-3 inp_data col-4">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" >Média</span>
+                                </div>
+                                <input type="text" class="form-control" id="media_normal" placeholder="Média">
                             </div>
-                            <input type="text" class="form-control" id="dp_normal" placeholder="Desvio Padrão">
+
+                            <div class="input-group mb-3 inp_data col-4">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" >Desvio Padrão</span>
+                                </div>
+                                <input type="text" class="form-control" id="dp_normal" placeholder="Desvio Padrão">
+                            </div>
+                            <div class="col-2"></div>
                         </div>
-                            
-                        <div class="input-group mb-3 inp_data col-12" id="de_ate_normal">
-                            <div class="col-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">De</span>
-                            </div>
-                            <input type="text" class="form-control" id="de_normal" placeholder="De (x)" aria-label="Variables"><div class="input-group-prepend">
-                            </div>
-                            <div class="col-3">
-                                <span class="input-group-text">Até</span>
-                            </div>
-                            <input type="text" class="form-control" id="ate_normal" placeholder="Até (y)" aria-label="Variables">
+                        
+                        <!-- De - Até - Distribuição Normal -->
+                        <div class="row pl-3">  
+                            <div class="input-group mb-3 inp_data col-12" id="de_ate_normal">
+                                <div class="input-group mx-auto mb-3 col-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">De</span>
+                                    </div>
+                                <input type="text" class="form-control" id="de_normal" placeholder="De (x)" aria-label="Variables">
+                                </div>
+                                <div class="input-group mx-auto mb-3 col-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Até</span>
+                                    </div>
+                                <input type="text" class="form-control" id="ate_normal" placeholder="Até (y)" aria-label="Variables">
+                                </div>
                             </div>
                         </div>
-                            
-                            <div class="from-group col-12">
-                                    <button type="button" class="btn btn-dark btnEntrada" onclick="entrada()">Entrada</button>
-                            </div>
+                        
+                        <!-- Botão de Entrada distribuição Normal -->
+                        <div class="from-group col-12">
+                            <button type="button" class="btn btn-dark btnEntrada d-block mx-auto" onclick="entrada()">Entrada</button>
+                        </div>
                     </div>
+
                 </div>
 
-                <!-- Tabela -->
+                <!-- TABULAÇÃO DE DADOS - ÁREA DE AMOSTRAGEM DE DADOS EM FORMA DE TABELA - PROBABILIDADE -->
                 <div class="tab-pane fade" id="tabulacao_prob">
-                <h5 class="text-center" id="tit_table"></h5>
-                <table class="table">
-                <thead>
-                    <th>Média</th>
-                    <th>Probabilidade %</th>
-                    <th>Desvio Padrão</th>
-                    <th>Coeficiente de Variação</th>
-                </thead>
-                <tbody id="tabul">
+                    <h5 class="text-center" id="tit_table"></h5>
+                    <table class="table">
+                        <thead>
+                            <th>Média</th>
+                            <th>Probabilidade %</th>
+                            <th>Desvio Padrão</th>
+                            <th>Coeficiente de Variação</th>
+                        </thead>
+                    <tbody id="tabul">
 
-                </tbody>
-                </table>
+                    </tbody>
+                    </table>
                 </div>
 
 
