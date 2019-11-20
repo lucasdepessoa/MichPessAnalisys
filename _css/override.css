@@ -122,3 +122,15 @@ button.outline:focus{
 #de_ate_normal{
     display: none;
 }
+
+#trigger_correlacao{
+    display: none;
+}
+
+#resultadoCorrelacao{
+    display: none;
+} 
+
+#calcularCorr{
+    display: none;
+}

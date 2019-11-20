@@ -874,6 +874,7 @@
 
     // correlação e regressão //
     function correlacao_regressao(arrX,arrY){
+       
     
         var somaX=0,somaY=0,somaX_x_Y=0,somax2=0,somay2=0,correlacao=0,a=0,b=0, 
              Y_r_formula=0, X_r_formula=0,resultado =[];
@@ -1038,8 +1039,11 @@
 
         var obj =  document.getElementById('varPes');
         var objProb = document.getElementById('varPesProb');
+        var objCorr = document.getElementById('varPesCorrelacao');
+
         var indice = document.getElementById('indice');
         var indiceProb = document.getElementById('indice_prob');
+        var indiceCorr = document.getElementById('indice_correlacao');
 
         var comando = {
             corrige : function(e=null){
@@ -1055,6 +1059,11 @@
                     $('#lb_binomial').removeClass('active');
                     $('#lb_normal').removeClass('active');
                 break;
+                case 'correlacao':
+                    $('#y_value').val('');
+                    $('#x_value').val('');
+                    $('#x_value').focus();    
+                break;
                 }
                 
 
@@ -1067,6 +1076,9 @@
                 //Mostra a div//
                 switch(e){
                     case 'discreta':
+                        $('#trigger_correlacao').css("display","none"); 
+                        $('#resultadoCorrelacao').css("display","none");
+                        $('#calcularCorr').css("display","none");
                         $('#moldeBino').css("display","none");
                         $('#moldeUni').css("display","none");
                         $('#moldeNormal').css("display","none");
@@ -1075,10 +1087,18 @@
                         $('#moldeDesc').css("display","block");
                     break;
                     case 'probabilidade':
+                        $('#trigger_correlacao').css("display","none"); 
+                        $('#resultadoCorrelacao').css("display","none");
+                        $('#calcularCorr').css("display","none");
                         $('#moldeDesc').css("display","none")
                         $('#moldeUni').css("display","none");
                         $("#trigger").css("display","none");
                         $("#trigger_prob").css("display","block");
+                    break;
+                    case 'correlacao':
+                        $('#trigger_prob').css("display","none");
+                        $('#trigger').css("display","none");
+                        $('#trigger_correlacao').css("display","block");    
                     break;
                 }
 
@@ -1124,8 +1144,10 @@
                 comando.mostra('probabilidade');
             break;
             case 'navCorrelacao':
-                obj.innerHTML = 'Correlação e Regressão';
-                indice.value = 'CORRELACAO';
+                comando.corrige('correlacao');
+                objCorr.innerHTML = 'Correlação e Regressão';
+                indiceCorr.value = 'CORRELACAO';
+                comando.mostra('correlacao');
             break;
             case 'navSair':
                 window.location.href = 'login.html';
@@ -1235,6 +1257,7 @@ function entrada(){
         //Caso esteja preenchido//
         var indicador = document.getElementById('indice').value;
         var indicador_prob = document.getElementById('indice_prob').value;
+        var indicador_corr = document.getElementById('indice_correlacao').value;
         var arr_ent = [], numString = document.getElementById('variable').value;
 
 
@@ -1382,6 +1405,37 @@ function entrada(){
                 var tipo = $('#selTipoNormal').val();
 
                 console.log(distribuicao_normal(media,dp,tipo,qtd));
+            }
+
+
+
+        }
+
+        if(indicador_corr == 'CORRELACAO'){
+            var x_value = document.getElementById('x_value').value;   
+            var y_value = document.getElementById('y_value').value;
+            var xvalue = x_value.split(';').map(parseFloat);
+            var yvalue = y_value.split(';').map(parseFloat);
+            if( isNaN(xvalue[0]) || isNaN(yvalue[0])){
+                alert('Valores incorretos !');
+                
+                $('#y_value').val('');
+                $('#x_value').val('');
+                $('#x_value').focus();
+                return false;
+            }else{
+                
+                var res = correlacao_regressao(xvalue,yvalue);
+                
+                $('#resCorrelacao').text('Correlação de ' + res[0] + ' %');
+                $('#equa_a').text(res[1]);
+                $('#equa_b').text(' + (' + res[2] + ' )');
+
+                $('#resultadoCorrelacao').css("display","block");
+                $('#calcularCorr').css("display","block");
+                
+
+
             }
 
 
