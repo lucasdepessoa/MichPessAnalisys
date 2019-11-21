@@ -604,18 +604,18 @@
                 //Intervalo F(X)//
                 intervalo = Number(parseFloat(((1 / (max-min))*(qtd1-min))*100).toFixed(2));
                 
-                result[0] = media;
-                result[1] = intervalo;
+                result[0] = intervalo;
+                result[1] = media;
                 return result;
             break;
             case 'MAIOR_QUE':
                 //media//
-                media = Number(parseFloat((max + min)/2).toFixed(2));
+                media = parseFloat(((max + min)/2).toFixed(2));
                 //Intervalo F(x)//
-                intervalo = Number(parseFloat(((1 / (max-min))*(max-qtd1))*100).toFixed(2));  
+                intervalo = parseFloat((((1 / (max-min))*(max-qtd1))*100).toFixed(2));  
 
-                result[0] = media;
-                result[1] = intervalo;
+                result[0] = intervalo;
+                result[1] = media;
                 return result;   
             break;
             case 'ENTRE_':
@@ -638,8 +638,8 @@
                 //Coeficiente de variação//
                 cv = Number(parseFloat(((dp/media)*100)).toFixed(2));
 
-                result[0] = media;
-                result[1] = intervalo;
+                result[0] = intervalo;
+                result[1] = media;
                 result[2] = dp;
                 result[3] = cv;
                 return result;
@@ -958,13 +958,19 @@
 
     //Controlador SELECT PROBABILIDADE - uniforme //
     $('#selTipoUni').on('change',function(){
-        if($(this).val()=='ENTRE_'){
+        if($('#selTipoUni').val()=='ENTRE_'){
             $('#qtd_uni').val('');
             $('#qtd_uni').attr('disabled','disabled');
             $('#de_ate').css("display","block");
         }else{
             $('#de_ate').css("display","none");
             $('#qtd_uni').attr('disabled',false);
+        }
+
+        if($('#selTipoUni').val()=='EQUILIBRIO'){
+            $('#qtd_uni').attr("placeholder","Digite o valor de Equilíbrio");
+        }else{
+            $('#qtd_uni').attr("placeholder","Insira a quantidade");
         }
     })
 
@@ -1277,8 +1283,8 @@
         switch(tipo){
             case 'UNI':
                 tabela += '<tr>';
-                tabela += '<td>'+parseFloat(arr[0]).toFixed(2)+'</td>';
                 tabela += '<td>'+parseFloat(arr[1]).toFixed(2)+'</td>';
+                tabela += '<td>'+parseFloat(arr[0]).toFixed(2)+'</td>';
                 tabela += '<td>'+parseFloat(arr[2]).toFixed(2)+'</td>';
                 tabela += '<td>'+parseFloat(arr[3]).toFixed(2)+'</td>';
                 tabela += '<tr>';
@@ -1423,6 +1429,14 @@ function entrada(){
                 tableBuilderProb(distribuicao_uniforme(max,min,tipo,qtd),'UNI');
             }
 
+            if($('#lb_uniforme').hasClass('active') && $('#selTipoUni').val()=='EQUILIBRIO'){
+                var qtd = parseFloat($('#qtd_uni').val());
+                var min = parseFloat($('#min_uni').val());
+                var max = parseFloat($('#max_uni').val());
+                var tipo = $('#selTipoUni').val();
+
+                tableBuilderProb(distribuicao_uniforme(max,min,tipo,qtd),'UNI');
+            }
 
 
             //BINOMIAL//
