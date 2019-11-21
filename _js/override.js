@@ -137,7 +137,8 @@
             percent = coef_varia * 100;
             
             //Guarda o desvio padrão de população//
-            quanti_struct_tb[10] = percent;
+            quanti_struct_tb[10] = v_x;
+            quanti_struct_tb[11] = percent;
         }
         //para amostra //
         else{
@@ -299,7 +300,8 @@
             percent = coef_varia * 100;
 
             //Guarda o desvio padrão de população//
-            quanti_struct_tb[12] = percent;
+            quanti_struct_tb[12] = v_x;
+            quanti_struct_tb[13] = percent;
         }
         //para amostra
         else{
@@ -332,6 +334,8 @@
         9 - Media específica calculada
         10 - Mediana específica - função externa
         11 - Moda específica - função externa
+        12 - desvio padrão
+        13 - coeficiente de variação
         */
     
         //Monta o Array de Retorno//
@@ -1181,9 +1185,9 @@
             
             tabela += '<tfoot>';
             tabela +=   '<th>Moda</th>';
-            tabela +=   '<th>'+arr[7]+'</td>';
+            tabela +=   '<th>'+parseFloat(arr[7]).toFixed(2)+'</td>';
             tabela +=   '<th>Mediana</th>';
-            tabela +=   '<th>'+arr[8]+'</td>';
+            tabela +=   '<th>'+parseFloat(arr[8]).toFixed(2)+'</td>';
             tabela +=   '<th>Medida Separatriz</th>';
             tabela +=   '<th>' + medida_separatriz(arr,parseInt(selValor),parseInt(selDivisao)) + '</th>';
             tabela += '</tfoot>';
@@ -1191,15 +1195,17 @@
         }else if($('#indice').val() == 'DISCRETA'){
             tabela += '<tfoot>';
             tabela +=   '<th>Moda</th>';
-            tabela +=   '<th>'+arr[7]+'</td>';
+            tabela +=   '<th>'+parseFloat(arr[7]).toFixed(2)+'</td>';
             tabela +=   '<th>Mediana</th>';
-            tabela +=   '<th>'+arr[8]+'</td>';
+            tabela +=   '<th>'+parseFloat(arr[8]).toFixed(2)+'</td>';
             tabela +=   '<th>Média</th>';
-            tabela +=   '<th>'+arr[9]+'</td>';
+            tabela +=   '<th>'+parseFloat(arr[9]).toFixed(2)+'</td>';
             tabela +=   '<th>Desvio Padrão</th>';
-            tabela +=   '<th>'+arr[10]+'</td>';
+            tabela +=   '<th>'+parseFloat(arr[10]).toFixed(2)+'</td>';
+            tabela +=   '<th>Coeficiente Variação</th>';
+            tabela +=   '<th>'+parseFloat(arr[11]).toFixed(2)+'</th>';
             tabela +=   '<th>Medida Separatriz</th>';
-            tabela +=   '<th>' + medida_separatriz(arr,parseInt(selValor),parseInt(selDivisao)) + '</th>';
+            tabela +=   '<th>' + parseFloat(medida_separatriz(arr,parseInt(selValor),parseInt(selDivisao))).toFixed(2) + '</th>';
             tabela += '</tfoot>';
 
         }
@@ -1224,15 +1230,17 @@
         if($('#indice').val() == 'CONTINUA'){
             tabela += '<tfoot>';
             tabela +=   '<th>Moda</th>';
-            tabela +=   '<th>'+arr[11]+'</th>';
+            tabela +=   '<th>'+parseFloat(arr[11]).toFixed(2)+'</th>';
             tabela +=   '<th>Mediana</th>';
-            tabela +=   '<th>'+arr[10]+'</th>';
+            tabela +=   '<th>'+parseFloat(arr[10]).toFixed(2)+'</th>';
             tabela +=   '<th>Média</th>';
-            tabela +=   '<th>'+arr[9]+'</td>';
+            tabela +=   '<th>'+parseFloat(arr[9]).toFixed(2)+'</td>';
             tabela +=   '<th>Desvio Padrão</th>';
-            tabela +=   '<th>'+arr[12]+'</td>';
+            tabela +=   '<th>'+parseFloat(arr[12]).toFixed(2)+'</td>';
+            tabela ==   '<th>Coeficiente Variação</th>';
+            tabela +=   '<th>'+parseFloat(arr[13]).toFixed(2)+'<th>';
             tabela +=   '<th>Medida Separatriz</th>';
-            tabela +=   '<th>'+ medida_separatriz_cont(arr,parseInt(selValor),parseInt(selDivisao))+'</th>';
+            tabela +=   '<th>'+ parseFloat(medida_separatriz_cont(arr,parseInt(selValor),parseInt(selDivisao))).toFixed(2)+'</th>';
             tabela += '</tfoot>';
         }
 
