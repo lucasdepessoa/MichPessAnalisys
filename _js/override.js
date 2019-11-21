@@ -650,18 +650,25 @@
     // Distribuição Binomial //
     function distribuicao_binomial(n,p,q,k){
     
-        var analise_combinatoria = 0, probabilidade = 0, media = 0, dp = 0, result = []; 
-       
-        analise_combinatoria = factorial(n) / (factorial(k) * factorial(n-k));
-        
-        probabilidade = analise_combinatoria * Math.pow(p,k) * Math.pow(q,(n-k));
+        var analise_combinatoria = [], probabilidade = [i], media = 0, dp = 0, result = [], soma_prob = 0 ; 
+
+        if(Array.isArray(k)){
+            for(var i=0; i<k.length; i++){
+                
+                analise_combinatoria[i] = factorial(n) / (factorial(k[i]) * factorial(n-k[i]));
+
+                probabilidade[i] = analise_combinatoria[i] * Math.pow(p,k[i]) * Math.pow(q,(n-k[i]));
+                
+                soma_prob += parseFloat((probabilidade[i] * 100).toFixed(2))
+            }    
+        }
     
         media = Number(n*p).toFixed(2);
     
         dp = Math.sqrt(n*p*q);
     
         //Resultados//
-        result[0] = Number((probabilidade * 100).toFixed(2));
+        result[0] = Number((soma_prob).toFixed(2));
         result[1] = Number(media);
         result[2] = dp;
     
@@ -1423,7 +1430,14 @@ function entrada(){
                 var amostra = parseFloat($('#amostra_bino').val());
                 var sucesso = parseFloat($('#succes_bino').val());
                 var fracasso = parseFloat($('#failed_bino').val());
-                var evento = parseFloat($('#event_bino').val());
+                
+                if($('#event_bino').val().indexOf(';') != -1){
+                    var evento = $('#event_bino').val().split(';').map(parseFloat);
+                }else{
+                    var evento = []; 
+                    evento.push($('#event_bino').val());
+                }
+                
 
 
                 tableBuilderProb(distribuicao_binomial(amostra,sucesso,fracasso,evento),'BIN');
