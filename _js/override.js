@@ -771,7 +771,7 @@
                 var pos = (z.charAt(3) == '' || z.charAt(3) == '0')? 0 : Number(z.slice(-1));
     
                 //Calcula a probabilidade//
-                var prob = ((0.5 - parseFloat(tbz[indice][pos])) * 100 ).toFixed(2)
+                var prob = ((0.5 + parseFloat(tbz[indice][pos])) * 100 ).toFixed(2)
     
                 //Retorna a probabilidade//
                 return prob;
@@ -963,13 +963,13 @@
 
     //Controlador SELECT PROBABILIDADE - Normal//
     $('#selTipoNormal').on('change',function(){
-        if($(this).val()=='ENTRE_'){
+        if($('#selTipoNormal').val()=='ENTRE_'){
             $('#qtd_normal').val('');
             $('#qtd_normal').attr('disabled','disabled');
             $('#de_ate_normal').css("display","block");
         }else{
             $('#de_ate_normal').css("display","none");
-            $('#qtd_qtd').attr('disabled',false);
+            $('#qtd_normal').attr('disabled',false);
         }
     })
 
@@ -1170,9 +1170,10 @@
     function table_builder(arr,selValor=null,selDivisao=null){
         
         var tabela = '';   
-        
+        var tabela2 = '';
+
         document.getElementById('tabul').innerHTML = '';
-        
+        document.getElementById('tabulMetricaDesc').innerHTML = '';
     
         for(var i=0; i<arr[1].length; i++){
             tabela += '<tr>';
@@ -1183,35 +1184,40 @@
 
         if($('#indice').val() == 'NOMINAL' || $('#indice').val() == 'ORDINAL'){
             
-            tabela += '<tfoot>';
-            tabela +=   '<th>Moda</th>';
-            tabela +=   '<th>'+parseFloat(arr[7]).toFixed(2)+'</td>';
-            tabela +=   '<th>Mediana</th>';
-            tabela +=   '<th>'+parseFloat(arr[8]).toFixed(2)+'</td>';
-            tabela +=   '<th>Medida Separatriz</th>';
-            tabela +=   '<th>' + medida_separatriz(arr,parseInt(selValor),parseInt(selDivisao)) + '</th>';
-            tabela += '</tfoot>';
+            tabela2 += '<thead>';
+            tabela2 +=   '<th>Moda</th>';
+            tabela2 +=   '<th>'+parseFloat(arr[7]).toFixed(2)+'</th>';
+            tabela2 +=   '<th>Mediana</th>';
+            tabela2 +=   '<th>'+parseFloat(arr[8]).toFixed(2)+'</th>';
+            tabela2 +=   '<th>Medida Separatriz</th>';
+            tabela2 +=   '<th>' + medida_separatriz(arr,parseInt(selValor),parseInt(selDivisao)) + '</th>';
+            tabela2 += '</thead>';
         
         }else if($('#indice').val() == 'DISCRETA'){
-            tabela += '<tfoot>';
-            tabela +=   '<th>Moda</th>';
-            tabela +=   '<th>'+parseFloat(arr[7]).toFixed(2)+'</td>';
-            tabela +=   '<th>Mediana</th>';
-            tabela +=   '<th>'+parseFloat(arr[8]).toFixed(2)+'</td>';
-            tabela +=   '<th>Média</th>';
-            tabela +=   '<th>'+parseFloat(arr[9]).toFixed(2)+'</td>';
-            tabela +=   '<th>Desvio Padrão</th>';
-            tabela +=   '<th>'+parseFloat(arr[10]).toFixed(2)+'</td>';
-            tabela +=   '<th>Coeficiente Variação</th>';
-            tabela +=   '<th>'+parseFloat(arr[11]).toFixed(2)+'</th>';
-            tabela +=   '<th>Medida Separatriz</th>';
-            tabela +=   '<th>' + parseFloat(medida_separatriz(arr,parseInt(selValor),parseInt(selDivisao))).toFixed(2) + '</th>';
-            tabela += '</tfoot>';
+            tabela2 += '<thead>';
+            tabela2 +=   '<tr>';
+            tabela2 +=   '<th>Moda</th>';
+            tabela2 +=   '<th>'+parseFloat(arr[7]).toFixed(2)+'</th>';
+            tabela2 +=   '<th>Mediana</th>';
+            tabela2 +=   '<th>'+parseFloat(arr[8]).toFixed(2)+'</th>';
+            tabela2 +=   '<th>Média</th>';
+            tabela2 +=   '<th>'+parseFloat(arr[9]).toFixed(2)+'</th>';
+            tabela2 +=   '</tr>';
+            tabela2 +=  '<tr>';
+            tabela2 +=   '<th>Desvio Padrão</th>';
+            tabela2 +=   '<th>'+parseFloat(arr[10]).toFixed(2)+'</th>';
+            tabela2 +=   '<th>Coeficiente Variação</th>';
+            tabela2 +=   '<th>'+parseFloat(arr[11]).toFixed(2)+'</th>';
+            tabela2 +=   '<th>Medida Separatriz</th>';
+            tabela2 +=   '<th>' + parseFloat(medida_separatriz(arr,parseInt(selValor),parseInt(selDivisao))).toFixed(2) + '</th>';
+            tabela2 +=   '</tr>';
+            tabela2 += '</thead>';
 
         }
         
         // console.log(medida_separatriz(arr[6],4,1));
         document.getElementById('tabul').innerHTML += tabela; 
+        document.getElementById('tabulMetricaDesc').innerHTML += tabela2;
     }
 
 
@@ -1219,7 +1225,9 @@
     function table_builder_continua(arr, selValor=null,selDivisao=null){
 
         var tabela = '';
+        var tabela2 = '';
         document.getElementById('tabul').innerHTML = ''; 
+        document.getElementById('tabulMetricaDesc').innerHTML = '';
     
         for(var i=0; i<arr[1].length; i++){
             tabela += '<tr>';
@@ -1228,25 +1236,63 @@
         }
 
         if($('#indice').val() == 'CONTINUA'){
-            tabela += '<tfoot>';
-            tabela +=   '<th>Moda</th>';
-            tabela +=   '<th>'+parseFloat(arr[11]).toFixed(2)+'</th>';
-            tabela +=   '<th>Mediana</th>';
-            tabela +=   '<th>'+parseFloat(arr[10]).toFixed(2)+'</th>';
-            tabela +=   '<th>Média</th>';
-            tabela +=   '<th>'+parseFloat(arr[9]).toFixed(2)+'</td>';
-            tabela +=   '<th>Desvio Padrão</th>';
-            tabela +=   '<th>'+parseFloat(arr[12]).toFixed(2)+'</td>';
-            tabela ==   '<th>Coeficiente Variação</th>';
-            tabela +=   '<th>'+parseFloat(arr[13]).toFixed(2)+'<th>';
-            tabela +=   '<th>Medida Separatriz</th>';
-            tabela +=   '<th>'+ parseFloat(medida_separatriz_cont(arr,parseInt(selValor),parseInt(selDivisao))).toFixed(2)+'</th>';
-            tabela += '</tfoot>';
+            tabela2 += '<thead>';
+            tabela2 +=   '<th>Moda</th>';
+            tabela2 +=   '<th>'+parseFloat(arr[11]).toFixed(2)+'</th>';
+            tabela2 +=   '<th>Mediana</th>';
+            tabela2 +=   '<th>'+parseFloat(arr[10]).toFixed(2)+'</th>';
+            tabela2 +=   '<th>Média</th>';
+            tabela2 +=  '</tr>';
+            tabela2 +=  '<tr>';
+            tabela2 +=   '<th>'+parseFloat(arr[9]).toFixed(2)+'</th>';
+            tabela2 +=   '<th>Desvio Padrão</th>';
+            tabela2 +=   '<th>'+parseFloat(arr[12]).toFixed(2)+'</th>';
+            tabela2 ==   '<th>Coeficiente Variação</th>';
+            tabela2 +=   '<th>'+parseFloat(arr[13]).toFixed(2)+'<th>';
+            tabela2 +=   '<th>Medida Separatriz</th>';
+            tabela2 +=   '<th>'+ parseFloat(medida_separatriz_cont(arr,parseInt(selValor),parseInt(selDivisao))).toFixed(2)+'</th>';
+            tabela2 +=  '</tr>';
+            tabela2 += '</thead>';
         }
 
         document.getElementById('tabul').innerHTML += tabela; 
+        document.getElementById('tabulMetricaDesc').innerHTML += tabela2;
+
     }
 
+
+    //tabulação de resultados Probabilidade//
+    function tableBuilderProb(arr,tipo){
+        
+        var tabela = '';
+        document.getElementById('tabulProbMetrica').innerHTML = '';
+
+        switch(tipo){
+            case 'UNI':
+                tabela += '<tr>';
+                tabela += '<td>'+parseFloat(arr[0]).toFixed(2)+'</td>';
+                tabela += '<td>'+parseFloat(arr[1]).toFixed(2)+'</td>';
+                tabela += '<td>'+parseFloat(arr[2]).toFixed(2)+'</td>';
+                tabela += '<td>'+parseFloat(arr[3]).toFixed(2)+'</td>';
+                tabela += '<tr>';
+                $('#tab_tabulacao_prob').trigger('click');
+            break;
+            case 'BIN':
+                tabela += '<tr>';
+                tabela += '<td>'+parseFloat(arr[1]).toFixed(2)+'</td><td>'+parseFloat(arr[0]).toFixed(2)+'</td><td>'+parseFloat(arr[2]).toFixed(2)+'</td>';
+                tabela += '</tr>';
+                $('#tab_tabulacao_prob').trigger('click');
+            break;
+            case 'NOR':
+                tabela += '<tr>';
+                tabela += '<td> - </td><td>'+parseFloat(arr[0]).toFixed(2)+'</td><td> - </td><td> - </td>';
+                tabela += '</tr>';
+                $('#tab_tabulacao_prob').trigger('click');
+            break;
+        }
+
+        document.getElementById('tabulProbMetrica').innerHTML = tabela;
+    }
 //################################################//
 
 
@@ -1348,7 +1394,7 @@ function entrada(){
                 var ate_uni = parseFloat($('#ate_uni').val());
                 var tipo = $('#selTipoUni').val();
 
-                console.log(distribuicao_uniforme(max,min,tipo,de_uni,ate_uni))
+                tableBuilderProb(distribuicao_uniforme(max,min,tipo,de_uni,ate_uni),'UNI');
             }
 
             if($('#lb_uniforme').hasClass('active') && $('#selTipoUni').val()=='MAIOR_QUE'){
@@ -1357,7 +1403,7 @@ function entrada(){
                 var max = parseFloat($('#max_uni').val());
                 var tipo = $('#selTipoUni').val();
 
-                console.log(distribuicao_uniforme(max,min,tipo,qtd));
+                tableBuilderProb(distribuicao_uniforme(max,min,tipo,qtd),'UNI');
 
             } 
 
@@ -1367,7 +1413,7 @@ function entrada(){
                 var max = parseFloat($('#max_uni').val());
                 var tipo = $('#selTipoUni').val();
 
-                console.log(distribuicao_uniforme(max,min,tipo,qtd));
+                tableBuilderProb(distribuicao_uniforme(max,min,tipo,qtd),'UNI');
             }
 
 
@@ -1380,7 +1426,7 @@ function entrada(){
                 var evento = parseFloat($('#event_bino').val());
 
 
-                console.log(distribuicao_binomial(amostra,sucesso,fracasso,evento))
+                tableBuilderProb(distribuicao_binomial(amostra,sucesso,fracasso,evento),'BIN');
             }
             
 
@@ -1393,7 +1439,7 @@ function entrada(){
                 var media = parseFloat($('#media_normal').val());
                 var tipo = $('#selTipoNormal').val();
 
-                console.log(distribuicao_normal(media,dp,tipo,de_uni,ate_uni));
+                tableBuilderProb(distribuicao_normal(media,dp,tipo,de_uni,ate_uni),'NOR');
             }
 
             if($('#lb_normal').hasClass('active') && $('#selTipoNormal').val()=='MAIOR_QUE'){
@@ -1402,7 +1448,7 @@ function entrada(){
                 var media = parseFloat($('#media_normal').val());
                 var tipo = $('#selTipoNormal').val();
 
-                console.log(distribuicao_normal(media,dp,tipo,qtd));
+                tableBuilderProb(distribuicao_normal(media,dp,tipo,qtd),'NOR');
 
             } 
 
@@ -1412,7 +1458,7 @@ function entrada(){
                 var media = parseFloat($('#media_normal').val());
                 var tipo = $('#selTipoNormal').val();
 
-                console.log(distribuicao_normal(media,dp,tipo,qtd));
+                tableBuilderProb(distribuicao_normal(media,dp,tipo,qtd),'NOR');
             }
 
 
@@ -1524,8 +1570,8 @@ $(document).ready(function(){
         // var arr8 = [34,43,20,37,37,55,27,37,23,46,43,56,60,32,27,60,53,51,45,45,45,28,41,38,38,38,56,65,63,23,56,34,27,34,30,29,47,45,47,42,50,35];
         
         // var arr8 = [58,61,61,65,65,66,66,67,67,68,71,71,71,72,73,80,90,100,55,50,47,78,98,65,69,82,72,68,61,76];
-
-    //    var arrteste = [2,2,2,3,3,3,4,4,5,5,6,6,8,8,8];
+        
+    //    var arrteste = [2;2,2,3,3,3,4,4,5,5,6,6,8,8,8];
         
     //     console.log( medida_separatriz_cont(quanti_continua('AMOSTRA',arrteste),4,1))
 
@@ -1601,7 +1647,7 @@ $(document).ready(function(){
         // console.log('entre ' + distribuicao_normal(90,5,'ENTRE_',89,93));
         // console.log('entre menos ' + distribuicao_normal(90,5,'ENTRE_MENOS',86,89));
 
-
+ 
 
         // TESTE CORRELACAO E PROGRESSÃO //
         // ax = [12.38,14.56,14.67,15.98,17.65];
