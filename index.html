@@ -7,6 +7,7 @@
     <title>MichPess Analisys</title>
     <!-- Style References -->
     <link type="text/css" rel="stylesheet" href="_css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="_css/Chart.min.css">
     <link type="text/css" rel="stylesheet" href="_css/override.css"/> 
     <link type="text/css" rel="stylesheet" href="_css/all.css"/>
     <!-- -->
@@ -169,7 +170,11 @@
 
                 <!-- ÁREA DE GRÁFICOS - ESTATÍSTICA DESCRITIVA -->
                 <div class="tab-pane fade" id="graficos">
-                    Gráficos
+                    <div class="row pl-3">
+                        <div class="col-12">
+                            <canvas id="myChart" width="50" height="50"></canvas>
+                        </div>
+                    </div>
                 </div>
             </div> 
         </div>
@@ -519,6 +524,7 @@
 
 <!-- Script References-->
 <script type="text/javascript" src="_js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="_js/Chart.min.js"></script>
 <script type="text/javascript" src="_js/override.js"></script>
 <script type="text/javascript" src="_js/bootstrap.min.js"></script>
 
