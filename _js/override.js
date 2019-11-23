@@ -810,7 +810,7 @@ graphDescritiva();
                 
                 //Calcula a probabilidade//
                 if(media <= qtd1){
-                    var prob = ((0.5 + parseFloat(tbz[indice][pos])) * 100 ).toFixed(2);
+                    var prob = ((0.5 - parseFloat(tbz[indice][pos])) * 100 ).toFixed(2);
                 }else{
                     var prob = ((0.5 - parseFloat(tbz[indice][pos])) * 100 ).toFixed(2);
                 }
