@@ -449,17 +449,18 @@ graphDescritiva();
             6 - Array completo ordenado 
         */
         
-        var med = [];
+        var med = 0;
         
         if (matriz[5]%2==0){
             var pos1 = matriz[5]/2;
             var pos2 = pos1 + 1;
-            med.push(matriz[6][pos1],matriz[6][pos2]);
-            // console.log("A mediana é " + med + " nas posições "+ pos1 + " e " + pos2);
+            med = (matriz[6][pos1] + matriz[6][pos2])/2;
+            //console.log("A mediana é " + med + " nas posições "+ pos1 + " e " + pos2);
+
         }
         else {
             var pos1 = Math.ceil(matriz[5]/2);
-            med.push(matriz[6][pos1]);
+            med = matriz[6][pos1];
             // console.log("A mediana é " + med + " na posição " + pos1);
         };
         return med;
