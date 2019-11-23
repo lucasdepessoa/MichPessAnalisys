@@ -1213,8 +1213,9 @@ graphDescritiva();
                 }
 
                 //da foco no input principal//
+                $('#nameVariable').val('');
                 $('#variable').val('');
-                $('#variable').focus();
+                $('#nameVariable').focus();
 
                 $('#tab_coleta').trigger('click')
 
@@ -1277,6 +1278,9 @@ graphDescritiva();
         
         var tabela = '';   
         var tabela2 = '';
+        var name = document.getElementById('th_name');
+
+        name.innerHTML = ($('#nameVariable').val() != '' || $('#nameVariable').val() != ' ')? $('#nameVariable').val() : 'Variável'; 
 
         document.getElementById('tabul').innerHTML = '';
         document.getElementById('tabulMetricaDesc').innerHTML = '';
@@ -1332,6 +1336,9 @@ graphDescritiva();
 
         var tabela = '';
         var tabela2 = '';
+        var name = document.getElementById('th_name');
+
+        name.innerHTML = ($('#nameVariable').val() != '' || $('#nameVariable').val() != ' ')? $('#nameVariable').val() : 'Variável'; 
         document.getElementById('tabul').innerHTML = ''; 
         document.getElementById('tabulMetricaDesc').innerHTML = '';
     
