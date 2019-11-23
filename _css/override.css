@@ -138,3 +138,10 @@ button.outline:focus{
 #calcularCorr{
     display: none;
 }
+
+.graphDESC{
+    max-height: 400px!important ;
+    display: block;
+    max-width: 600px!important ;
+
+}

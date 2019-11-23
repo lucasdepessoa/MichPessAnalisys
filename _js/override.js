@@ -2,17 +2,25 @@
 
 // FUNÇÕES PARA CRIAÇÃO DE GRÁFICOS //
 
-function graphDescritiva(){
+function graphDescritiva(variavel=null,names=null,values=null){
+
+    var labels = [], datas = [], label = '';
+
+    switch(variavel){
+        case 'NOMINAL':
+            label = $('#th_name').text();
+        break;
+    }
 
     var ctx = document.getElementById('myChart').getContext('2d');
-    
+
     var myChart = new Chart(ctx, {
-        type: 'bar',
+        type: 'pie',
         data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            labels: '# of Votes',
             datasets: [{
-                label: '# of Votes',
-                data: [10, 10, 3, 5, 2, 3],
+                label: "'"+label+"'",
+                data: values,
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',
@@ -36,7 +44,7 @@ function graphDescritiva(){
             scales: {
                 yAxes: [{
                     ticks: {
-                        beginAtZero: true
+                        beginAtZero: true,
                     }
                 }]
             }
@@ -46,8 +54,6 @@ function graphDescritiva(){
 
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@//
 
-
-graphDescritiva();
 
 
 
@@ -1460,6 +1466,11 @@ function entrada(){
                     $("#variable").val('');
                     $("#tit_table").html('Dados variável qualitativa Nominal');
                     $("#tab_tabulacao").trigger('click');
+                    
+                    
+
+                    graphDescritiva('NOMINAL',quali_nominal_ordinal(proporcao,indicador,arr_ent)[0],quali_nominal_ordinal(proporcao,indicador,arr_ent)[2]);
+
                 break;
                 case 'ORDINAL':
                     table_builder(quali_nominal_ordinal(proporcao,indicador,arr_ent),selValor,selDivisao);
@@ -1680,7 +1691,7 @@ $(document).ready(function(){
         // var arr = ['EF','EF','PG','EF','EF','ES','PG','EM','PG','EM','EM',
         //             'ES','ES','EM','EM','ES','EF','EM','PG','ES','ES',
         //             'EM','EF','EM','EM','PG','ES','PG','ES','ES'];
-       
+         
         // var arr2 = ['rosa','amarela','rosa','azul','rosa','branca','preta',
         //             'preta','rosa','branca','rosa','preta','branca','preta',
         //             'rosa','amarela','rosa','branca','branca','azul','rosa','amarela',
