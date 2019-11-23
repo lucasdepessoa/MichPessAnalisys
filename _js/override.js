@@ -878,7 +878,7 @@ graphDescritiva();
                 var pos1 = (z1.charAt(3) == '' || z1.charAt(3) == '0')? 0 : Number(z1.slice(-1)); 
     
                 //Calcula a probabilidade//
-                if(qtd1 < media && qtd > media){
+                if(qtd1 < media && qtd2 > media){
                     var prob = []; 
                     prob[0] = ((parseFloat(tbz[indice][pos]) + parseFloat(tbz[indice1][pos1])) * 100 ).toFixed(2);
                     return prob;
