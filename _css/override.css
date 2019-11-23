@@ -9,6 +9,7 @@ button.outline {
     outline: none!important;
     border:none!important;
     background-color:#000!important;
+    border-radius:0px;
 }
 
 button.outline:hover{
@@ -41,8 +42,8 @@ button.outline:focus{
 }
 .navItemCustom:focus {
     outline: none!important;
-    color:black!important;
-    background-color: white!important;
+    color:#fff!important;
+    background-color: #000!important;
     border:none!important;
 }
 
@@ -74,8 +75,15 @@ button.outline:focus{
 
 
 .btnVariable{
-    background:#616263;
+    background:#fff;
     border-radius:0px;
+    color:#000;
+}
+
+.btnVariable:hover{
+    background:#000;
+    border-radius:0px;
+    color:#fff;
 }
 
 .btnEntrada {

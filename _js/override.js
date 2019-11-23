@@ -809,7 +809,11 @@ graphDescritiva();
                 var pos = (z.charAt(3) == '' || z.charAt(3) == '0')? 0 : Number(z.slice(-1));
                 
                 //Calcula a probabilidade//
-                var prob = ((0.5 - parseFloat(tbz[indice][pos])) * 100 ).toFixed(2);
+                if(media <= qtd1){
+                    var prob = ((0.5 + parseFloat(tbz[indice][pos])) * 100 ).toFixed(2);
+                }else{
+                    var prob = ((0.5 - parseFloat(tbz[indice][pos])) * 100 ).toFixed(2);
+                }
     
                 //Retorna a probabilidade//
                 return prob;
@@ -835,7 +839,11 @@ graphDescritiva();
                 var pos = (z.charAt(3) == '' || z.charAt(3) == '0')? 0 : Number(z.slice(-1));
     
                 //Calcula a probabilidade//
-                var prob = ((0.5 + parseFloat(tbz[indice][pos])) * 100 ).toFixed(2)
+                if(media <= qtd1){
+                    var prob = ((0.5 + parseFloat(tbz[indice][pos])) * 100 ).toFixed(2);
+                }else{
+                    var prob = ((0.5 + parseFloat(tbz[indice][pos])) * 100 ).toFixed(2);
+                }
     
                 //Retorna a probabilidade//
                 return prob;
@@ -870,44 +878,68 @@ graphDescritiva();
                 var pos1 = (z1.charAt(3) == '' || z1.charAt(3) == '0')? 0 : Number(z1.slice(-1)); 
     
                 //Calcula a probabilidade//
-                var prob = ((parseFloat(tbz[indice][pos]) + parseFloat(tbz[indice1][pos1])) * 100 ).toFixed(2)
-    
-                //Retorna a probabilidade//
-                return prob;
-            break;
-            case 'ENTRE_MENOS':
-                //Entre_Menos é quando a média é maior do que os valores informados, ou seja o intervalo é entre números que são menores que a média//
-                
-                //Calcula os Z//
-                var z = parseFloat((qtd1 - media)/dp).toFixed(2);
-                var z1 = parseFloat((qtd2 - media)/dp).toFixed(2);
-                
-                //verifica se o intervalo existe na tabela//
-                if(z > 3.9 || z < -3.9 || z1 > 3.9 || z1 < -3.9){
-                    return "Error: Intervalos maior do que 3,9";
+                if(qtd1 < media && qtd > media){
+                    var prob = ((parseFloat(tbz[indice][pos]) + parseFloat(tbz[indice1][pos1])) * 100 ).toFixed(2);
+                    return prob;
+                }else if(qtd1 < media && qtd2 < media){
+                    var prob = ((parseFloat(tbz[indice][pos]) - parseFloat(tbz[indice1][pos1])) * 100 ).toFixed(2);
+                    return prob;
+                }else if(qtd1 > media && qtd2 > media){
+                    var prob = ((parseFloat(tbz[indice][pos]) - parseFloat(tbz[indice1][pos1])) * 100 ).toFixed(2);
+                    return prob;
+                }else if( qtd1==media && qtd2>media){
+
+                    //calcula o (Z)//
+                    var t = parseFloat((qtd2 - media)/dp).toFixed(2);
+                    
+                    //Verifica se o intervalo existe na tabela//
+                    if(t > 3.9 || t < -3.9){
+                        return "Error: Intervalos maior do que 3,9";
+                    }
+        
+                    //Verifica se o resultado é negativo//
+                    if(Math.sign(t) == -1 || Math.sign(t) == '-0' || Math.sign(t) == -0){
+                        t = Math.abs(t).toString();
+                    }
+
+                    //trata o valor do indice//
+                    var indicet = t.slice(0,3).replace('.',',');
+
+                    //trata i valor da posição//
+                    var post = (t.charAt(3) == '' || t.charAt(3) == '0')? 0 : Number(t.slice(-1));  
+
+                    //calcula a probabilidade//
+                    var prob = (parseFloat(tbt[indicet][post]) * 100 ).toFixed(2);
+
+                    return prob;
+
+                }else if(qtd1==media && qtd2<media){
+                     //calcula o (Z)//
+                     var t = parseFloat((qtd2 - media)/dp).toFixed(2);
+                    
+                     //Verifica se o intervalo existe na tabela//
+                     if(t > 3.9 || t < -3.9){
+                         return "Error: Intervalos maior do que 3,9";
+                     }
+         
+                     //Verifica se o resultado é negativo//
+                     if(Math.sign(t) == -1 || Math.sign(t) == '-0' || Math.sign(t) == -0){
+                         t = Math.abs(t).toString();
+                     }
+ 
+                     //trata o valor do indice//
+                     var indicet = t.slice(0,3).replace('.',',');
+ 
+                     //trata i valor da posição//
+                     var post = (t.charAt(3) == '' || t.charAt(3) == '0')? 0 : Number(t.slice(-1));  
+ 
+                     //calcula a probabilidade//
+                     var prob = (parseFloat(tbt[indicet][post]) * 100 ).toFixed(2);
+ 
+                     return prob;
                 }
-    
-                //Verifica se o resultado é negativo//
-                if(Math.sign(z) == -1 || Math.sign(z) == '-0' || Math.sign(z) == -0){
-                    z = Math.abs(z).toString();
                 
-                }
-                //Verifica se o resultado é negativo//
-                if(Math.sign(z1) == -1 || Math.sign(z1) == '-0' || Math.sign(z1) == -0){
-                    z1 = Math.abs(z1).toString();
-                }
     
-                //Retira do Z o indice do objeto tbz//
-                var indice = z.slice(0,3).replace('.',',');
-                var indice1 = z1.slice(0,3).replace('.',',');
-            
-                //Retira a posição do array que está no indice//
-                var pos = (z.charAt(3) == '' || z.charAt(3) == '0')? 0 : Number(z.slice(-1));   
-                var pos1 = (z1.charAt(3) == '' || z1.charAt(3) == '0')? 0 : Number(z1.slice(-1));  
-                
-                //Calcula a probabilidade//
-                var prob = ((parseFloat(tbz[indice][pos]) - parseFloat(tbz[indice1][pos1])) * 100 ).toFixed(2)
-     
                 //Retorna a probabilidade//
                 return prob;
             break;
