@@ -879,13 +879,16 @@ graphDescritiva();
     
                 //Calcula a probabilidade//
                 if(qtd1 < media && qtd > media){
-                    var prob = ((parseFloat(tbz[indice][pos]) + parseFloat(tbz[indice1][pos1])) * 100 ).toFixed(2);
+                    var prob = []; 
+                    prob[0] = ((parseFloat(tbz[indice][pos]) + parseFloat(tbz[indice1][pos1])) * 100 ).toFixed(2);
                     return prob;
                 }else if(qtd1 < media && qtd2 < media){
-                    var prob = ((parseFloat(tbz[indice][pos]) - parseFloat(tbz[indice1][pos1])) * 100 ).toFixed(2);
+                    var prob = [];
+                    prob[0] = ((parseFloat(tbz[indice][pos]) - parseFloat(tbz[indice1][pos1])) * 100 ).toFixed(2);
                     return prob;
                 }else if(qtd1 > media && qtd2 > media){
-                    var prob = ((parseFloat(tbz[indice][pos]) - parseFloat(tbz[indice1][pos1])) * 100 ).toFixed(2);
+                    var prob = [];
+                    prob[0] = ((parseFloat(tbz[indice][pos]) - parseFloat(tbz[indice1][pos1])) * 100 ).toFixed(2);
                     return prob;
                 }else if( qtd1==media && qtd2>media){
 
@@ -901,16 +904,17 @@ graphDescritiva();
                     if(Math.sign(t) == -1 || Math.sign(t) == '-0' || Math.sign(t) == -0){
                         t = Math.abs(t).toString();
                     }
-
+                    alert('entrou aqui')
                     //trata o valor do indice//
                     var indicet = t.slice(0,3).replace('.',',');
 
                     //trata i valor da posição//
                     var post = (t.charAt(3) == '' || t.charAt(3) == '0')? 0 : Number(t.slice(-1));  
-
-                    //calcula a probabilidade//
-                    var prob = (parseFloat(tbz[indicet][post]) * 100 ).toFixed(2);
-
+                    
+                    //retorna a probabilidade//
+                    var prob = [];
+                    prob[0] = parseFloat((tbz[indicet][post]) * 100).toFixed(2);
+                    
                     return prob;
 
                 }else if(qtd1==media && qtd2<media){
@@ -934,14 +938,14 @@ graphDescritiva();
                      var post = (t.charAt(3) == '' || t.charAt(3) == '0')? 0 : Number(t.slice(-1));  
  
                      //calcula a probabilidade//
-                     var prob = (parseFloat(tbz[indicet][post]) * 100 ).toFixed(2);
+                     var prob = [];
+                     
+                     //Retorno//
+                     /* 0 - probabilidade */
+                     prob[0] = parseFloat((tbz[indicet][post]) * 100 ).toFixed(2)
  
                      return prob;
                 }
-                
-    
-                //Retorna a probabilidade//
-                return prob;
             break;
         }  
     }
@@ -1387,7 +1391,7 @@ graphDescritiva();
             break;
             case 'NOR':
                 tabela += '<tr>';
-                tabela += '<td> - </td><td>'+parseFloat(arr[0]).toFixed(2)+'</td><td> - </td><td> - </td>';
+                tabela += '<td> - </td><td>'+arr+'</td><td> - </td><td> - </td>';
                 tabela += '</tr>';
                 $('#tab_tabulacao_prob').trigger('click');
             break;
@@ -1557,6 +1561,7 @@ function entrada(){
                 var tipo = $('#selTipoNormal').val();
 
                 tableBuilderProb(distribuicao_normal(media,dp,tipo,de_uni,ate_uni),'NOR');
+              
             }
 
             if($('#lb_normal').hasClass('active') && $('#selTipoNormal').val()=='MAIOR_QUE'){
