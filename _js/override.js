@@ -909,7 +909,7 @@ graphDescritiva();
                     var post = (t.charAt(3) == '' || t.charAt(3) == '0')? 0 : Number(t.slice(-1));  
 
                     //calcula a probabilidade//
-                    var prob = (parseFloat(tbt[indicet][post]) * 100 ).toFixed(2);
+                    var prob = (parseFloat(tbz[indicet][post]) * 100 ).toFixed(2);
 
                     return prob;
 
@@ -934,7 +934,7 @@ graphDescritiva();
                      var post = (t.charAt(3) == '' || t.charAt(3) == '0')? 0 : Number(t.slice(-1));  
  
                      //calcula a probabilidade//
-                     var prob = (parseFloat(tbt[indicet][post]) * 100 ).toFixed(2);
+                     var prob = (parseFloat(tbz[indicet][post]) * 100 ).toFixed(2);
  
                      return prob;
                 }
