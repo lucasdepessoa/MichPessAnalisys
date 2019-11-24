@@ -73,6 +73,61 @@ function graphDescritiva(variavel=null,names=null,values=null){
     
 }
 
+
+function graphContinua(variavel=null, names=null,values=null){
+
+    $('.graphDESC').html('');
+    $('.graphDESC').append('<canvas id="myChart" width="600" height="400"></canvas>');
+
+    var  backCOLORS = [];
+    var tipoGraph = new Object();
+
+    tipoGraph.type = 'bar';
+    
+    for(var i=0; i<names.length;i++){
+        var cor = gera_cor()
+        backCOLORS.push(cor);
+    }
+
+    var ctx = document.getElementById("myChart").getContext('2d');
+
+    var myChart = new Chart(ctx, {
+        type: tipoGraph.type,
+        data: {
+            labels: names,
+            datasets: [{
+                label: variavel ,
+                data: values,
+                backgroundColor: backCOLORS,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+              xAxes: [{
+                display: false, //false
+                barPercentage: 1.3,
+                ticks: {
+                    min: names[1],
+                    max: names[names.length-2],
+                }
+             }, {
+                display: true,
+                barPercentage: 1.3,
+                ticks: {
+                    autoSkip: false,
+                    max: names[names.length-1],
+                }
+              }],
+              yAxes: [{
+                ticks: {
+                  beginAtZero:true
+                }
+              }]
+            }
+        }
+    });
+}
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@//
 
 
@@ -1380,12 +1435,12 @@ function graphDescritiva(variavel=null,names=null,values=null){
             tabela2 +=   '<th>Mediana</th>';
             tabela2 +=   '<th>'+parseFloat(arr[10]).toFixed(2)+'</th>';
             tabela2 +=   '<th>Média</th>';
+            tabela2 +=   '<th>'+parseFloat(arr[9]).toFixed(2)+'</th>';
             tabela2 +=  '</tr>';
             tabela2 +=  '<tr>';
-            tabela2 +=   '<th>'+parseFloat(arr[9]).toFixed(2)+'</th>';
             tabela2 +=   '<th>Desvio Padrão</th>';
             tabela2 +=   '<th>'+parseFloat(arr[12]).toFixed(2)+'</th>';
-            tabela2 ==   '<th>Coeficiente Variação</th>';
+            tabela2 +=   '<th>Coeficiente Variação</th>';
             tabela2 +=   '<th>'+parseFloat(arr[13]).toFixed(2)+'<th>';
             tabela2 +=   '<th>Medida Separatriz</th>';
             tabela2 +=   '<th>'+ parseFloat(medida_separatriz_cont(arr,parseInt(selValor),parseInt(selDivisao))).toFixed(2)+'</th>';
@@ -1531,7 +1586,8 @@ function entrada(){
                     $("#tit_table").html('Dados variável quantitativa Continua');
                     $("#tab_tabulacao").trigger('click');
 
-                    graphDescritiva('CONTINUA',quanti_continua(proporcao,arr_ent)[0],quanti_continua(proporcao,arr_ent)[2]);
+                    graphContinua($('#nameVariable').val(),quanti_continua(proporcao,arr_ent)[0],quanti_continua(proporcao,arr_ent)[2]);
+                
                 break;
             }
 
