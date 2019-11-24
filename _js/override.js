@@ -1436,7 +1436,7 @@ function graphContinua(variavel=null, names=null,values=null){
             tabela2 +=   '<th>'+parseFloat(arr[10]).toFixed(2)+'</th>';
             tabela2 +=   '<th>Média</th>';
             tabela2 +=   '<th>'+parseFloat(arr[9]).toFixed(2)+'</th>';
-            tabela2 +=  '</tr>';
+            tabela2 +=  '</tr>'; 
             tabela2 +=  '<tr>';
             tabela2 +=   '<th>Desvio Padrão</th>';
             tabela2 +=   '<th>'+parseFloat(arr[12]).toFixed(2)+'</th>';
