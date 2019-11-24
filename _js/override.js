@@ -9,17 +9,18 @@ function graphDescritiva(variavel=null,names=null,values=null){
     switch(variavel){
         case 'NOMINAL':
             label = $('#th_name').text();
+            console.log(label)
         break;
     }
 
+   setTimeout(function(){
     var ctx = document.getElementById('myChart').getContext('2d');
 
     var myChart = new Chart(ctx, {
         type: 'pie',
         data: {
-            labels: '# of Votes',
+            labels: names,
             datasets: [{
-                label: "'"+label+"'",
                 data: values,
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
@@ -50,6 +51,7 @@ function graphDescritiva(variavel=null,names=null,values=null){
             }
         }
     });
+   },1000)
 }
 
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@//
@@ -1469,7 +1471,9 @@ function entrada(){
                     
                     
 
-                    graphDescritiva('NOMINAL',quali_nominal_ordinal(proporcao,indicador,arr_ent)[0],quali_nominal_ordinal(proporcao,indicador,arr_ent)[2]);
+                    $('#tab_graficos').on('click',function(){
+                        graphDescritiva('NOMINAL',quali_nominal_ordinal(proporcao,indicador,arr_ent)[0],quali_nominal_ordinal(proporcao,indicador,arr_ent)[2]);
+                    })
 
                 break;
                 case 'ORDINAL':
