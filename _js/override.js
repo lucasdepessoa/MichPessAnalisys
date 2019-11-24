@@ -2,60 +2,78 @@
 
 // FUNÇÕES PARA CRIAÇÃO DE GRÁFICOS //
 
+//função de cores//
+function gera_cor(){
+    var hexadecimais = '0123456789ABCDEF';
+    var cor = '#';
+
+    //Pega um numero aleatório do array acima//
+    for (var i=0; i<6; i++){
+        cor += hexadecimais[Math.floor(Math.random()*16)];
+    }
+    return cor;
+}
+
+
 function graphDescritiva(variavel=null,names=null,values=null){
 
-    var labels = [], datas = [], label = '';
+    $('.graphDESC').html('');
+    $('.graphDESC').append('<canvas id="myChart" width="600" height="400"></canvas>');
 
+    var labels = [], datas = [], label = '', backCOLORS = [], borderCOLORS = [];
+    var tipoGraph = new Object();
+    
+
+    for(var i=0; i<names.length;i++){
+        var cor = gera_cor()
+        backCOLORS.push(cor);
+    }
+    
     switch(variavel){
         case 'NOMINAL':
-            label = $('#th_name').text();
-            console.log(label)
+            tipoGraph.type = 'pie';
+        break;
+        case 'ORDINAL':
+            tipoGraph.type = 'pie';
+        break;
+        case 'DISCRETA':
+            tipoGraph.type = 'bar';
+        break;
+        case 'CONTINUA':
+            tipoGraph.type = 'bar';
+
         break;
     }
 
-   setTimeout(function(){
-    var ctx = document.getElementById('myChart').getContext('2d');
 
-    var myChart = new Chart(ctx, {
-        type: 'pie',
-        data: {
-            labels: names,
-            datasets: [{
-                data: values,
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true,
-                    }
+    setTimeout(function(){
+        var ctx = document.getElementById('myChart').getContext('2d');
+
+        var myChart = new Chart(ctx, {
+            type: tipoGraph.type,
+            data: {
+                labels: names,
+                datasets: [{
+                    data: values,
+                    backgroundColor: backCOLORS,
+                    borderWidth: 1
                 }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                        }
+                    }]
+                }
             }
-        }
-    });
-   },1000)
+        });
+    },1000)
+    
 }
 
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@//
-
 
 
 
@@ -1172,16 +1190,19 @@ function graphDescritiva(variavel=null,names=null,values=null){
                 case 'discreta':
                     $('#lb_amostra').removeClass('active');
                     $('#lb_populacao').removeClass('active');
+                    $('.graphDESC').html('');
                 break;
                 case 'probabilidade':
                     $('#lb_uniforme').removeClass('active');
                     $('#lb_binomial').removeClass('active');
                     $('#lb_normal').removeClass('active');
+                    $('.graphDESC').html('');
                 break;
                 case 'correlacao':
                     $('#y_value').val('');
                     $('#x_value').val('');
                     $('#x_value').focus();    
+                    $('.graphDESC').html('');
                 break;
                 }
                 
@@ -1217,7 +1238,7 @@ function graphDescritiva(variavel=null,names=null,values=null){
                     case 'correlacao':
                         $('#trigger_prob').css("display","none");
                         $('#trigger').css("display","none");
-                        $('#trigger_correlacao').css("display","block");    
+                        $('#trigger_correlacao').css("display","block");    s
                     break;
                 }
 
@@ -1287,10 +1308,7 @@ function graphDescritiva(variavel=null,names=null,values=null){
         
         var tabela = '';   
         var tabela2 = '';
-        var name = document.getElementById('th_name');
-
-        name.innerHTML = ($('#nameVariable').val() != '' || $('#nameVariable').val() != ' ')? $('#nameVariable').val() : 'Variável'; 
-
+        
         document.getElementById('tabul').innerHTML = '';
         document.getElementById('tabulMetricaDesc').innerHTML = '';
     
@@ -1345,9 +1363,7 @@ function graphDescritiva(variavel=null,names=null,values=null){
 
         var tabela = '';
         var tabela2 = '';
-        var name = document.getElementById('th_name');
-
-        name.innerHTML = ($('#nameVariable').val() != '' || $('#nameVariable').val() != ' ')? $('#nameVariable').val() : 'Variável'; 
+        
         document.getElementById('tabul').innerHTML = ''; 
         document.getElementById('tabulMetricaDesc').innerHTML = '';
     
@@ -1471,9 +1487,9 @@ function entrada(){
                     
                     
 
-                    $('#tab_graficos').on('click',function(){
-                        graphDescritiva('NOMINAL',quali_nominal_ordinal(proporcao,indicador,arr_ent)[0],quali_nominal_ordinal(proporcao,indicador,arr_ent)[2]);
-                    })
+                   
+                    graphDescritiva('NOMINAL',quali_nominal_ordinal(proporcao,indicador,arr_ent)[0],quali_nominal_ordinal(proporcao,indicador,arr_ent)[2]);
+                    
 
                 break;
                 case 'ORDINAL':
@@ -1481,6 +1497,12 @@ function entrada(){
                     $("#variable").val('');
                     $("#tit_table").html('Dados variável qualitativa Ordinal');
                     $("#tab_tabulacao").trigger('click');
+
+
+                  
+                    graphDescritiva('ORDINAL',quali_nominal_ordinal(proporcao,indicador,arr_ent)[0],quali_nominal_ordinal(proporcao,indicador,arr_ent)[2]);
+                    
+
                 break;
             }
 
@@ -1497,11 +1519,16 @@ function entrada(){
                     table_builder(quanti_discreta(proporcao,arr_ent),selValor,selDivisao);
                     $("#tit_table").html('Dados variável quantitativa Discreta');
                     $("#tab_tabulacao").trigger('click');
+
+                    graphDescritiva('DISCRETA',quanti_discreta(proporcao,arr_ent)[0],quanti_discreta(proporcao,arr_ent)[2]);               
+
                 break;
                 case 'CONTINUA':
                     table_builder_continua(quanti_continua(proporcao,arr_ent),selValor,selDivisao);
                     $("#tit_table").html('Dados variável quantitativa Continua');
                     $("#tab_tabulacao").trigger('click');
+
+                    graphDescritiva('CONTINUA',quanti_continua(proporcao,arr_ent)[0],quanti_continua(proporcao,arr_ent)[2]);
                 break;
             }
 
@@ -1665,10 +1692,6 @@ $(document).ready(function(){
     
 });
 // ################################################################## //
-
-
-
-
 
 
 
