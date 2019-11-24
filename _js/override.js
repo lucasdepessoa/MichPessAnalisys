@@ -1238,7 +1238,7 @@ function graphDescritiva(variavel=null,names=null,values=null){
                     case 'correlacao':
                         $('#trigger_prob').css("display","none");
                         $('#trigger').css("display","none");
-                        $('#trigger_correlacao').css("display","block");    s
+                        $('#trigger_correlacao').css("display","block");    
                     break;
                 }
 
@@ -1450,8 +1450,7 @@ function entrada(){
         var indicador = document.getElementById('indice').value;
         var indicador_prob = document.getElementById('indice_prob').value;
         var indicador_corr = document.getElementById('indice_correlacao').value;
-        var arr_ent = [], numString = document.getElementById('variable').value;
-
+        var arr_ent = [], numString = document.getElementById('variable').value.toUpperCase();
 
         //verifica o item escolhido no select de separatriz e faz a conversão para o numero esperado na função
         var selValor = $('#selSeparatriz').val();
@@ -1469,13 +1468,17 @@ function entrada(){
 
         
         //determina se o valor digitado é número ou caractere, a partir disso, monta o array
-        var teste = numString.split(';').map(parseFloat);
+        var teste = numString.split(';').map(function(e){
+            return parseFloat(e.trim());
+        });
         
         //Se o primeiro resultado em teste der NaN, então converta tudo para um array de string//
         if (isNaN(teste[0]) == true){
 
             //Converte para um array de string//
-            arr_ent = numString.split(';');    
+            arr_ent = numString.split(';').map(function(e){
+                return e.trim();
+            });    
         
 
             switch(indicador){
@@ -1718,7 +1721,8 @@ $(document).ready(function(){
         // var arr = ['EF','EF','PG','EF','EF','ES','PG','EM','PG','EM','EM',
         //             'ES','ES','EM','EM','ES','EF','EM','PG','ES','ES',
         //             'EM','EF','EM','EM','PG','ES','PG','ES','ES'];
-         
+
+                
         // var arr2 = ['rosa','amarela','rosa','azul','rosa','branca','preta',
         //             'preta','rosa','branca','rosa','preta','branca','preta',
         //             'rosa','amarela','rosa','branca','branca','azul','rosa','amarela',
@@ -1730,7 +1734,6 @@ $(document).ready(function(){
 
         // var arr5 = [40,41,42,45,54,55,59,60,61,62,64,65,65,66,67,68,69,70,71,71,80,81,83,84,85,86,87,87,88,89,90,91,93,97,98,98,99,100,101,105];
 
-
         // var arr6 = [2,2,2,4,4,4,4,4,5,5,5,5,5,5,5,5,7,7,7,7,7,7,10,10];
 
         // var arr7 = [20,23,23,27,27,27,28,29,30,32,34,34,34,35,37,37,37,38,38,38,41,42,43,43,45,45,45,46,47,47,50,51,53,55,55,56,56,56,60,60,63,65];
@@ -1739,11 +1742,28 @@ $(document).ready(function(){
         
         // var arr8 = [58,61,61,65,65,66,66,67,67,68,71,71,71,72,73,80,90,100,55,50,47,78,98,65,69,82,72,68,61,76];
         
-    //    var arrteste = [2;2,2,3,3,3,4,4,5,5,6,6,8,8,8];
+    //var arrteste = [2;2,2,3,3,3,4,4,5,5,6,6,8,8,8];
         
-    //     console.log( medida_separatriz_cont(quanti_continua('AMOSTRA',arrteste),4,1))
+    //console.log( medida_separatriz_cont(quanti_continua('AMOSTRA',arrteste),4,1))
 
-    //     console.log(quanti_continua('AMOSTRA',arrteste))
+//nominal
+// EF;EF;PG;EF;EF;ES;PG;EM;PG;EM;EM;
+//                     ES;ES;EM;EM;ES;EF;EM;PG;ES;ES;
+//                     EM;EF;EM;EM;PG;ES;PG;ES;ES
+
+//ordinal
+// rosa;amarela;rosa;azul;rosa;branca;preta;
+//         preta;rosa;branca;rosa;preta;branca;preta;
+//                      rosa;amarela;rosa;branca;branca;azul;rosa;amarela;
+//                                 branca;branca;branca;branca;azul;branca;branca;azul
+
+//discreta
+//2;2;2;4;4;4;4;4;5;5;5;5;5;5;5;5;7;7;7;7;7;7;10;10
+
+//continua
+// 34;43;20;37;37;55;27;37;23;46;43;56;60;32;27;60;53;51;45;45;45;28;41;38;38;38;56;65;63;23;56;34;27;34;30;29;47;45;47;42;50;35
+
+    //console.log(quanti_continua('AMOSTRA',arrteste))
 
 
         //TESTES - TABULAÇÃO //
