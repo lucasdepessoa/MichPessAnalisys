@@ -145,3 +145,12 @@ button.outline:focus{
     max-width: 600px!important ;
 
 }
+
+#resCorrelacao{
+    font-size: 18px;
+    font-family: monospace;
+    margin-bottom: 4px;
+}
+#projecao{
+    display: none;
+}

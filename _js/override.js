@@ -131,7 +131,11 @@ function graphContinua(variavel=null, names=null,values=null){
 
 function graphCorrelacao(valX,valY,b=null,a=null){
 
-    var ctx = document.getElementById("myChartCorr");
+    $('.graphCorr').html('');
+    $('#myChartCorr').remove();
+    $('.graphCorr').append('<canvas id="myChartCorr" width="400" height="200"></canvas>');
+
+    var ctx = document.getElementById("myChartCorr").getContext('2d');
 
 
     var dados = [];
@@ -144,39 +148,68 @@ function graphCorrelacao(valX,valY,b=null,a=null){
         }
         dados.push(dd)
     }
-    var reta = [];
+    
 
-    reta.push({
-        x: Math.min(...valY),
-        y: (Math.min(...valY) - b ) / a 
+    var reta = [{x:Math.min(...valY),y:(Math.min(...valY)-b)/a}, {x:Math.max(...valY),y:(Math.max(...valY)-b)/a}];
+  
 
-    },{
-        x: Math.max(...valY),
-        y:  (Math.max(...valY) - b ) / a
-    })
-
-    var scatterChart = new Chart(ctx, {
-        type: 'scatter',
+    var chart = new Chart(ctx, {
+        type: 'line',
         data: {
-            datasets: [{
-                label: 'Scatter Dataset',
-                data: dados,
-            },{
-                type:'line',
-                data: reta,
-                fill:false,
-                borderColor:'#000'
-            }]
+          datasets: [{
+            type: 'line',
+            label: 'X:',
+            data: reta,
+            fill: false,
+            backgroundColor: "rgba(218,83,79, .7)",
+            borderColor: "rgba(218,83,79, .7)",
+            pointRadius: 0
+          }, {
+            type: 'bubble',
+            label: 'Y:',
+            data: dados,
+            backgroundColor: "rgba(76,78,80, .7)",
+            borderColor: "transparent",
+          }]
         },
         options: {
-            scales: {
-                xAxes: [{
-                    type: 'linear',
-                    position: 'bottom'
-                }]
-            }
+          scales: {
+            xAxes: [{
+              type: 'linear',
+              position: 'bottom'
+            }],
+           
+          }
         }
-    });
+      });
+    // var scatterChart = new Chart(ctx, {
+    //     type: 'bubble',
+    //     data: {
+    //         datasets: [{
+    //             type: 'line',
+    //             label: 'Projeção',
+    //             data: reta,
+    //             fill:false,
+    //             backgroundColor:'rgba(218,83,79,.7)',
+    //             borderColor: 'rgba(218,83,79,.7)',
+    //             pointRadius:0
+    //         },{
+    //             type:'bubble',
+    //             label: 'Pontos',
+    //             data: dados,
+    //             backgroundColor:'rgba(76,78,80,.7)',
+    //             borderColor: 'transparent',
+    //         }]
+    //     },
+    //     options: {
+    //         scales: {
+    //             xAxes: [{
+    //                 type: 'linear',
+    //                 position: 'bottom'
+    //             }]
+    //         }
+    //     }
+    // });
 }
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@//
 
@@ -1181,6 +1214,14 @@ function graphCorrelacao(valX,valY,b=null,a=null){
 
 //------------- FUNÇÕES DE ESTRUTURA ------------ //
 
+    //Controle de equação//
+    $('#equa_xx').on("focus",function(){
+        $('#equa_y').val('');
+    })
+    $('#equa_y').on('focus',function(){
+        $('#equa_xx').val('');
+    })
+
     //Controlador SELECT PROBABILIDADE - uniforme //
     $('#selTipoUni').on('change',function(){
         if($('#selTipoUni').val()=='ENTRE_'){
@@ -1273,6 +1314,10 @@ function graphCorrelacao(valX,valY,b=null,a=null){
 
         if(local === 'tabs2'){
             $('html,body').animate({scrollTop: $('#myTabProbContent').offset().top},1500);
+        }
+        
+        if(local === 'tabs3'){
+            $('html,body').animate({scrollTop: $('#myChartCorr').offset().top+300},1500);
         }
     }
 
@@ -1746,6 +1791,9 @@ function entrada(){
 
         }
 
+        
+
+
         if(indicador_corr == 'CORRELACAO'){
             var x_value = document.getElementById('x_value').value;   
             var y_value = document.getElementById('y_value').value;
@@ -1759,21 +1807,55 @@ function entrada(){
                 $('#x_value').focus();
                 return false;
             }else{
-                
+                //Calcula a correlacao e regressao//
                 var res = correlacao_regressao(xvalue,yvalue);
                 
+                //Monta os valores da equação na tela//
                 $('#resCorrelacao').text('Correlação de ' + res[0] + ' %');
                 $('#equa_a').text(res[1]);
                 $('#equa_b').text(' + (' + res[2] + ' )');
 
+                //Mostra os valores na tela//
                 $('#resultadoCorrelacao').css("display","block");
                 $('#calcularCorr').css("display","block");
                 
-                var valX = [], valY = [];
+                //Constroi o gráfico de dispersão//
+                var a = res[1];               
+                graphCorrelacao(xvalue,yvalue,res[2],a)
 
-               
-                graphCorrelacao(xvalue,yvalue,res[2],[1])
+                $('#tab_graficosCorrelacao').trigger('click');
+                animaScroll('tabs3');
 
+
+                //Calcula a projeção com base na variável escolhida//
+                function calcProjecao(x=null,tipo){
+                    var projecao = 0;
+
+                    // Y projetando em X//
+                    if(x!=null && tipo=='Y'){
+                        projecao = (parseFloat($('#equa_y').val()) - res[2])/res[1];
+                        return projecao;
+                    }
+                    // X projetando em Y//
+                    if(x!=null && tipo=='X'){
+                        projecao = (parseFloat($('#equa_xx').val()) * res[1])+res[2];
+                        return projecao;
+                    }
+                }
+
+
+           
+
+                //Calculo de equação dinamico//
+                $('#equa_xx').on('change',function(){
+                    $('#projecao').text('Projetando X em : '+ $('#equa_xx').val() + ', Y vale : '+calcProjecao(1,'X').toFixed(2))
+                    $('#projecao').fadeIn('fast');
+                })
+
+                $('#equa_y').on('change',function(){
+                    $('#projecao').text('Projetando Y em : '+ $('#equa_y').val() + ', X vale : '+calcProjecao(1,'Y').toFixed(2))
+                    $('#projecao').fadeIn('fast');
+                })
             }
 
 
@@ -1952,7 +2034,6 @@ $(document).ready(function(){
 
         // console.log(correlacao_regressao(ax,ay));
 // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% //
-
 
 
 

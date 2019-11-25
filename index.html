@@ -481,8 +481,21 @@
                         </div>
                         <div class="col-3"></div>
                     </div>
- 
-                    <!-- Resultado Correlação  -->
+                   
+                    
+                    <!-- Botão de entrada Correlação de Regressão -->
+                    <div class="row pl-3">
+                        <div class="col-2"></div>
+                        <div class="from-group col-8">
+                            <button type="button" class="btn btn-dark btnEntrada d-block mx-auto"< id="entradaCorr" onclick="entrada()">Entrada</button>
+                        </div>
+                        <div class="col-2"></div>
+                    </div>
+                </div>
+                
+
+                <!-- ÁREA DE GRÁFICOS - ESTATÍSTICA DESCRITIVA -->
+                <div class="tab-pane fade" id="graficoCorrelacao">
                     <div class="row pl-3" id="resultadoCorrelacao">
                         <div class="col-3"></div>
                         <div class=" input-group mx-auto mb-0 col-3">
@@ -497,31 +510,24 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" title="Multiplica" id="equa_x"> x </span>
                             </div>
-                            <input type="text"  class="form-control" title="Valor de (X)" id="equa_x" placeholder="Valor de (X)">
+                            <input type="text"  class="form-control" title="Valor de (X)" id="equa_xx" placeholder="Valor de (X)">
                             <div class="input-group-append">
                                 <span class="input-group-text" title="Valor de (B)" id="equa_b"></span>
                             </div>
                         </div>
                         <div class="col-3"></div>
-                    </div>   
-                    
-                    <!-- Botão de entrada Correlação de Regressão -->
+                    </div> 
                     <div class="row pl-3">
-                        <div class="col-2"></div>
-                        <div class="from-group col-4">
-                            <button type="button" class="btn btn-dark btnEntrada d-block mx-auto"< id="entradaCorr" onclick="entrada()">Entrada</button>
+                        <div class="col-3"></div>
+                        <div class="col-6 text-center">
+                            <span id="projecao"></span>
                         </div>
-                        <div class="form-group col-4">
-                            <button type="button" class="btn btn-success btnEntrada mx-auto" id="calcularCorr">Calcular</button>
-                        </div>
-                        <div class="col-2"></div>
-                    </div>
-                </div>
-                
+                        <div class="col-3"></div>
+                    </div>  
 
-                <!-- ÁREA DE GRÁFICOS - ESTATÍSTICA DESCRITIVA -->
-                <div class="tab-pane fade" id="graficoCorrelacao">
-                    <canvas id="myChartCorr" width="600" height="400"></canvas>
+                    <div class="graphCorr">
+                        <!-- <canvas id="myChartCorr" width="600" height="400"></canvas> -->
+                    </div>
                 </div>
             </div> 
         </div>
