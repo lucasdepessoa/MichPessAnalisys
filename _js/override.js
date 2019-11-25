@@ -128,6 +128,56 @@ function graphContinua(variavel=null, names=null,values=null){
         }
     });
 }
+
+function graphCorrelacao(valX,valY,b=null,a=null){
+
+    var ctx = document.getElementById("myChartCorr");
+
+
+    var dados = [];
+
+    //Monta os pontos no grafico//
+    for(var i=0; i<valX.length; i++){
+        var dd = {
+            x: valY[i],
+            y: valX[i]
+        }
+        dados.push(dd)
+    }
+    var reta = [];
+
+    reta.push({
+        x: Math.min(...valY),
+        y: (Math.min(...valY) - b ) / a 
+
+    },{
+        x: Math.max(...valY),
+        y:  (Math.max(...valY) - b ) / a
+    })
+
+    var scatterChart = new Chart(ctx, {
+        type: 'scatter',
+        data: {
+            datasets: [{
+                label: 'Scatter Dataset',
+                data: dados,
+            },{
+                type:'line',
+                data: reta,
+                fill:false,
+                borderColor:'#000'
+            }]
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                    type: 'linear',
+                    position: 'bottom'
+                }]
+            }
+        }
+    });
+}
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@//
 
 
@@ -986,7 +1036,7 @@ function graphContinua(variavel=null, names=null,values=null){
                     if(Math.sign(t) == -1 || Math.sign(t) == '-0' || Math.sign(t) == -0){
                         t = Math.abs(t).toString();
                     }
-                    alert('entrou aqui')
+                    
                     //trata o valor do indice//
                     var indicet = t.slice(0,3).replace('.',',');
 
@@ -1719,7 +1769,10 @@ function entrada(){
                 $('#resultadoCorrelacao').css("display","block");
                 $('#calcularCorr').css("display","block");
                 
+                var valX = [], valY = [];
 
+               
+                graphCorrelacao(xvalue,yvalue,res[2],[1])
 
             }
 
