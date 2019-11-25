@@ -4,38 +4,549 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Login - MichPess</title>
-    <link href="_css/bootstrap.min.css" rel="stylesheet">
-    <link href="_css/lg.css" rel="stylesheet">
+    <title>MichPess Analisys</title>
+    <!-- Style References -->
+    <link type="text/css" rel="stylesheet" href="_css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="_css/Chart.min.css">
+    <link type="text/css" rel="stylesheet" href="_css/override.css"/> 
+    <link type="text/css" rel="stylesheet" href="_css/all.css"/>
+    <!-- -->
 </head>
-<body>
-    <div class="sidenav" id="log1">
-        <div class="login-main-text">
-            <h2>MichPess<br> Analisys</h2>
-            <p>Digite seu login ou registre-se.</p>
-        </div>
-    </div>
-    <div class="main" id="log2">
-        <div class="col-md-6 col-sm-12">
-            <div class="login-form">
-                <form>
-                    <div class="form-group">
-                    <label>Usuário</label>
-                    <input type="text" id="user_" class="form-control" placeholder="Usuário">
-                    </div>
-                    <div class="form-group">
-                    <label>Senha</label>
-                    <input type="password" id="pass_" class="form-control" placeholder="Senha">
-                    </div>
-                    <button type="button" id="entrar" class="btn btn-black">Entrar</button>
-                    <button type="button" class="btn btn-secondary">Registre-se</button>
-                </form>
+<body class="backMaster">
+
+
+    
+
+<div id="restante">
+    <!-- Menu Superior -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark text-white navCC">
+        <div class="container">
+            <!-- Logo do Aplicativo -->
+            <a href="#" class="navbar-brand mr-auto">MichPess Analisys</a>
+
+            <!-- Botão Toggle -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sub_DOWN">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Conteúdo botão toggle -->
+            <div class="collapse navbar-collapse" id="sub_DOWN">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item dropdown">
+                        <button class="btn btn-primary bg-dark dropdown-toggle outline" data-toggle="dropdown" id="navDesc">
+                            Estatística Descritiva
+                        </button>
+                        <div class="dropdown-menu menu_drop">
+                            <button class="dropdown-item navItemCustom" id="quali_nomi" type="button" onclick="trigger(this.id);" > Qualitativa Nominal </button>
+                            <button class="dropdown-item navItemCustom" id="quali_ordi" type="button" onclick="trigger(this.id);" > Qualitativa Ordinal </button>
+                            <button class="dropdown-item navItemCustom" id="quati_disc" type="button" onclick="trigger(this.id);" > Quantitativa Discreta </button>
+                            <button class="dropdown-item navItemCustom" id="quati_cont" type="button" onclick="trigger(this.id);" > Quantitativa Continua </button>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <button class="btn btn-primary bg-dark dropdown-toggle outline" onclick="trigger(this.id);" data-toggle="dropdown" id="dist_probabilidade">
+                            Probabilidade
+                        </button>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <button class="btn btn-primary bg-dark dropdown-toggle outline" onclick="trigger(this.id);" data-toggle="dropdown" id="navCorrelacao">
+                            Correlação e Regressão
+                        </button>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <button class="btn btn-primary bg-dark dropdown-toggle outline" onclick="trigger(this.id);" data-toggle="dropdown" id="navSair">
+                            Sair
+                            <i class="fa fa-power-off"></i>
+                        </button>
+                        
+                    </li>
+                </ul>
             </div>
         </div>
+    </nav>
+
+
+    <div class="container p-4" id="container_trigger">
+
+
+        <!-- Pagina estatística descritiva -->
+        <div id="trigger">
+            <nav class="navbar mt-0">
+                <h4 id="varPes"> <!-- Aqui vai o título inserido via javascript --> </h4>
+                <input type="hidden" id="indice" value=''>
+            </nav>
+
+            <!-- Menu tabulação -->
+            <ul class="nav nav-tabs bg-white" id="myTab">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" id='tab_coleta' onclick="animaScroll('tabs');" href="#coleta">Coleta de Dados</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" id='tab_tabulacao' onclick="animaScroll('tabs');" href="#tabulacao">Tabulação</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" id='tab_graficos' onclick="animaScroll('tabs');" href="#graficos">Gráficos</a>
+                </li>
+            </ul>
+            
+            <!--INSERÇÃO DE DADOS, TABULAÇÃO E APRESENTAÇÃO DE RESULTADOS-->
+            <div class="tab-content bg-white p-4" id="myTabContent">
+
+                <!--INSERÇÃO DE DADOS - ABA DE COLETA ESTATÍSTICA DESCRITIVA-->
+                <div class="tab-pane fade show active" id="coleta">
+
+                    <!-- Menu Amostra ou População -->
+                    <div class="row pl-3">
+                        <div class="btn-group btn-group-toggle mx-auto col-6" data-toggle="buttons">
+                            <label class="btn btn-dark  btnVariable" id="lb_amostra">
+                            <input type="radio" name="tipo_variavel" id="tipo_amostra" autocomplete="off"> 
+                            Amostra
+                            </label>
+                            <label class="btn btn-dark btnVariable" id="lb_populacao">
+                            <input type="radio" name="tipo_variavel" id="tipo_populacao" autocomplete="off"> 
+                            População
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Nome da variável -->
+                    <div class="row pl-3">
+                        <div class="col-3"></div>
+                        <div class="input-group mb-3 inp_data col-6">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">[name]</span>
+                            </div>
+                            <input type="text" class="form-control" id="nameVariable" placeholder="Insira o nome da variável" aria-label="Variables" aria-describedby="Variables-Insert">
+                        </div>
+                        <div class="col-3"></div>
+                    </div>
+
+                    <!-- Input Principal de Entrada de Dados -->
+                    <div class="row pl-3">
+                        <div class="col-3"></div>
+                        <div class="input-group mb-3 inp_data col-6">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">;</span>
+                            </div>
+                            <input type="text" class="form-control" id="variable" placeholder="Insira os valores separados por ponto e vírgula" aria-label="Variables" aria-describedby="Variables-Insert">
+                        </div>
+                        <div class="col-3"></div>
+                    </div>
+
+                    <!--Medidas Separatrizes -->
+                    <div class="row pl-3">
+                        <div class="col-3"></div>
+                        <div class=" input-group mx-auto mb-0 col-3">
+                            <select name="selSeparatriz" id="selSeparatriz" class="custom-select mb-3">
+                                <option value="4">Quartil</option>
+                                <option value="10">Decil</option> 
+                                <option value="5">Quintil</option>
+                                <option value="100">Percentil</option>   
+                            </select>
+                        </div>
+                        <div class="input-group mx-auto mb-3 col-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon2">%</span>
+                            </div>    
+                            <input type="number" min="1" max="4" step="1.0" class="form-control" id="parcela" placeholder=" % ..">
+                        </div>
+                        <div class="col-3"></div>
+                    </div>   
+                    
+                    <!-- Botão de entrada Estatística Descritiva -->
+                    <div class="from-group col-12">
+                        <button type="button" class="btn btn-dark btnEntrada d-block mx-auto" onclick="entrada()">Entrada</button>
+                    </div>
+                </div>
+                 
+                <!-- AREA DE TABULAÇÃO - ESTATÍSTICA DESCRITIVA -->
+                <div class="tab-pane fade" id="tabulacao">
+                    <h5 class="text-center" id="tit_table"></h5>
+                    <table class="table table-hover text-center">
+                        <thead>
+                            <th>Variavel</th>
+                            <th>Fi</th>
+                            <th>FR %</th>
+                            <th>Fac </th>
+                            <th>Fac %</th>
+                        </thead>
+                        <tbody id="tabul">
+
+                        </tbody>
+                    </table>
+                    <table class="table table-dark">
+                        <tbody id="tabulMetricaDesc">
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- ÁREA DE GRÁFICOS - ESTATÍSTICA DESCRITIVA -->
+                <div class="tab-pane fade" id="graficos">
+                    <div class="row pl-3">
+                        <div class="col-12 graphDESC">
+                            <!-- <canvas id="myChart" width="600" height="400"></canvas> -->
+                        </div>
+                    </div>
+                </div>
+            </div> 
+        </div>
+
+        <!-- Pagina estatística probabilidade -->
+        <div id="trigger_prob">
+            <nav class="navbar mt-0">
+                <h4 id="varPesProb"> <!-- Aqui vai o título inserido via javascript --> </h4>
+                <input type="hidden" id="indice_prob" value=''>
+            </nav>
+    
+            <!-- Menu tabulação -->
+            <ul class="nav nav-tabs bg-white" id="myTabProb">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" id='tab_coleta_prob' onclick="animaScroll('tabs');" href="#coleta_prob">Coleta de Dados</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" id='tab_tabulacao_prob' onclick="animaScroll('tabs');" href="#tabulacao_prob">Resultados</a>
+                </li>
+            </ul>
+            
+            <!--INSERÇÃO DE DADOS, TABULAÇÃO E APRESENTAÇÃO DE RESULTADOS-->
+            <div class="tab-content bg-white p-4" id="myTabProbContent">
+
+
+                <!--INSERÇÃO DE DADOS - ABA DE COLETA - PROBABILIDADE -->
+                <div class="tab-pane fade show active" id="coleta_prob">
+                    
+                    <!-- MENU DE BLOCOS -->
+                    <div class="row pl-3 mb-2">
+                        <div class="btn-group btn-group-toggle col-12" data-toggle="buttons">
+                            <label class="btn btn-dark  btnVariable" id="lb_uniforme">
+                                <input type="radio" name="tipo_calculo" id="tipo_uniforme" autocomplete="off"> 
+                                Uniforme
+                            </label>
+                            <label class="btn btn-dark btnVariable" id="lb_binomial">
+                                <input type="radio" name="tipo_calculo" id="tipo_binomial" autocomplete="off"> 
+                                Binomial
+                            </label>
+                            <label class="btn btn-dark btnVariable" id="lb_normal">
+                                <input type="radio" name="tipo_calculo" id="tipo_normal" autocomplete="off"> 
+                                Normal
+                            </label>
+                        </div>
+                    </div>   
+
+                    <!-- BLOCO UNIFORME -->
+                    <div id="moldeUni">
+
+                        <!-- Quantidade e Select Distribuição Uniforme --> 
+                        <div class="row pl-3">
+                            <div class="col-2"></div>
+                            <div class="input-group mb-3 inp_data col-4">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Qtd</span>
+                                </div>
+                                <input type="text" class="form-control" id="qtd_uni" placeholder="Insira a quantidade" aria-label="Variables">
+                            </div>  
+                            <div class="input-group mb-3 inp_data col-4">
+                                <select name="selTipoUni" id="selTipoUni" class="custom-select">
+                                    <option value="MAIOR_QUE">MAIOR QUE</option>
+                                    <option value="ENTRE_">ENTRE</option>
+                                    <option value="MENOR_QUE">MENOR QUE</option>
+                                    <option value="EQUILIBRIO">EQUILIBRIO</option>
+                                </select>
+                            </div>
+                            <div class="col-2"></div>
+                        </div>
+                        
+                        <!-- Valor Máximo e Valor Mínimo Distribuição Binomial -->
+                        <div class="row pl-3">
+                            <div class="col-2"></div>
+                        
+                            <div class="input-group mb-3 inp_data col-4">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Min</span>
+                                </div>
+                                <input type="text" class="form-control" id="min_uni" placeholder="Ponto mínimo" aria-label="Variables">
+                            </div>
+                            
+                            <div class="input-group mb-3 inp_data col-4">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Max</span>
+                                </div>
+                                <input type="text" class="form-control" id="max_uni" placeholder="Ponto máximo" aria-label="Variables">
+                            </div>
+
+                            <div class="col-2"></div>
+                        </div>
+
+
+                        <!-- De - Até Distribuição Uniforme -->
+                        <div class="row pl-3" id="de_ate">
+                            <div class="input-group mx-auto mb-2 col-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">De</span>
+                                </div>
+                                <input type="text" class="form-control" id="de_uni" placeholder="De (x)" aria-label="Variables">      
+                            </div>
+
+                            <div class="input-group mb-4 mx-auto col-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Até</span>
+                                </div>    
+                                <input type="text" class="form-control" id="ate_uni" placeholder="Até (y)" aria-label="Variables">
+                            </div> 
+                        </div>
+                        
+                        <!-- Botão de entrada distribuição Uniforme -->
+                        <div class="from-group col-12">
+                            <button type="button" class="btn btn-dark btnEntrada d-block mx-auto" onclick="entrada()">Entrada</button>
+                        </div>
+                    </div>
+
+                    <!-- BLOCO BINOMIAL -->
+                    <div id="moldeBino">
+                        <!-- Amostra e Evento  Distribuição Binomial -->
+                        <div class="row mb-0 pl-3">
+                            <div class="col-2"></div>
+                            <div class="input-group mb-3 inp_data mx-auto col-4">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Amostra</span>
+                                </div>
+                                <input type="text" class="form-control" id="amostra_bino" placeholder="Amostra (N)" aria-label="Variables">
+                            </div>
+
+                            <div class="input-group mb-3 inp_data mx-auto col-4"> 
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Evento (K)</span>
+                                </div>
+                                <input type="text" class="form-control" id="event_bino" placeholder="Evento (k)" aria-label="Variables">
+                            </div>
+                            <div class="col-2"></div>
+                        </div>
+
+                        <!-- Sucesso e Fracasso Distribuição Binomial -->
+                        <div class="row pl-3">
+                            <div class="col-2"></div>
+                            <div class="input-group mb-4 col-4">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Sucesso (P)</span>
+                                </div>
+                                <input type="text" class="form-control" id="succes_bino" placeholder="Sucesso (P)" aria-label="Variables">
+                            </div>
+                            <div class="input-group mb-4  col-4"> 
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Fracasso (Q)</span>
+                                </div>
+                                <input type="text" class="form-control" id="failed_bino" placeholder="Fracasso (Q)" aria-label="Variables">
+                            </div>
+                            <div class="col-2"></div>
+                        </div>
+                       
+                        <!-- Botão Distribuição Binomial -->
+                        <div class="from-group col-12">
+                            <button type="button" class="btn btn-dark btnEntrada d-block mx-auto" onclick="entrada()">Entrada</button>
+                        </div>
+                    </div>
+
+                    <!-- BLOCO NORMAL  -->
+                    <div id="moldeNormal">
+
+                        <!-- Quantidade e Select - Distribuição Normal -->
+                        <div class="row pl-3">
+                            <div class="col-2"></div>
+                            <div class="input-group mb-3 inp_data col-4">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Qtd</span>
+                                </div>
+                                <input type="text" class="form-control" id="qtd_normal" placeholder="Quantidade">
+                            </div>    
+                            <div class="input-group mb-3 inp_data col-4">
+                                <select name="selTipoNormal" id="selTipoNormal" class="custom-select">
+                                    <option value="MAIOR_QUE">MAIOR QUE</option>
+                                    <option value="ENTRE_">ENTRE</option>
+                                    <option value="MENOR_QUE">MENOR QUE</option>
+                                </select>
+                            </div>
+                            <div class="col-2"></div>                                
+                        </div>
+
+                        <!-- Média e Desvio Padrão - Distribuição Normal -->
+                        <div class="row pl-3">
+                            <div class="col-2"></div>
+                            <div class="input-group mb-3 inp_data col-4">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" >Média</span>
+                                </div>
+                                <input type="text" class="form-control" id="media_normal" placeholder="Média">
+                            </div>
+
+                            <div class="input-group mb-3 inp_data col-4">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" >Desvio Padrão</span>
+                                </div>
+                                <input type="text" class="form-control" id="dp_normal" placeholder="Desvio Padrão">
+                            </div>
+                            <div class="col-2"></div>
+                        </div>
+                        
+                        <!-- De - Até - Distribuição Normal -->
+                        <div class="row pl-3">  
+                            <div class="input-group mb-3 inp_data col-12" id="de_ate_normal">
+                                <div class="input-group mx-auto mb-3 col-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">De</span>
+                                    </div>
+                                <input type="text" class="form-control" id="de_normal" placeholder="De (x)" aria-label="Variables">
+                                </div>
+                                <div class="input-group mx-auto mb-3 col-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Até</span>
+                                    </div>
+                                <input type="text" class="form-control" id="ate_normal" placeholder="Até (y)" aria-label="Variables">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Botão de Entrada distribuição Normal -->
+                        <div class="from-group col-12">
+                            <button type="button" class="btn btn-dark btnEntrada d-block mx-auto" onclick="entrada()">Entrada</button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- TABULAÇÃO DE DADOS - ÁREA DE AMOSTRAGEM DE DADOS EM FORMA DE TABELA - PROBABILIDADE -->
+                <div class="tab-pane fade" id="tabulacao_prob">
+                    <h5 class="text-center" id="tit_tableProb"></h5>
+                    <table class="table table-dark  text-center">
+                        <thead>
+                            <th>Média</th>
+                            <th>Probabilidade %</th>
+                            <th>Desvio Padrão</th>
+                            <th>Coeficiente de Variação</th>
+                        </thead>
+                    <tbody id="tabulProbMetrica">
+
+                    </tbody>
+                    </table>
+                </div>
+
+
+            </div> 
+        </div>
+
+        <!-- Correlação e Regressão -->
+        <div id="trigger_correlacao">
+            <nav class="navbar mt-0">
+                <h4 id="varPesCorrelacao"> <!-- Aqui vai o título inserido via javascript --> </h4>
+                <input type="hidden" id="indice_correlacao" value=''>
+            </nav>
+
+            <!-- Menu tabulação -->
+            <ul class="nav nav-tabs bg-white" id="myTabCorrelacao">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" id='tab_coletaCorrelacao' onclick="animaScroll('tabs');" href="#coletaCorrelacao">Coleta de Dados</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" id='tab_graficosCorrelacao' onclick="animaScroll('tabs');" href="#graficoCorrelacao">Gráfico</a>
+                </li>
+            </ul>
+            
+            <!--INSERÇÃO DE DADOS E APRESENTAÇÃO DE RESULTADO COMO GRÁFICO-->
+            <div class="tab-content bg-white p-4" id="myTabContentCorrelacao">
+
+                <!--INSERÇÃO DE DADOS - ABA DE COLETA ESTATÍSTICA DESCRITIVA-->
+                <div class="tab-pane fade show active" id="coletaCorrelacao">
+
+                    
+
+                    <!-- Valores de (x) -->
+                    <div class="row pl-3">
+                        <div class="col-3"></div>
+                        <div class="input-group mb-3 inp_data col-6">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">;</span>
+                            </div>
+                            <input type="text" class="form-control" id="x_value" placeholder="Insira os valores de (X)" aria-label="Variables" aria-describedby="Variables-Insert">
+                        </div>
+                        <div class="col-3"></div>
+                    </div>
+
+                    <!-- Valores de (Y) -->
+                    <div class="row pl-3">
+                        <div class="col-3"></div>
+                        <div class="input-group mb-3 inp_data col-6">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">;</span>
+                            </div>
+                            <input type="text" class="form-control" id="y_value" placeholder="Insira os valores de (Y)" aria-label="Variables" aria-describedby="Variables-Insert">
+                        </div>
+                        <div class="col-3"></div>
+                    </div>
+                   
+                    
+                    <!-- Botão de entrada Correlação de Regressão -->
+                    <div class="row pl-3">
+                        <div class="col-2"></div>
+                        <div class="from-group col-8">
+                            <button type="button" class="btn btn-dark btnEntrada d-block mx-auto"< id="entradaCorr" onclick="entrada()">Entrada</button>
+                        </div>
+                        <div class="col-2"></div>
+                    </div>
+                </div>
+                
+
+                <!-- ÁREA DE GRÁFICOS - ESTATÍSTICA DESCRITIVA -->
+                <div class="tab-pane fade" id="graficoCorrelacao">
+                    <div class="row pl-3" id="resultadoCorrelacao">
+                        <div class="col-3"></div>
+                        <div class=" input-group mx-auto mb-0 col-3">
+                            <label for="resCorrelacao"></label>
+                            <span id="resCorrelacao" class="bg-black"> </span>
+                        </div>
+                        <div class="input-group mx-auto mb-3 col-6">
+                            <input type="text"  class="form-control" title="Valor de (Y)" id="equa_y" placeholder="Valor de (Y)">
+                            <div class="input-group-append">
+                                <span class="input-group-text" title="Valor de (A)" id="equa_a"></span>
+                            </div>
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" title="Multiplica" id="equa_x"> x </span>
+                            </div>
+                            <input type="text"  class="form-control" title="Valor de (X)" id="equa_xx" placeholder="Valor de (X)">
+                            <div class="input-group-append">
+                                <span class="input-group-text" title="Valor de (B)" id="equa_b"></span>
+                            </div>
+                        </div>
+                        <div class="col-3"></div>
+                    </div> 
+                    <div class="row pl-3">
+                        <div class="col-3"></div>
+                        <div class="col-6 text-center">
+                            <span id="projecao"></span>
+                        </div>
+                        <div class="col-3"></div>
+                    </div>  
+
+                    <div class="graphCorr">
+                        <!-- <canvas id="myChartCorr" width="600" height="400"></canvas> -->
+                    </div>
+                </div>
+            </div> 
+        </div>
+        
+
     </div>
 
-    <!-- Scripts -->
-    <script src="_js/jquery-3.4.1.min.js"></script>
-    <script src="_js/lg.js"></script>
+
+
+
+
+
+<!-- Script References-->
+<script type="text/javascript" src="_js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="_js/Chart.min.js"></script>
+<script type="text/javascript" src="_js/override.js"></script>
+<script type="text/javascript" src="_js/bootstrap.min.js"></script>
+
+
+<!-- -->
 </body>
 </html>
