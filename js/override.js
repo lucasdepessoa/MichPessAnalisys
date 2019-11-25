@@ -1373,6 +1373,7 @@ function graphCorrelacao(valX,valY,b=null,a=null){
                         $('#moldeUni').css("display","none");
                         $('#moldeNormal').css("display","none");
                         $("#trigger_prob").css("display","none");
+                        $('.graphCorr').html('')
                         $("#trigger").css("display","block");
                         $('#moldeDesc').css("display","block");
                     break;
@@ -1384,6 +1385,7 @@ function graphCorrelacao(valX,valY,b=null,a=null){
                         $('#moldeUni').css("display","none");
                         $("#trigger").css("display","none");
                         $("#trigger_prob").css("display","block");
+                        $('.graphCorr').html('')
                         $("#tab_coleta_prob").trigger("click");
                     break;
                     case 'correlacao':
