@@ -1384,11 +1384,13 @@ function graphCorrelacao(valX,valY,b=null,a=null){
                         $('#moldeUni').css("display","none");
                         $("#trigger").css("display","none");
                         $("#trigger_prob").css("display","block");
+                        $("#tab_coleta_prob").trigger("click");
                     break;
                     case 'correlacao':
                         $('#trigger_prob').css("display","none");
                         $('#trigger').css("display","none");
-                        $('#trigger_correlacao').css("display","block");    
+                        $('#trigger_correlacao').css("display","block");   
+                        $('#tab_coletaCorrelacao').trigger("click");
                     break;
                 }
 
