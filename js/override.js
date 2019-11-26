@@ -159,7 +159,7 @@ function graphCorrelacao(valX,valY,b=null,a=null){
         data: {
           datasets: [{
             type: 'line',
-            label: 'X:',
+            label: 'Projeção:',
             data: reta,
             fill: false,
             backgroundColor: "rgba(218,83,79, .7)",
@@ -167,7 +167,7 @@ function graphCorrelacao(valX,valY,b=null,a=null){
             pointRadius: 0
           }, {
             type: 'bubble',
-            label: 'Y:',
+            label: 'Dados:',
             data: dados,
             backgroundColor: "rgba(76,78,80, .7)",
             borderColor: "transparent",
@@ -182,35 +182,7 @@ function graphCorrelacao(valX,valY,b=null,a=null){
            
           }
         }
-      });
-    // var scatterChart = new Chart(ctx, {
-    //     type: 'bubble',
-    //     data: {
-    //         datasets: [{
-    //             type: 'line',
-    //             label: 'Projeção',
-    //             data: reta,
-    //             fill:false,
-    //             backgroundColor:'rgba(218,83,79,.7)',
-    //             borderColor: 'rgba(218,83,79,.7)',
-    //             pointRadius:0
-    //         },{
-    //             type:'bubble',
-    //             label: 'Pontos',
-    //             data: dados,
-    //             backgroundColor:'rgba(76,78,80,.7)',
-    //             borderColor: 'transparent',
-    //         }]
-    //     },
-    //     options: {
-    //         scales: {
-    //             xAxes: [{
-    //                 type: 'linear',
-    //                 position: 'bottom'
-    //             }]
-    //         }
-    //     }
-    // });
+      });   
 }
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@//
 
@@ -1480,9 +1452,9 @@ function graphCorrelacao(valX,valY,b=null,a=null){
             
             tabela2 += '<thead>';
             tabela2 +=   '<th>Moda</th>';
-            tabela2 +=   '<th>'+parseFloat(arr[7]).toFixed(2)+'</th>';
+            tabela2 +=   '<th>'+arr[7]+'</th>';
             tabela2 +=   '<th>Mediana</th>';
-            tabela2 +=   '<th>'+parseFloat(arr[8]).toFixed(2)+'</th>';
+            tabela2 +=   '<th>'+arr[8]+'</th>';
             tabela2 +=   '<th>Medida Separatriz</th>';
             tabela2 +=   '<th>' + medida_separatriz(arr,parseInt(selValor),parseInt(selDivisao)) + '</th>';
             tabela2 += '</thead>';
@@ -1873,6 +1845,75 @@ function entrada(){
 }
 
 
+    const input = document.querySelector('input[type=file]');
+
+
+    input.addEventListener('change',function(e){
+        const reader = new FileReader();
+        reader.onload = function(){
+            const linhas = reader.result.split('\n').map(function(line){
+                return line.split(';');
+            })
+            var pacoteX = [], pacoteY = [];
+            for(var i=0; i<linhas.length; i++){
+                if(linhas[i][0] != ''){
+                    pacoteX.push(parseFloat(linhas[i][0]))
+                    pacoteY.push(parseFloat(linhas[i][1]))
+                }
+                
+            }
+            
+            //Envia valores para a função e monta o gráfico//
+            var pp = correlacao_regressao(pacoteX,pacoteY);
+
+            graphCorrelacao(pacoteX,pacoteY,pp[2],pp[1]);
+
+            //Monta os valores da equação na tela//
+            $('#resCorrelacao').text('Correlação de ' + pp[0] + ' %');
+            $('#equa_a').text(pp[1]);
+            $('#equa_b').text(' + (' + pp[2] + ' )');
+
+            //Mostra os valores na tela//
+            $('#resultadoCorrelacao').css("display","block");
+            $('#calcularCorr').css("display","block");
+            $('#tab_graficosCorrelacao').trigger("click");
+            animaScroll('tabs3');
+
+
+
+            //Calcula a projeção com base na variável escolhida//
+            function calcProjecao(x=null,tipo){
+                var projecao = 0;
+
+                // Y projetando em X//
+                if(x!=null && tipo=='Y'){
+                    projecao = (parseFloat($('#equa_y').val()) - pp[2])/pp[1];
+                    return projecao;
+                }
+                // X projetando em Y//
+                if(x!=null && tipo=='X'){
+                    projecao = (parseFloat($('#equa_xx').val()) * pp[1])+pp[2];
+                    return projecao;
+                }
+            }
+
+
+
+            $('#equa_xx').on('change',function(){
+                $('#projecao').text('Projetando X em : '+ $('#equa_xx').val() + ', Y vale : '+calcProjecao(1,'X').toFixed(2))
+                $('#projecao').fadeIn('fast');
+            })
+
+            $('#equa_y').on('change',function(){
+                $('#projecao').text('Projetando Y em : '+ $('#equa_y').val() + ', X vale : '+calcProjecao(1,'Y').toFixed(2))
+                $('#projecao').fadeIn('fast');
+            })
+
+
+        }
+        reader.readAsText(input.files[0])
+    },false);
+
 //-------------------------------//
 
 
@@ -2033,7 +2074,7 @@ $(document).ready(function(){
         // console.log('entre ' + distribuicao_normal(90,5,'ENTRE_',89,93));
         // console.log('entre menos ' + distribuicao_normal(90,5,'ENTRE_MENOS',86,89));
 
- 
+       
 
         // TESTE CORRELACAO E PROGRESSÃO //
         // ax = [12.38,14.56,14.67,15.98,17.65];
