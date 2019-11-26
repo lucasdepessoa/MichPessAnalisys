@@ -1,5 +1,3 @@
-
-
 // FUNÇÕES PARA CRIAÇÃO DE GRÁFICOS //
 
 //função de cores//
@@ -238,6 +236,36 @@ function graphCorrelacao(valX,valY,b=null,a=null){
             quali_fac_percent.push(sum2);
         }
 
+        //calcula a moda//
+        var freq = quali_fi[0];
+        var moda = [];
+            for (var i=0;i<quali_names.length;i++){
+                if (quali_fi[i]>freq){
+                    freq = quali_fi[i];
+                };
+            };
+            for (var i=0;i<quali_names.length; i++){
+                if(freq==quali_fi[i]){
+                    moda.push(quali_names[i]);
+                }
+            }
+            
+
+        //calcula a mediana
+        var mediana = [];
+        if (tot%2==0){
+           var pos1 = (tot/2)-1;
+           var pos2 = pos1 + 1;
+           mediana.push(arr[pos1],arr[pos2]);
+           
+        }
+        else {
+           var pos1 = Math.ceil(tot/2);
+           mediana.push(arr[pos1]);
+           
+           
+        };
+
         /* LEGENDA - array de retorno :
             0 - Elementos (Nomes das Variaveis Pesquisadas) 
             1 - FI 
@@ -246,8 +274,8 @@ function graphCorrelacao(valX,valY,b=null,a=null){
             4 - FAC %
             5 - Tamanho do Array
             6 - Array inteiro ordenado
-            7 - Moda (função genérica)
-            8 - Mediana (função genérica)
+            7 - Moda 
+            8 - Mediana 
         */
 
         //montando o array de retorno//
@@ -258,9 +286,10 @@ function graphCorrelacao(valX,valY,b=null,a=null){
         quali_struct_tb[4] = quali_fac_percent;
         quali_struct_tb[5] = [tot];
         quali_struct_tb[6] = arr;
-        quali_struct_tb[7] = moda(quali_struct_tb);
-        quali_struct_tb[8] = mediana(quali_struct_tb);
+        quali_struct_tb[7] = moda;
+        quali_struct_tb[8] = mediana;
 
+        console.log(quali_struct_tb);
         //retorna o array com os valores prontos//
         return quali_struct_tb;
     }
@@ -358,8 +387,8 @@ function graphCorrelacao(valX,valY,b=null,a=null){
             4 - FAC %
             5 - Tamanho do array original
             6 - Array inteiro ordenado
-            7 - Moda (função genérica)
-            8 - Mediana (função genérica)
+            7 - Moda (função externa)
+            8 - Mediana (função função externa)
             9 - Media calculada (funções específicas)
         */
     
@@ -634,8 +663,6 @@ function graphCorrelacao(valX,valY,b=null,a=null){
     }
 
 
-
-
     // moda - variavel continua // 
     function moda_cont(matriz){
         /*  Cálculo da moda para a função quantitativa contínua
@@ -778,11 +805,6 @@ function graphCorrelacao(valX,valY,b=null,a=null){
     
 
 //########################################################//
-
-
-
-
-
 
 
 // --------------- ESTATÍSTICA - PROBABILIDADE -----------//
@@ -1452,9 +1474,9 @@ function graphCorrelacao(valX,valY,b=null,a=null){
             
             tabela2 += '<thead>';
             tabela2 +=   '<th>Moda</th>';
-            tabela2 +=   '<th>'+arr[7]+'</th>';
+            tabela2 +=   '<th>'+(arr[7])+'</th>';
             tabela2 +=   '<th>Mediana</th>';
-            tabela2 +=   '<th>'+arr[8]+'</th>';
+            tabela2 +=   '<th>'+(arr[8])+'</th>';
             tabela2 +=   '<th>Medida Separatriz</th>';
             tabela2 +=   '<th>' + medida_separatriz(arr,parseInt(selValor),parseInt(selDivisao)) + '</th>';
             tabela2 += '</thead>';
@@ -1986,24 +2008,16 @@ $(document).ready(function(){
     //console.log( medida_separatriz_cont(quanti_continua('AMOSTRA',arrteste),4,1))
 
 //nominal
-// EF;EF;PG;EF;EF;ES;PG;EM;PG;EM;EM;
-//                     ES;ES;EM;EM;ES;EF;EM;PG;ES;ES;
-//                     EM;EF;EM;EM;PG;ES;PG;ES;ES
+// EF;EF;PG;EF;EF;ES;PG;EM;PG;EM;EM;ES;ES;EM;EM;ES;EF;EM;PG;ES;ES;EM;EF;EM;EM;PG;ES;PG;ES;ES
 
 //ordinal
-// rosa;amarela;rosa;azul;rosa;branca;preta;
-//         preta;rosa;branca;rosa;preta;branca;preta;
-//                      rosa;amarela;rosa;branca;branca;azul;rosa;amarela;
-//                                 branca;branca;branca;branca;azul;branca;branca;azul
+// rosa;amarela;rosa;azul;rosa;branca;preta;preta;rosa;branca;rosa;preta;branca;preta;rosa;amarela;rosa;branca;branca;azul;rosa;amarela;branca;branca;branca;branca;azul;branca;branca;azul
 
 //discreta
 //2;2;2;4;4;4;4;4;5;5;5;5;5;5;5;5;7;7;7;7;7;7;10;10
 
 //continua
-// 34;43;20;37;37;55;27;37;23;46;43;56;60;32;27;60;53;51;45;45;45;28;41;38;38;38;56;65;63;23;56;34;27;34;30;29;47;45;47;42;50;35
-
-    //console.log(quanti_continua('AMOSTRA',arrteste))
-
+//34;43;20;37;37;55;27;37;23;46;43;56;60;32;27;60;53;51;45;45;45;28;41;38;38;38;56;65;63;23;56;34;27;34;30;29;47;45;47;42;50;35
 
         //TESTES - TABULAÇÃO //
         //table_builder(quanti_discreta('POPULACAO',entrada()));
@@ -2011,8 +2025,6 @@ $(document).ready(function(){
         //table_builder(quali_nominal_ordinal(PROP[0],TIPO[1],entrada()));
         // table_builder_continua(quanti_continua(PROP[0],entrada()));
         //--//
-
-
 
         //TESTE DE MEDIANA E SEPARATRIZ//
         //console.log(mediana_cont(quanti_continua(PROP[0],arr5)));
@@ -2032,49 +2044,14 @@ $(document).ready(function(){
         // console.log(medida_separatriz_cont(quanti_continua('AMOSTRA',arr8),100,27))
         // console.log(medida_separatriz_cont(quanti_continua('AMOSTRA',arr8),5,3))
 
-
-
-
-
-        //FUNÇÕES ANTIGAS - PENDENTES DE APAGAR OU NÃO //
-
-        // function call(){
-            //TESTES - CONSOLE.LOG//
-            //console.log(quali_nominal_ordinal(PROP[0],TIPO[0],entrada()));
-            //console.log(quali_nominal_ordinal(PROP[0],TIPO[1],entrada()));
-            // console.log(quanti_continua(PROP[0],entrada()));
-            //console.log(quanti_discreta('POPULACAO',entrada()));
-            //--//
-        // }
-
-        // function entrada(){
-            //     var arr_ent = [];
-            //     var numString = document.getElementById("numString").value;
-            //     //determina se o valor digitado é número ou caractere, a partir disso, monta o array
-            //     var teste = (numString.split(';').map(parseFloat));
-            //     if (isNaN(teste[0]) == true){
-            //         arr_ent = numString.split(';');    
-            //     }
-            //     else{
-            //         arr_ent = numString.split(';').map(parseFloat);
-            //     }
-            //     document.getElementById("valores").innerHTML = arr_ent;
-            //     console.log(arr_ent);
-            //     return arr_ent;
-        // }
-
         // TESTE FUNÇÃO BINOMIAL //
         // console.log(distribuicao_binomial(10,0.3,0.7,2))
-
-
 
         // TESTE FUNÇÃO NORMAL //
         // console.log('maior que ' + distribuicao_normal(90,5,'MAIOR_QUE',93));
         // console.log('menor que ' + distribuicao_normal(90,5,'MENOR_QUE',95));
         // console.log('entre ' + distribuicao_normal(90,5,'ENTRE_',89,93));
         // console.log('entre menos ' + distribuicao_normal(90,5,'ENTRE_MENOS',86,89));
-
-       
 
         // TESTE CORRELACAO E PROGRESSÃO //
         // ax = [12.38,14.56,14.67,15.98,17.65];
