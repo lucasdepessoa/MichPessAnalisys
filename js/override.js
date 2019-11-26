@@ -1635,7 +1635,7 @@ function entrada(){
                 case 'NOMINAL':
                     table_builder(quali_nominal_ordinal(proporcao,indicador,arr_ent),selValor,selDivisao);
                     $("#variable").val('');
-                    $("#tit_table").html('Dados variável qualitativa Nominal');
+                    $("#tit_table").html($('#nameVariable').val());
                     $("#tab_tabulacao").trigger('click');
                     
                     
@@ -1648,7 +1648,7 @@ function entrada(){
                 case 'ORDINAL':
                     table_builder(quali_nominal_ordinal(proporcao,indicador,arr_ent),selValor,selDivisao);
                     $("#variable").val('');
-                    $("#tit_table").html('Dados variável qualitativa Ordinal');
+                    $("#tit_table").html($('#nameVariable').val());
                     $("#tab_tabulacao").trigger('click');
 
 
@@ -1670,7 +1670,7 @@ function entrada(){
             switch(indicador){
                 case 'DISCRETA':
                     table_builder(quanti_discreta(proporcao,arr_ent),selValor,selDivisao);
-                    $("#tit_table").html('Dados variável quantitativa Discreta');
+                    $("#tit_table").html($('#nameVariable').val());
                     $("#tab_tabulacao").trigger('click');
 
                     graphDescritiva('DISCRETA',quanti_discreta(proporcao,arr_ent)[0],quanti_discreta(proporcao,arr_ent)[2]);               
@@ -1678,7 +1678,7 @@ function entrada(){
                 break;
                 case 'CONTINUA':
                     table_builder_continua(quanti_continua(proporcao,arr_ent),selValor,selDivisao);
-                    $("#tit_table").html('Dados variável quantitativa Continua');
+                    $("#tit_table").html($('#nameVariable').val());
                     $("#tab_tabulacao").trigger('click');
 
                     graphContinua($('#nameVariable').val(),quanti_continua(proporcao,arr_ent)[0],quanti_continua(proporcao,arr_ent)[2]);
