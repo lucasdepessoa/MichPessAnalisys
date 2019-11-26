@@ -14,7 +14,7 @@ function gera_cor(){
     return cor;
 }
 
-
+//grafico estatística descritiva//
 function graphDescritiva(variavel=null,names=null,values=null){
 
     $('.graphDESC').html('');
@@ -73,7 +73,7 @@ function graphDescritiva(variavel=null,names=null,values=null){
     
 }
 
-
+//gráfico continua//
 function graphContinua(variavel=null, names=null,values=null){
 
     $('.graphDESC').html('');
@@ -129,6 +129,7 @@ function graphContinua(variavel=null, names=null,values=null){
     });
 }
 
+//gráfico correlacao//
 function graphCorrelacao(valX,valY,b=null,a=null){
 
     $('.graphCorr').html('');
@@ -1374,6 +1375,7 @@ function graphCorrelacao(valX,valY,b=null,a=null){
                         $('#moldeNormal').css("display","none");
                         $("#trigger_prob").css("display","none");
                         $('.graphCorr').html('')
+                        $("#projecao").fadeOut('slow');
                         $("#trigger").css("display","block");
                         $('#moldeDesc').css("display","block");
                     break;
@@ -1384,6 +1386,7 @@ function graphCorrelacao(valX,valY,b=null,a=null){
                         $('#moldeDesc').css("display","none")
                         $('#moldeUni').css("display","none");
                         $("#trigger").css("display","none");
+                        $("#projecao").fadeOut('slow');
                         $("#trigger_prob").css("display","block");
                         $('.graphCorr').html('')
                         $("#tab_coleta_prob").trigger("click");
@@ -1401,7 +1404,7 @@ function graphCorrelacao(valX,valY,b=null,a=null){
                 $('#variable').val('');
                 $('#nameVariable').focus();
 
-                $('#tab_coleta').trigger('click')
+                $('#tab_coleta').trigger('click');
 
             }
         }
@@ -1445,7 +1448,7 @@ function graphCorrelacao(valX,valY,b=null,a=null){
                 comando.mostra('correlacao');
             break;
             case 'navSair':
-                window.location.href = 'login.html';
+                window.location.href = 'index.html';
             break;
         }
         
