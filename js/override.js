@@ -289,7 +289,6 @@ function graphCorrelacao(valX,valY,b=null,a=null){
         quali_struct_tb[7] = moda;
         quali_struct_tb[8] = mediana;
 
-        console.log(quali_struct_tb);
         //retorna o array com os valores prontos//
         return quali_struct_tb;
     }
@@ -604,7 +603,7 @@ function graphCorrelacao(valX,valY,b=null,a=null){
                     moda.push(matriz[0][i]);
                 }
             }
-            // console.log("A moda é " + moda + " com " + freq + " de frequência");
+            
             return moda;
     }
 
@@ -621,13 +620,13 @@ function graphCorrelacao(valX,valY,b=null,a=null){
             var pos1 = matriz[5]/2;
             var pos2 = pos1 + 1;
             med = (matriz[6][pos1] + matriz[6][pos2])/2;
-            //console.log("A mediana é " + med + " nas posições "+ pos1 + " e " + pos2);
+            
 
         }
         else {
             var pos1 = Math.ceil(matriz[5]/2);
             med = matriz[6][pos1];
-            // console.log("A mediana é " + med + " na posição " + pos1);
+
         };
         return med;
     }
@@ -681,7 +680,7 @@ function graphCorrelacao(valX,valY,b=null,a=null){
                     moda.push(matriz[7][i]);
                 }
             }
-            // console.log("A moda é " + moda + " com " + freq + " de frequência");
+            
             return moda;
         
     }
@@ -1503,7 +1502,7 @@ function graphCorrelacao(valX,valY,b=null,a=null){
 
         }
         
-        // console.log(medida_separatriz(arr[6],4,1));
+       
         document.getElementById('tabul').innerHTML += tabela; 
         document.getElementById('tabulMetricaDesc').innerHTML += tabela2;
     }
@@ -1956,141 +1955,6 @@ $(document).ready(function(){
     
 });
 // ################################################################## //
-
-
-
-
-
-
-
-
-// ######## *******    $$$$$$$$$$   ÁREA DE TESTES    $$$$$$$$$$ ********** ########### //
-    /*
-        Vamos realizar qualquer teste acima, aqui para manter a organização por favor.
-    */
-
-
-
-    // TESTES ANTIGOS, APAGAR CONFORME A NECESSIDADE //
-
-
-        // VALORES DE TESTE //
-
-        // const PROP = ['POPULACAO','AMOSTRA'], TIPO = ['NOMINAL','ORDINAL'];
-
-        // variável qualitativa ordinal //
-        // var arr = ['EF','EF','PG','EF','EF','ES','PG','EM','PG','EM','EM',
-        //             'ES','ES','EM','EM','ES','EF','EM','PG','ES','ES',
-        //             'EM','EF','EM','EM','PG','ES','PG','ES','ES'];
-
-                
-        // var arr2 = ['rosa','amarela','rosa','azul','rosa','branca','preta',
-        //             'preta','rosa','branca','rosa','preta','branca','preta',
-        //             'rosa','amarela','rosa','branca','branca','azul','rosa','amarela',
-        //             'branca','branca','branca','branca','azul','branca','branca','azul'];
-
-        // var arr3 = [230,232,244,245,248,280,281,284,289,292,308,309,309,310,311,333,335,335,337,337];
-
-        // var arr4 = [2,3,1,1,2,1,2,1,2,5,5,1,2,3,1,2,2,3,1,2];
-
-        // var arr5 = [40,41,42,45,54,55,59,60,61,62,64,65,65,66,67,68,69,70,71,71,80,81,83,84,85,86,87,87,88,89,90,91,93,97,98,98,99,100,101,105];
-
-        // var arr6 = [2,2,2,4,4,4,4,4,5,5,5,5,5,5,5,5,7,7,7,7,7,7,10,10];
-
-        // var arr7 = [20,23,23,27,27,27,28,29,30,32,34,34,34,35,37,37,37,38,38,38,41,42,43,43,45,45,45,46,47,47,50,51,53,55,55,56,56,56,60,60,63,65];
-
-        // var arr8 = [34,43,20,37,37,55,27,37,23,46,43,56,60,32,27,60,53,51,45,45,45,28,41,38,38,38,56,65,63,23,56,34,27,34,30,29,47,45,47,42,50,35];
-        
-        // var arr8 = [58,61,61,65,65,66,66,67,67,68,71,71,71,72,73,80,90,100,55,50,47,78,98,65,69,82,72,68,61,76];
-        
-    //var arrteste = [2;2,2,3,3,3,4,4,5,5,6,6,8,8,8];
-        
-    //console.log( medida_separatriz_cont(quanti_continua('AMOSTRA',arrteste),4,1))
-
-//nominal
-// EF;EF;PG;EF;EF;ES;PG;EM;PG;EM;EM;ES;ES;EM;EM;ES;EF;EM;PG;ES;ES;EM;EF;EM;EM;PG;ES;PG;ES;ES
-
-//ordinal
-// rosa;amarela;rosa;azul;rosa;branca;preta;preta;rosa;branca;rosa;preta;branca;preta;rosa;amarela;rosa;branca;branca;azul;rosa;amarela;branca;branca;branca;branca;azul;branca;branca;azul
-
-//discreta
-//2;2;2;4;4;4;4;4;5;5;5;5;5;5;5;5;7;7;7;7;7;7;10;10
-
-//continua
-//34;43;20;37;37;55;27;37;23;46;43;56;60;32;27;60;53;51;45;45;45;28;41;38;38;38;56;65;63;23;56;34;27;34;30;29;47;45;47;42;50;35
-
-        //TESTES - TABULAÇÃO //
-        //table_builder(quanti_discreta('POPULACAO',entrada()));
-        //table_builder(quali_nominal_ordinal(PROP[0],TIPO[0],entrada()));
-        //table_builder(quali_nominal_ordinal(PROP[0],TIPO[1],entrada()));
-        // table_builder_continua(quanti_continua(PROP[0],entrada()));
-        //--//
-
-        //TESTE DE MEDIANA E SEPARATRIZ//
-        //console.log(mediana_cont(quanti_continua(PROP[0],arr5)));
-
-        // Teste de separatriz//
-        // console.log(medida_separatriz(quanti_discreta('AMOSTRA',arr6),4,1)); //Quartil 1//
-        // console.log(medida_separatriz(quanti_discreta('AMOSTRA',arr6),4,3)); //Quartil 3//
-        // console.log(medida_separatriz(quanti_discreta('AMOSTRA',arr6),10,4)); //Deal 4//
-        // console.log(medida_separatriz(quanti_discreta('AMOSTRA',arr6),5,4)); //Kintil 4//
-        // console.log(medida_separatriz(quanti_discreta('AMOSTRA',arr6),100,60)); //Percentil 60//
-
-        // console.log(medida_separatriz(quali_nominal_ordinal('AMOSTRA','NOMINAL',arr2),4,1)); //Quartil 1//
-        // console.log(medida_separatriz(quali_nominal_ordinal('AMOSTRA','ORDINAL',arr2),4,3)); //Quartil 3//
-        // console.log(medida_separatriz(quali_nominal_ordinal('AMOSTRA','NOMINAL',arr2),10,4)); //Deal 4//
-        // console.log(medida_separatriz(quali_nominal_ordinal('AMOSTRA','ORDINAL',arr2),5,4)); //Kintil 4//
-        // console.log(medida_separatriz(quali_nominal_ordinal('AMOSTRA','ORDINAL',arr2),100,60)); //Percentil 60//
-        // console.log(medida_separatriz_cont(quanti_continua('AMOSTRA',arr8),100,27))
-        // console.log(medida_separatriz_cont(quanti_continua('AMOSTRA',arr8),5,3))
-
-        // TESTE FUNÇÃO BINOMIAL //
-        // console.log(distribuicao_binomial(10,0.3,0.7,2))
-
-        // TESTE FUNÇÃO NORMAL //
-        // console.log('maior que ' + distribuicao_normal(90,5,'MAIOR_QUE',93));
-        // console.log('menor que ' + distribuicao_normal(90,5,'MENOR_QUE',95));
-        // console.log('entre ' + distribuicao_normal(90,5,'ENTRE_',89,93));
-        // console.log('entre menos ' + distribuicao_normal(90,5,'ENTRE_MENOS',86,89));
-
-        // TESTE CORRELACAO E PROGRESSÃO //
-        // ax = [12.38,14.56,14.67,15.98,17.65];
-        // ay = [2003,2004,2005,2006,2007];
-
-        // console.log(correlacao_regressao(ax,ay));
-// %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% //
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
